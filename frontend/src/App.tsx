@@ -1,0 +1,129 @@
+// src/App.tsx
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/auth/LoginPage";
+import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
+import SignupPage from "./pages/auth/SignupPage";
+import Produit from "./pages/Produit";
+import Layout from "./layout/Layout";
+import NotFoundPage from "./pages/NotfoundPage";
+import DecisionDetailPage from "./pages/DecisionDetailPage";
+import UserProfilePage from "./pages/UserProfilePage";
+import ProfileLayout from "./layout/ProfilLayout";
+import HelpAndSupportPage from "./pages/HelpAndSupportPage";
+import VerifyAccount from "./pages/auth/VerifyAccount";
+import { userStore } from "./store/store";
+import NewPasswordPage from "./pages/auth/NewPasswordPage";
+import AddDecision from "./components/adminComponents/AddDecision";
+import ViewDecisionsList from "./components/adminComponents/ViewDecisionList";
+import DashboardLayout from "./layout/DashboardLayout";
+import DecisionStatistics from "./components/adminComponents/DecisionStatistics";
+// Make sure this import is correct
+
+const App = () => {
+  const { user } = userStore(); // Assuming userStore is defined and imported correctly
+  // fonction to check if the user is authenticated
+  const isAuthenticated = () => {
+    // Check if user object is not empty
+    if (user && Object.keys(user).length > 0) {
+      return null; // User is authenticated
+    }
+    return window.history.back(); // User is not authenticated
+  };
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      errorElement: <NotFoundPage />,
+      children: [
+        {
+          path: "",
+          element: <HomePage />,
+        },
+        {
+          path: "presentation-terraohada",
+          element: <Produit />,
+        },
+        {
+          path: "decisions/:id",
+          element: <DecisionDetailPage />,
+        },
+        {
+          path: "aide-et-support",
+          element: <HelpAndSupportPage />,
+        },
+      ],
+    },
+    {
+      path: "/profile/:id", // The /profil route uses ProfileLayout
+      element: <ProfileLayout />,
+      errorElement: <NotFoundPage />,
+      children: [
+        {
+          path: "", // UserProfilePage will be the default content for /profil
+          element: <UserProfilePage />,
+          loader: isAuthenticated,
+        },
+      ],
+    },
+    {
+      path: "/tableau-de-bord",
+      element: <DashboardLayout />,
+      errorElement: <NotFoundPage />,
+      children: [
+        // {
+        //   path: "",
+        //   element: <DecisionDashboard />,
+        // },
+        {
+          path: "",
+          element: <AddDecision />,
+        },
+        {
+          path: "voir-decisions",
+          element: <ViewDecisionsList />,
+        },
+        {
+          path: "voir-commentaires",
+          element: <ViewDecisionsList />,
+        },
+        {
+          path: "statistics-decisions",
+          element: <DecisionStatistics />,
+        },
+      ],
+    },
+    {
+      path: "/connexion",
+      element: <LoginPage />,
+    },
+    {
+      path: "/inscription",
+      element: <SignupPage />,
+    },
+    {
+      path: "/mot-de-passe-oublie",
+      element: <ForgotPasswordPage />,
+    },
+    {
+      path: "/reinitialisation-mot-de-passe/:token",
+      element: <NewPasswordPage />,
+    },
+    {
+      path: "/verification-compte/:id",
+      element: (
+        <VerifyAccount
+          onVerificationSuccess={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+          onResendCode={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
+      ),
+    },
+  ]);
+  return <RouterProvider router={router} />;
+};
+
+export default App;

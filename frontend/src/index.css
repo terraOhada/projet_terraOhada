@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+@import "tailwindcss";
+
+@theme {
+  /* les polices de terra ohada */
+  --font-ohada-title: "Playfair Display"; /* Titre */
+  --font-ohada-body: "Lato"; /* Sous-titre*/
+
+  /* les couleurs */
+  --color-ohada-blue-one: #0e4194; /* blue primaire */
+  --color-ohada-blue-two: #0093d9; /* bleu secondaire */
+  --color-ohada-blue-three: #0292d8; /* bleu tertiare */
+  --color-ohada-blue-for: #36529c; /* bleu quatrieme */
+  --color-ohada-white: #ffffff; /* Couleur secondaire */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-ohada-title);
+  box-sizing: border-box;
+  font-weight: 900;
+}
+
+body {
+  font-family: var(--font-ohada-body);
+  box-sizing: border-box;
+}
+
+/* ... (votre CSS Tailwind et les autres animations précédemment définies) ... */
+
+@keyframes bounceSlow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px); /* Hauteur du "rebond" */
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounceSlow 2s infinite ease-in-out; /* Durée et type de l'animation */
+}
