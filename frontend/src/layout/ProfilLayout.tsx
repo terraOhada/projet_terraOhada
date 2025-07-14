@@ -1,6 +1,6 @@
 // src/layout/ProfileLayout.tsx
 import React, { useState } from "react"; // Importez useState
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import ScrollToTop from "../components/others/ScrollToTop"; // Assurez-vous que le chemin est correct
 import {
   User,
@@ -12,9 +12,11 @@ import {
   X,
 } from "lucide-react"; // Importez Menu et X pour le toggle
 import { userStore } from "../store/store";
+import LogoTerraOhada from "../assets/logo TO.png";
 
 const ProfileLayout: React.FC = () => {
-  const { clearUser } = userStore(); // Importez votre store pour gérer l'utilisateur
+  const navigate = useNavigate();
+  const { user, clearUser } = userStore(); // Importez votre store pour gérer l'utilisateur
   // const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // État pour la visibilité de la sidebar
 
@@ -22,12 +24,8 @@ const ProfileLayout: React.FC = () => {
     clearUser(); // Appel de la fonction pour vider l'utilisateur du store
   };
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-      setIsSidebarOpen(false); // Ferme la sidebar après le clic sur mobile
-    }
+  const scrollToSection = (path: string) => {
+    navigate(path);
   };
 
   return (
@@ -60,15 +58,16 @@ const ProfileLayout: React.FC = () => {
                    md:relative md:translate-x-0 md:border-r md:border-gray-200 
                    transition-transform duration-300 ease-in-out`}
       >
-        <div className="flex items-center justify-center mb-6">
+        <div
+          className="flex items-center justify-center mb-6 cursor-pointer"
+          onClick={() => scrollToSection("/")}
+        >
           <img
-            src="https://avatar.iran.liara.run/public/17"
+            src={LogoTerraOhada}
             alt="Logo"
-            className="w-14 h-14 rounded-full"
+            className="w-14 h-14 object-contain rounded-full border-2 border-ohada-blue-one p-2"
           />
-          <h2 className="text-2xl font-bold text-gray-900 ml-3">
-            Tableau de bord
-          </h2>
+          <h2 className="text-2xl font-bold text-gray-900 ml-3">Mon profile</h2>
           {/* Close button for mobile sidebar */}
           <button
             className="md:hidden absolute top-4 right-4 p-1 text-gray-500 hover:text-gray-700"
@@ -79,14 +78,16 @@ const ProfileLayout: React.FC = () => {
         </div>
 
         <nav className="flex-grow space-y-2">
-          <Link
-            to="/profil"
-            className="flex items-center w-full px-4 py-2 text-lg font-medium text-gray-700 rounded-lg hover:bg-orange-50 hover:text-orange-700 transition-colors duration-200"
-            onClick={() => setIsSidebarOpen(false)} // Close sidebar on click
-          >
-            <BriefcaseBusiness className="w-5 h-5 mr-3" />
-            Tableau de bord
-          </Link>
+          {user?.role !== "USER" && (
+            <Link
+              to="/tableau-de-bord"
+              className="flex items-center w-full px-4 py-2 text-lg font-medium text-gray-700 rounded-lg hover:bg-orange-50 hover:text-orange-700 transition-colors duration-200"
+              onClick={() => setIsSidebarOpen(false)} // Close sidebar on click
+            >
+              <BriefcaseBusiness className="w-5 h-5 mr-3" />
+              Tableau de bord
+            </Link>
+          )}
 
           <h3 className="text-sm font-semibold text-gray-500 uppercase mt-6 mb-2">
             Profile
@@ -94,7 +95,7 @@ const ProfileLayout: React.FC = () => {
           <ul className="space-y-2">
             <li>
               <button
-                onClick={() => scrollToSection("profile-info")}
+                onClick={() => scrollToSection("")}
                 className="flex items-center w-full px-4 py-2 text-md font-medium text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
               >
                 <User className="w-5 h-5 mr-3" />
@@ -103,7 +104,7 @@ const ProfileLayout: React.FC = () => {
             </li>
             <li>
               <button
-                onClick={() => scrollToSection("favorite-decisions")}
+                onClick={() => scrollToSection("favoris")}
                 className="flex items-center w-full px-4 py-2 text-md font-medium text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
               >
                 <Heart className="w-5 h-5 mr-3" />
@@ -117,7 +118,7 @@ const ProfileLayout: React.FC = () => {
                 onClick={() => setIsSidebarOpen(false)} // Close sidebar on click
               >
                 <MessageSquare className="w-5 h-5 mr-3" />
-                Mes commenataires
+                Mes commentaires
               </Link>
             </li>
           </ul>

@@ -82,7 +82,11 @@ const AddDecision: React.FC = () => {
       );
 
       if (response.data.success) {
-        toast.success("Décision enregistrée avec succès !");
+        setLoading(false);
+        toast.success(
+          response.data.message || "Décision enregistrée avec succès !"
+        );
+
         setFormData({
           // Reset form
           idInterne: "",

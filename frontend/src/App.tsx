@@ -8,7 +8,6 @@ import Produit from "./pages/Produit";
 import Layout from "./layout/Layout";
 import NotFoundPage from "./pages/NotfoundPage";
 import DecisionDetailPage from "./pages/DecisionDetailPage";
-import UserProfilePage from "./pages/UserProfilePage";
 import ProfileLayout from "./layout/ProfilLayout";
 import HelpAndSupportPage from "./pages/HelpAndSupportPage";
 import VerifyAccount from "./pages/auth/VerifyAccount";
@@ -18,6 +17,8 @@ import AddDecision from "./components/adminComponents/AddDecision";
 import ViewDecisionsList from "./components/adminComponents/ViewDecisionList";
 import DashboardLayout from "./layout/DashboardLayout";
 import DecisionStatistics from "./components/adminComponents/DecisionStatistics";
+import FavorisProfile from "./pages/profile/FavorisProfile";
+import UserProfilePage from "./pages/profile/UserProfilePage";
 // Make sure this import is correct
 
 const App = () => {
@@ -64,11 +65,16 @@ const App = () => {
           element: <UserProfilePage />,
           loader: isAuthenticated,
         },
+        {
+          path: "favoris",
+          element: <FavorisProfile />,
+        },
       ],
     },
     {
       path: "/tableau-de-bord",
       element: <DashboardLayout />,
+      loader: isAuthenticated,
       errorElement: <NotFoundPage />,
       children: [
         // {

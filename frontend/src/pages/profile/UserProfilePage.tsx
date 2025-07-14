@@ -1,11 +1,7 @@
 // src/pages/UserProfilePage.tsx
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { decisions } from "../data/data"; // Your decisions data
-// Your decision interface
-import { Edit, Save, CheckCircle, XCircle, Trash2 } from "lucide-react"; // Icons
-import type { IDecision } from "../types";
-import { userStore } from "../store/store";
+import React, { useState } from "react";
+import { Edit, Save, CheckCircle, XCircle } from "lucide-react"; // Icons
+import { userStore } from "../../store/store";
 
 const UserProfilePage: React.FC = () => {
   const { user } = userStore();
@@ -20,27 +16,11 @@ const UserProfilePage: React.FC = () => {
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmNewPassword, setConfirmNewPassword] = useState<string>("");
 
-  // Favorites
-  const [favoritedDecisions, setFavoritedDecisions] = useState<IDecision[]>([]);
-
   // Notifications
   const [message, setMessage] = useState<{
     type: "success" | "error";
     text: string;
   } | null>(null);
-
-  useEffect(() => {
-    const storedFavorites = JSON.parse(
-      localStorage.getItem("user_favorites") || "{}"
-    );
-    const favoriteIds = Object.keys(storedFavorites)
-      .filter((id) => storedFavorites[id])
-      .map(Number);
-    const foundFavoritedDecisions = decisions.filter((d) =>
-      favoriteIds.includes(Number(d._id))
-    );
-    setFavoritedDecisions(foundFavoritedDecisions);
-  }, []);
 
   // Handle Profile Info Save (Username, Email, Phone)
   const handleProfileSave = (e: React.FormEvent) => {
@@ -100,19 +80,6 @@ const UserProfilePage: React.FC = () => {
     setNewPassword("");
     setConfirmNewPassword("");
     setTimeout(() => setMessage(null), 3000);
-  };
-
-  // Remove Favorite Decision
-  const handleRemoveFavorite = (idToRemove: number) => {
-    const storedFavorites = JSON.parse(
-      localStorage.getItem("user_favorites") || "{}"
-    );
-    delete storedFavorites[idToRemove];
-    localStorage.setItem("user_favorites", JSON.stringify(storedFavorites));
-
-    setFavoritedDecisions((prev) => prev.filter((d) => d._id !== idToRemove));
-    setMessage({ type: "success", text: "Decision removed from favorites." });
-    setTimeout(() => setMessage(null), 2000);
   };
 
   return (
@@ -301,64 +268,6 @@ const UserProfilePage: React.FC = () => {
           </form>
         </div>
       </section>
-
-      {/* My Favorites Card - Inspired by image layout */}
-      <section
-        id="favorite-decisions"
-        className="bg-white p-6 rounded-lg shadow-md"
-      >
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">
-          My Favorites
-        </h2>
-        {favoritedDecisions.length > 0 ? (
-          <div className="space-y-4">
-            {favoritedDecisions.map((decision) => (
-              <div
-                key={decision._id}
-                className="bg-gray-50 p-4 rounded-md border border-gray-100 flex justify-between items-center"
-              >
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900">
-                    {decision.titre}
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    {new Date(decision.date).toLocaleDateString("fr-FR")} -{" "}
-                    {decision.juridiction}
-                  </p>
-                </div>
-                <div className="flex space-x-2">
-                  <Link
-                    to={`/decisions/${decision._id}`}
-                    className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded-md transition-colors duration-200"
-                  >
-                    View
-                  </Link>
-                  <button
-                    onClick={() => handleRemoveFavorite(Number(decision._id))}
-                    className="bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded-md transition-colors duration-200"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-gray-600">
-            You don't have any favorite decisions yet. Go to the{" "}
-            <Link to="/decisions" className="text-blue-600 hover:underline">
-              decisions list
-            </Link>{" "}
-            to add some!
-          </p>
-        )}
-      </section>
-
-      {/* Placeholder for "My Comments" section if implemented later */}
-      {/* <section id="my-comments" className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">My Comments</h2>
-        <p className="text-gray-600">This section will display your comments once implemented.</p>
-      </section> */}
     </div>
   );
 };

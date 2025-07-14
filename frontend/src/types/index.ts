@@ -15,6 +15,13 @@ export interface IDecision {
   articleMisAjour?: string; // Optional, for full text display
 }
 
+export interface IFavorite {
+  id: string;
+  decision: IDecision;
+  userId: string;
+  decisionId: string;
+}
+
 // id              String  @id @default(auto()) @map("_id") @db.ObjectId
 //   idInterne       String  @unique // "ID interne" - Identifiant unique de la décision
 //   titreDecision   String // "Titre de la décision"

@@ -9,6 +9,7 @@ import authRouter from './routes/auth.route.js';
 import { connectDB } from './utils/db.js';
 import decisionRouter from './routes/decision.route.js';
 import fileRouter from './routes/file.route.js';
+import favoriteRouter from './routes/favorite.route.js';
 
 
 const app = express();
@@ -47,6 +48,7 @@ app.use('/documents', express.static('uploads/documents'));
 app.use("/api/auth", authRouter);
 app.use('/api/decision', decisionRouter)
 app.use("/api/file", fileRouter)
+app.use('/api/favorite', favoriteRouter);
 
 app.get('/', (req, res) => {
     res.send('API is running...');

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/pages/DecisionDetailPage.tsx
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -5,6 +6,9 @@ import MarkdownPreview from "@uiw/react-markdown-preview";
 
 import type { IDecision } from "../types";
 import { userStore } from "../store/store";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { FAVORI_URL } from "../api/api";
 // Assurez-vous d'importer l'interface
 
 // Définir une interface pour un commentaire
@@ -32,60 +36,46 @@ const DecisionDetailPage: React.FC = () => {
     user?.nom ? user.nom : ""
   ); // Simule un nom d'utilisateur
 
-  // useEffect(() => {
-  //   const foundDecision = decisions.find((d) => d.id.toString() === id);
+  const handleFavoriteToggle = async (decisionId: string) => {
+    if (!user || !user?.id) return;
+    if (!decisionId) return;
+    setIsFavorited((prev) => !prev);
 
-  //   if (foundDecision) {
-  //     setDecision(foundDecision);
-  //     setLoading(false);
+    if (!isFavorited) {
+      try {
+        const response = await axios.post(
+          `${FAVORI_URL}/ajouter-favorite/${user?.id}`,
+          {
+            decisionId: decisionId,
+          }
+        );
 
-  //     // Charger l'état de favori et les commentaires depuis le stockage local (pour la persistance locale simple)
-  //     // Dans une vraie app, cela viendrait d'une API backend
-  //     const storedFavorites = JSON.parse(
-  //       localStorage.getItem("user_favorites") || "{}"
-  //     );
-  //     setIsFavorited(!!storedFavorites[foundDecision.id]);
+        if (response.status === 201) {
+          toast.success(response.data.message || "Ajouté comme favori 💖");
+        }
+      } catch (error: any) {
+        toast.error(error.response.data.message || "Erreur d'ajout 😒");
+        //
+      }
+    } else {
+      try {
+        const response = await axios.delete(
+          `${FAVORI_URL}/supprimer-favorite/${user?.id}`,
+          {
+            data: {
+              decisionId,
+            },
+          }
+        );
 
-  //     const storedComments = JSON.parse(
-  //       localStorage.getItem(`comments_for_${foundDecision.id}`) || "[]"
-  //     );
-  //     setComments(storedComments);
-  //   } else {
-  //     setError("Désolé, cette décision n'a pas été trouvée.");
-  //     setLoading(false);
-  //   }
-  // }, [id]);
-
-  // Effet pour sauvegarder l'état de favori localement quand il change
-  // useEffect(() => {
-  //   if (decision) {
-  //     const storedFavorites = JSON.parse(
-  //       localStorage.getItem("user_favorites") || "{}"
-  //     );
-  //     if (isFavorited) {
-  //       storedFavorites[decision.id] = true;
-  //     } else {
-  //       delete storedFavorites[decision.id];
-  //     }
-  //     localStorage.setItem("user_favorites", JSON.stringify(storedFavorites));
-  //   }
-  // }, [isFavorited, decision]);
-
-  // // Effet pour sauvegarder les commentaires localement quand ils changent
-  // useEffect(() => {
-  //   if (decision) {
-  //     localStorage.setItem(
-  //       `comments_for_${decision.id}`,
-  //       JSON.stringify(comments)
-  //     );
-  //   }
-  // }, [comments, decision]);
-
-  // const handleFavoriteToggle = () => {
-  //   setIsFavorited((prev) => !prev);
-  //   // Ici, vous feriez un appel API pour enregistrer/supprimer le favori sur le backend
-  //   // Ex: api.toggleFavorite(decision._id, !isFavorited);
-  // };
+        if (response.status === 200) {
+          toast.success(response.data.message || "Ajouté comme favori 💖");
+        }
+      } catch (error: any) {
+        toast.error(error.response.data.message || "Erreur d'ajout 😒");
+      }
+    }
+  };
 
   const handleAddComment = (e: React.FormEvent) => {
     e.preventDefault();
@@ -174,7 +164,7 @@ const DecisionDetailPage: React.FC = () => {
             {decision.titreDecision}
           </h1>
           <button
-            // onClick={handleFavoriteToggle}
+            onClick={() => handleFavoriteToggle(decision.id as string)}
             className={`flex items-center space-x-2 p-2 rounded-full transition-colors duration-200 ${
               isFavorited
                 ? "bg-red-100 text-red-500"
@@ -223,7 +213,11 @@ const DecisionDetailPage: React.FC = () => {
             <h2 className="font-semibold text-lg mb-2">Résumé</h2>
             <MarkdownPreview
               source={decision.resume}
-              style={{ padding: 16, backgroundColor: "", borderRadius: "5px" }}
+              style={{
+                padding: 16,
+                backgroundColor: "blue",
+                borderRadius: "5px",
+              }}
             />
           </div>
         )}

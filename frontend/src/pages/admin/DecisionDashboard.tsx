@@ -53,9 +53,6 @@ const ModalDecision: React.FC = () => {
 
   // Function to re-fetch decisions when a new one is added
   const refreshDecisionsList = () => {
-    // This will trigger a re-render of ViewDecisionsList if it depends on a state change
-    // For simplicity, we'll just set active section to itself to force re-mount/re-fetch
-    // In a more complex app, you might use a context or a global state management library
     setActiveSection("viewDecisions"); // Go back to view decisions after adding
     setTimeout(() => setActiveSection("addDecision"), 100); // Small delay to ensure re-render
   };

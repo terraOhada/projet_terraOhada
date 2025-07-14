@@ -39,6 +39,8 @@ model User {
   resetOtpExpireAt  Int?     @default(0)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+
+  favorites Favorite[]
 }
 
 /// Modèle pour les décisions juridiques de la cour OHADA
@@ -57,8 +59,9 @@ model Decision {
   articleMisAjour String? // "Articles mis à jour" - Utilisation de @map pour un nom de colonne différent
   colonne1        String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  FavoriteBy Favorite[]
 
   // Vous pouvez ajouter des index pour optimiser les requêtes
   @@index([pays])
@@ -75,4 +78,15 @@ model Document {
   taille     Float
   typeMime   String
   dateUpload DateTime @default(now())
+}
+
+model Favorite {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String   @db.ObjectId // ID de l'utilisateur
+  decision   Decision @relation(fields: [decisionId], references: [id])
+  decisionId String   @db.ObjectId // ID de la décision
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, decisionId]) // Un utilisateur ne peut liker qu'une fois une décision
 }
