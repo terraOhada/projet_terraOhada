@@ -10,6 +10,7 @@ import { connectDB } from './utils/db.js';
 import decisionRouter from './routes/decision.route.js';
 import fileRouter from './routes/file.route.js';
 import favoriteRouter from './routes/favorite.route.js';
+import userRouter from './routes/user.route.js';
 
 
 const app = express();
@@ -49,6 +50,7 @@ app.use("/api/auth", authRouter);
 app.use('/api/decision', decisionRouter)
 app.use("/api/file", fileRouter)
 app.use('/api/favorite', favoriteRouter);
+app.use('/api/users', userRouter);
 
 app.get('/', (req, res) => {
     res.send('API is running...');

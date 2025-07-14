@@ -5,6 +5,7 @@ export const AUTH_URL = `${BASE_URL}/auth`;
 export const DECISION_URL = `${BASE_URL}/decision`;
 export const FAVORI_URL = `${BASE_URL}/favorite`;
 export const FILE_URL = `${BASE_URL}/file`;
+export const USERS_URL = `${BASE_URL}/users`;
 
 export const login = async (email: string, password: string) => {
   try {

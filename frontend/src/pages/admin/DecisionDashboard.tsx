@@ -8,6 +8,7 @@ import AddDecision from "../../components/adminComponents/AddDecision";
 import ViewDecisionsList from "../../components/adminComponents/ViewDecisionList";
 import ViewComments from "../../components/adminComponents/ViewComments";
 import DecisionStatistics from "../../components/adminComponents/DecisionStatistics";
+import { userStore } from "../../store/store";
 
 // --- Image URLs ---
 // Using direct URLs for images to avoid local path resolution issues
@@ -43,12 +44,12 @@ export interface Comment {
 
 // --- Main App Component ---
 const ModalDecision: React.FC = () => {
+  const { clearUser } = userStore(); // Assuming userStore has a clearUser method
   const [activeSection, setActiveSection] = useState<string>("viewDecisions"); // Default active section
 
   const handleLogout = () => {
+    clearUser(); // Clear user data from the store
     toast.success("Déconnexion réussie !");
-    // Implement actual logout logic here (e.g., clear tokens, redirect to login)
-    console.log("User logged out");
   };
 
   // Function to re-fetch decisions when a new one is added

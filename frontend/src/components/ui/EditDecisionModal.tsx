@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, type FormEvent } from "react";
 import type { Decision } from "../../pages/admin/DecisionDashboard";
 import toast from "react-hot-toast";
@@ -5,10 +6,12 @@ import { XIcon } from "lucide-react";
 import MarkdownEditor from "./MarkdownEditor";
 import { DECISION_URL } from "../../api/api";
 import { userStore } from "../../store/store";
+import axios from "axios";
+import type { IDecision } from "../../types";
 
 // --- Edit Decision Modal Component ---
 interface EditDecisionModalProps {
-  decision: Decision;
+  decision: IDecision;
   onClose: () => void;
   onDecisionUpdated: (updatedDecision: Decision) => void;
 }
@@ -19,7 +22,7 @@ const EditDecisionModal: React.FC<EditDecisionModalProps> = ({
   onDecisionUpdated,
 }) => {
   const { user } = userStore();
-  const [formData, setFormData] = useState<Decision>(decision);
+  const [formData, setFormData] = useState<IDecision>(decision);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -49,7 +52,7 @@ const EditDecisionModal: React.FC<EditDecisionModalProps> = ({
       !formData.idInterne ||
       !formData.titreDecision ||
       !formData.juridiction ||
-      !formData.date ||
+      !formData.dateDecision ||
       !formData.pays ||
       !formData.matiere
     ) {
@@ -59,29 +62,37 @@ const EditDecisionModal: React.FC<EditDecisionModalProps> = ({
     }
 
     try {
-      const response = await fetch(
+      const response = await axios.put(
         `${DECISION_URL}/modifier-decision/${user.id}`,
         {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
+          updatedData: formData,
+          decisionId: decision.id,
         }
       );
 
-      const data = await response.json();
-
-      if (response.ok) {
-        toast.success("Décision mise à jour avec succès !");
-        onDecisionUpdated(data.decision); // Pass updated decision to parent
+      if (response.data.success) {
+        toast.success(
+          response.data.message || "Décision mise à jour avec succès !"
+        );
+        onDecisionUpdated(response.data.data); // Pass updated decision to parent
         onClose(); // Close modal
       } else {
-        setError(data.message || "Erreur lors de la mise à jour.");
-        toast.error(data.message || "Échec de la mise à jour.");
+        setError(response.data.message || "Erreur lors de la mise à jour.");
+        toast.error(response.data.message || "Échec de la mise à jour.");
       }
-    } catch (err) {
-      console.error("Erreur lors de la mise à jour des données:", err);
-      setError("Une erreur réseau est survenue. Veuillez réessayer.");
-      toast.error("Erreur réseau. Veuillez réessayer.");
+    } catch (err: any) {
+      console.error(
+        err.response.data.message ||
+          "Erreur lors de la mise à jour des données:",
+        err
+      );
+      setError(
+        err.response.data.message ||
+          "Une erreur réseau est survenue. Veuillez réessayer."
+      );
+      toast.error(
+        err.response.data.message || "Erreur réseau. Veuillez réessayer."
+      );
     } finally {
       setLoading(false);
     }
@@ -170,7 +181,7 @@ const EditDecisionModal: React.FC<EditDecisionModalProps> = ({
               required
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               placeholder="Ex: 19 October 2015"
-              value={formData.date}
+              value={formData.dateDecision}
               onChange={handleChange}
             />
           </div>
@@ -224,14 +235,6 @@ const EditDecisionModal: React.FC<EditDecisionModalProps> = ({
                 setFormData({ ...formData, resume: value })
               }
             />
-            {/* <textarea
-              id="edit-resume"
-              name="resume"
-              rows={5}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              value={formData.resume}
-              onChange={handleChange}
-            ></textarea> */}
           </div>
           {/* Lien source */}
           <div>
@@ -317,7 +320,7 @@ const EditDecisionModal: React.FC<EditDecisionModalProps> = ({
               name="colonne1"
               type="text"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              value={formData.colonne1}
+              value={""}
               onChange={handleChange}
             />
           </div>

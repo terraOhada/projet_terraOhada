@@ -1,10 +1,11 @@
 import React from "react";
-import type { Decision } from "../../pages/admin/DecisionDashboard";
+
 import DetailItem from "./DetailItem";
 import MarkdownEditor from "./MarkdownEditor";
+import type { IDecision } from "../../types";
 
 interface ViewDecisionModalProps {
-  decision: Decision;
+  decision: IDecision;
   onClose: () => void;
 }
 const ViewDecisionModal: React.FC<ViewDecisionModalProps> = ({
@@ -32,10 +33,7 @@ const ViewDecisionModal: React.FC<ViewDecisionModalProps> = ({
               <DetailItem label="ID Interne" value={decision.idInterne} />
               <DetailItem label="Juridiction" value={decision.juridiction} />
               <DetailItem label="Pays" value={decision.pays} />
-              <DetailItem
-                label="Date"
-                value={new Date(decision.date).toLocaleDateString()}
-              />
+              <DetailItem label="Date" value={decision.dateDecision} />
             </div>
             <div className="space-y-4">
               <DetailItem label="Matière" value={decision.matiere} />

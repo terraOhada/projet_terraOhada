@@ -1,19 +1,19 @@
 import { useState, useMemo, useEffect, useCallback } from "react"; // Importez useState et useMemo
-
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import Couverture from "../assets/images/couverture.jpeg";
 import { Search } from "lucide-react";
 import DecisionCard from "../components/HomePage/DecisionCard"; // Assurez-vous que le chemin est correct
-import type { Decision } from "./admin/DecisionDashboard";
 import { DECISION_URL } from "../api/api";
 import toast from "react-hot-toast";
 import { userStore } from "../store/store";
+import type { IDecision } from "../types";
 
 // Définissez le nombre d'éléments par page
 const ITEMS_PER_PAGE = 3; // Vous pouvez ajuster ce nombre
 
 const HomePage = () => {
   const { user } = userStore();
-  const [decisions, setDecisions] = useState<Decision[]>([]);
+  const [decisions, setDecisions] = useState<IDecision[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -76,7 +76,7 @@ const HomePage = () => {
       if (!response.ok) {
         throw new Error(`Erreur HTTP: ${response.status}`);
       }
-      const data: Decision[] = await response.json();
+      const data: IDecision[] = await response.json();
       // console.log("data", data);
       setDecisions(data.data);
     } catch (err) {
@@ -180,9 +180,21 @@ const HomePage = () => {
 
         {/* Results */}
         {loading ? (
-          <div>En cours de téléchargement</div>
+          <div>
+            <SkeletonTheme baseColor="#202020" highlightColor="#444">
+              <p>
+                <Skeleton count={3} height={50} />
+              </p>
+            </SkeletonTheme>
+          </div>
         ) : error ? (
-          <div>Aucune donnée disponible</div>
+          <div>
+            <SkeletonTheme baseColor="#202020" highlightColor="#444">
+              <p>
+                <Skeleton count={3} />
+              </p>
+            </SkeletonTheme>
+          </div>
         ) : (
           <div className="md:col-span-3 space-y-6 lg:w-9/12 md:w-9/12">
             {/* Utilisez currentDecisions ici */}

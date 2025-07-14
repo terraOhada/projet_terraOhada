@@ -4,6 +4,7 @@ import {
   LogOutIcon,
   MessageSquareIcon,
   PlusCircleIcon,
+  UserIcon,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -29,6 +30,11 @@ const SidebarDash: React.FC = () => {
       name: "Commentaires",
       icon: MessageSquareIcon,
       url: "voir-commentaires",
+    },
+    {
+      name: "Utilisateurs",
+      icon: UserIcon,
+      url: "utilisateurs",
     },
   ];
 

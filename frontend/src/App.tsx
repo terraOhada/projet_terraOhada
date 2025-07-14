@@ -19,6 +19,7 @@ import DashboardLayout from "./layout/DashboardLayout";
 import DecisionStatistics from "./components/adminComponents/DecisionStatistics";
 import FavorisProfile from "./pages/profile/FavorisProfile";
 import UserProfilePage from "./pages/profile/UserProfilePage";
+import UserPage from "./pages/admin/UserPage";
 // Make sure this import is correct
 
 const App = () => {
@@ -96,6 +97,10 @@ const App = () => {
         {
           path: "statistics-decisions",
           element: <DecisionStatistics />,
+        },
+        {
+          path: "utilisateurs",
+          element: <UserPage />,
         },
       ],
     },
