@@ -8,7 +8,7 @@ const decisionRouter = Router()
 decisionRouter.post('/ajouter-decision/:userId', isAdmin, ajouterDecision)
 decisionRouter.delete('/supprimer-decision/:userId', isAdmin, supprimerDecision)
 decisionRouter.put('/modifier-decision/:userId', isAdmin, mettreAJourDecision)
-decisionRouter.get('/toutes-decisions/:userId', isAdmin, toutesDecisions)
+decisionRouter.get('/toutes-decisions', toutesDecisions)
 decisionRouter.get('/une-decision/:userId', isAdmin, uneDecision)
 
 export default decisionRouter

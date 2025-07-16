@@ -3,6 +3,7 @@ import db from "../utils/config.js";
 import path from 'path';
 import fs from 'fs';
 import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE } from "../utils/constants.js";
+import cloudinary from "../utils/cloudinaryConfig.js";
 
 export const uploadFile = async (req, res) => {
     if (!req.file) {
@@ -82,3 +83,43 @@ export const uploadFile = async (req, res) => {
         });
     }
 };
+
+export const uploadPhoto = async (req, res) => {
+    const { userId } = req.params;
+    if (!userId) {
+        return res.status(400).json({ success: false, message: 'Veuillez vous connecter' });
+    }
+    try {
+        if (!req.file) {
+            return res.status(400).json({ error: 'Aucune image fournie' });
+        }
+
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: 'ohada-uploads',
+            upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET
+        });
+
+        await db.user.update({
+            where: { id: userId },
+            data: {
+                photo: result.secure_url
+            }
+        });
+
+        const data = {
+            public_id: result.public_id,
+            url: result.secure_url,
+            width: result.width,
+            height: result.height
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Photo uploadée avec succès',
+            data: data
+        });
+    } catch (error) {
+        console.error('Upload error:', error);
+        res.status(500).json({ error: 'Erreur lors de l\'upload' });
+    }
+}

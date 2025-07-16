@@ -17,3 +17,5 @@ const upload = multer({
 });
 
 export default upload;
+
+export const uploadImage = multer({ dest: 'uploads/photos' });

@@ -299,3 +299,40 @@ export const resetPassword = async (req, res) => {
         return res.status(404).json({ success: false, message: "Utilisateur non trouvé" });
     }
 }
+
+export const changerMotDePasse = async (req, res) => {
+    const { userId } = req.params;
+    const { newPassword } = req.body;
+
+    // console.log("object", userId, newPassword);
+
+    if (!newPassword) {
+        return res.status(400).json({ success: false, message: "Tous les champs sont requis" });
+    }
+
+    try {
+        const user = await db.user.findUnique({
+            where: { id: userId }
+        });
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "Utilisateur non trouvé" });
+        }
+
+        if (!user.isAccountVerified) {
+            return res.status(404).json({ success: false, message: 'Veuillez vous connecter' });
+        }
+
+        const hashedNewPassword = await bcrypt.hash(newPassword, 12);
+
+        await db.user.update({
+            where: { id: userId },
+            data: { password: hashedNewPassword }
+        });
+
+        return res.status(200).json({ success: true, message: "Mot de passe modifié avec succès" });
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).json({ success: false, message: "Erreur interne du serveur lors de la modification du mot de passe" });
+    }
+}

@@ -40,7 +40,7 @@ const LoginPage: React.FC = () => {
 
         setTimeout(() => {
           navigate("/"); // Redirige vers la page d'accueil ou une autre page après la connexion
-        }, 2000);
+        }, 1000);
       }
     } catch (error: any) {
       setLoading(false);
@@ -113,7 +113,15 @@ const LoginPage: React.FC = () => {
           </div>
 
           {message && (
-            <div className="text-red-500 text-sm mb-4">{message}</div>
+            <div
+              className={`${
+                message === "Connexion réussie !"
+                  ? "text-teal-500"
+                  : "text-red-500"
+              } text-sm mb-4`}
+            >
+              {message}
+            </div>
           )}
           <div className="flex items-center justify-between">
             <button

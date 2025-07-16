@@ -13,6 +13,7 @@ import {
 } from "lucide-react"; // Importez Menu et X pour le toggle
 import { userStore } from "../store/store";
 import LogoTerraOhada from "../assets/logo TO.png";
+import toast from "react-hot-toast";
 
 const ProfileLayout: React.FC = () => {
   const navigate = useNavigate();
@@ -22,6 +23,10 @@ const ProfileLayout: React.FC = () => {
 
   const handleLogout = () => {
     clearUser(); // Appel de la fonction pour vider l'utilisateur du store
+    toast.success("Déconnexion réussie !");
+    setTimeout(() => {
+      navigate("/"); // Redirige vers la page d'accueil après la déconnexion
+    }, 1000);
   };
 
   const scrollToSection = (path: string) => {
@@ -29,7 +34,7 @@ const ProfileLayout: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
+    <div className=" flex flex-col md:flex-row min-h-screen bg-gray-100">
       {" "}
       {/* Passe en flex-row sur md */}
       <ScrollToTop />

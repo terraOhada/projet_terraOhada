@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import type { Decision } from "../../pages/admin/DecisionDashboard";
 import toast from "react-hot-toast";
 import { EditIcon, EyeIcon, Trash2Icon } from "lucide-react";
 import EditDecisionModal from "../ui/EditDecisionModal";
@@ -7,23 +6,25 @@ import { DECISION_URL } from "../../api/api";
 import { userStore } from "../../store/store";
 import { useCallback } from "react";
 import ViewDecisionModal from "../ui/ViewDecisionModal";
+import axios from "axios";
+import type { IDecision } from "../../types";
 
 // --- View Decisions Component ---
 const ViewDecisionsList: React.FC = () => {
   const { user } = userStore();
-  const [decisions, setDecisions] = useState<Decision[]>([]);
+  const [decisions, setDecisions] = useState<IDecision[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedDecision, setSelectedDecision] = useState<Decision | null>(
+  const [selectedDecision, setSelectedDecision] = useState<IDecision | null>(
     null
   ); // For editing modal
 
   const [viewModalOpen, setViewModalOpen] = useState(false);
   const [selectedDecisionModal, setSelectedDecisionModal] =
-    useState<Decision | null>(null);
+    useState<IDecision | null>(null);
 
   // Fonction pour ouvrir la modal
-  const handleViewClick = (decision: Decision) => {
+  const handleViewClick = (decision: IDecision) => {
     setSelectedDecisionModal(decision);
     setViewModalOpen(true);
   };
@@ -35,15 +36,13 @@ const ViewDecisionsList: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(
-        `${DECISION_URL}/toutes-decisions/${user.id}`
-      );
-      if (!response.ok) {
+      const response = await axios.get(`${DECISION_URL}/toutes-decisions`);
+      if (!response.data.success) {
         throw new Error(`Erreur HTTP: ${response.status}`);
       }
-      const data: Decision[] = await response.json();
+
       // console.log("data", data);
-      setDecisions(data.data);
+      setDecisions(response.data.data);
     } catch (err) {
       console.error("Erreur lors du chargement des décisions:", err);
       setError("Impossible de charger les décisions. Veuillez réessayer.");
@@ -57,7 +56,7 @@ const ViewDecisionsList: React.FC = () => {
     fetchDecisions();
   }, [fetchDecisions]);
 
-  const handleEditClick = (decision: Decision) => {
+  const handleEditClick = (decision: IDecision) => {
     setSelectedDecision(decision);
   };
 
@@ -92,7 +91,7 @@ const ViewDecisionsList: React.FC = () => {
     }
   };
 
-  const handleDecisionUpdated = (updatedDecision: Decision) => {
+  const handleDecisionUpdated = (updatedDecision: IDecision) => {
     setDecisions((prevDecisions) =>
       prevDecisions.map((dec) =>
         dec.id === updatedDecision.id ? updatedDecision : dec
@@ -143,7 +142,7 @@ const ViewDecisionsList: React.FC = () => {
                 <span className="ml-1 hidden sm:inline">Modifier</span>
               </button>
               <button
-                onClick={() => handleDeleteClick(decision.id)}
+                onClick={() => handleDeleteClick(decision.id as string)}
                 className="p-2 bg-ohada-blue-three text-white rounded-md hover:bg-red-600 transition-colors duration-200 flex items-center"
                 title="Supprimer"
               >

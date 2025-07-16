@@ -11,9 +11,6 @@ const DecisionCard: React.FC<{ decision: IDecision }> = ({ decision }) => {
       : `${decision.juridiction}, ${decision.pays || ""}`;
 
   const handleNavigateToDecision = (decision: IDecision) => {
-    console.log("Navigating to decision detail page for:", decision.id);
-    // Ici, vous pouvez utiliser useNavigate de react-router-dom pour naviguer
-
     navigate(`/decisions/${decision.id}`, { state: { item: decision } });
   };
   // Logique pour naviguer vers la page de détail de la décision

@@ -2,9 +2,14 @@
 import React, { useState } from "react";
 import { Edit, Save, CheckCircle, XCircle } from "lucide-react"; // Icons
 import { userStore } from "../../store/store";
+import { AUTH_URL, USERS_URL } from "../../api/api";
+import axios from "axios";
+import { userInfo } from "../../hooks/userInfo";
+import { ImageUploader } from "../../components/profile/ImageUploader";
 
 const UserProfilePage: React.FC = () => {
-  const { user } = userStore();
+  const { user, setUser } = userStore();
+
   // Simulated User Info
   const [nom, setNom] = useState<string>(user?.nom || ""); // Inspired by the image)
   const [prenom, setPrenom] = useState<string>(user?.prenom || "");
@@ -23,7 +28,7 @@ const UserProfilePage: React.FC = () => {
   } | null>(null);
 
   // Handle Profile Info Save (Username, Email, Phone)
-  const handleProfileSave = (e: React.FormEvent) => {
+  const handleProfileSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (
       nom.trim() === "" ||
@@ -31,55 +36,118 @@ const UserProfilePage: React.FC = () => {
       email.trim() === "" ||
       !email.includes("@") // Basic email validation
     ) {
-      setMessage({ type: "error", text: "Please fill in all profile fields." });
+      setMessage({ type: "error", text: "Tous les champs sont requis" });
+      return;
+    }
+    if (!user && !user?.id) return;
+    try {
+      const updatedData = {
+        nom,
+        prenom,
+        email,
+      };
+      const response = await axios.put(`${USERS_URL}/changer-utilisateur`, {
+        updatedData,
+        userId: user?.id,
+      });
+      if (!response.data.success) {
+        throw new Error(`Erreur HTTP: ${response.status}`);
+      }
+
+      const responseData = await userInfo(user?.id as string);
+      if (!responseData.success) {
+        setMessage({
+          type: "error",
+          text:
+            responseData.message || "Erreur lors de la mise à jour du profil",
+        });
+      } else {
+        setUser(responseData.data);
+        setMessage({ type: "success", text: "Profil modifié avec succès!" });
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      setMessage({
+        type: "error",
+        text: "Erreur lors de la mise à jour du profil",
+      });
       return;
     }
 
-    setMessage({ type: "success", text: "Profile updated successfully!" });
+    setMessage({ type: "success", text: "Profil mis à jour 🟢" });
     setIsEditingProfile(false); // Exit edit mode
     setTimeout(() => setMessage(null), 3000);
   };
 
   // Handle Password Change (SIMULATED)
-  const handlePasswordChange = (e: React.FormEvent) => {
+  const handlePasswordChange = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage(null);
 
+    if (!user || !user.id) {
+      setMessage({
+        type: "error",
+        text: "Veuillez vous connecter pour changer le mot de passe",
+      });
+      return;
+    }
+
     if (
-      currentPassword === "" ||
+      // currentPassword === "" ||
       newPassword === "" ||
       confirmNewPassword === ""
     ) {
       setMessage({
         type: "error",
-        text: "Please fill in all password fields.",
+        text: "Tous les champs sont requis pour changer le mot de passe",
       });
       return;
     }
 
     if (newPassword !== confirmNewPassword) {
-      setMessage({ type: "error", text: "New passwords do not match." });
+      setMessage({
+        type: "error",
+        text: "Les mots de passe ne correspondent pas",
+      });
       return;
     }
 
     if (newPassword.length < 6) {
       setMessage({
         type: "error",
-        text: "New password must be at least 6 characters.",
+        text: "Le mot de passe doit contenir 6 caractères min.",
       });
       return;
     }
 
-    // This is a simulation. In a real app, you'd send currentPassword
-    // and newPassword to your backend for secure authentication and update.
-    setMessage({
-      type: "success",
-      text: "Password updated successfully (simulation)!",
-    });
-    setCurrentPassword("");
-    setNewPassword("");
-    setConfirmNewPassword("");
-    setTimeout(() => setMessage(null), 3000);
+    try {
+      const response = await axios.put(
+        `${AUTH_URL}/changer-mot-de-passe/${user?.id}`,
+        {
+          newPassword,
+        }
+      );
+
+      // console.log("response", response);
+
+      if (response.data.success) {
+        setMessage({
+          type: "success",
+          text: "Mot de passe changé avec succès!",
+        });
+        // setCurrentPassword("");
+        setNewPassword("");
+        setConfirmNewPassword("");
+        setTimeout(() => setMessage(null), 3000);
+      }
+    } catch (error) {
+      console.error("Error changing password:", error);
+      setMessage({
+        type: "error",
+        text: "Erreur lors du changement de mot de passe",
+      });
+      return;
+    }
   };
 
   return (
@@ -103,9 +171,22 @@ const UserProfilePage: React.FC = () => {
         </div>
       )}
 
+      {/* <div>
+        <p className="text-sm text-gray-500 mt-2">
+          Vous pouvez modifier vos informations personnelles ici.
+        </p>
+        <ImageUploader />
+      </div> */}
+
       {/* My Profile Card - Inspired by image */}
       <section id="profile-info" className="bg-white p-6 rounded-lg shadow-md">
-        <div className="flex justify-between items-center mb-4">
+        <ImageUploader
+          photoUrl={user?.photo ? user.photo : ""}
+          userId={user?.id as string}
+          setUser={setUser}
+        />
+
+        <div className="flex justify-between items-center mb-4 mt-5">
           <h2 className="text-xl font-semibold text-gray-800">
             Mes informations
           </h2>
@@ -114,24 +195,29 @@ const UserProfilePage: React.FC = () => {
             className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
           >
             <Edit className="w-4 h-4 mr-1" />
-            {isEditingProfile ? "Cancel" : "Edit"}
+            {isEditingProfile ? "Retour" : "Modifier"}
           </button>
         </div>
-        <div className="flex items-center space-x-4 mb-4">
-          <img
-            src="https://avatar.iran.liara.run/public/17" // Placeholder for user avatar
-            alt="User Avatar"
-            className="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
-          />
-          <div>
-            <p className="text-lg font-bold text-gray-900">{nom}</p>
-            <p className="text-sm text-gray-500">
-              Dernière connexion :{" "}
-              {new Date(user?.updatedAt as Date).toLocaleDateString("fr-FR")}{" "}
-              14:04
-            </p>{" "}
-            {/* Simulated */}
-            {/* Simulated */}
+
+        <div className="flex flex-col items-start space-x-4 mb-4">
+          <div className="mt-5">
+            <img
+              src={
+                user?.photo
+                  ? user.photo
+                  : "https://avatar.iran.liara.run/public/17"
+              } // Placeholder for user avatar
+              alt="User Avatar"
+              className="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
+            />
+            <div>
+              <p className="text-lg font-bold text-gray-900">{nom}</p>
+              <p className="text-sm text-gray-500">
+                Dernière connexion :{" "}
+                {new Date(user?.updatedAt as Date).toLocaleDateString("fr-FR")}{" "}
+                14:04
+              </p>{" "}
+            </div>
           </div>
         </div>
 

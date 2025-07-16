@@ -53,15 +53,37 @@ const UserPage = () => {
     }
   };
 
-  const handleDelete = (userId: string) => {
+  const handleDelete = async (userId: string) => {
     if (!user || !user.id) {
       setError("Utilisateur non authentifié");
       return;
     }
-    setUsers(users.filter((user) => user.id !== userId));
-    // Si on supprime tous les users de la page actuelle, on revient à la page précédente
-    if (currentUsers.length === 1 && currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+    try {
+      const response = await axios.delete(
+        `${USERS_URL}/changer-role/${user.id}`,
+        {
+          data: { userId },
+        }
+      );
+      if (response.data.success) {
+        toast.success(
+          response.data.message || "Utilisateur supprimé avec succès"
+        );
+        handleUsers();
+      } else {
+        toast.error(
+          response.data.message || "Désolé, vous n'êtes pas autorisé"
+        );
+        setError(response.data.message || "Désolé, vous n'êtes pas autorisé");
+      }
+    } catch (error: any) {
+      toast.error(
+        error.response?.data?.message || "Erreur lors de la mise à jour du rôle"
+      );
+      // console.error("Erreur lors de la mise à jour du rôle:", error);
+      setError(
+        error.response?.data?.message || "Erreur lors de la mise à jour du rôle"
+      );
     }
   };
 

@@ -1,5 +1,5 @@
 import express from 'express';
-import { isAuthenticated, login, logout, register, resetPassword, sendResetOtp, sendVerifyOtp, verifyAccount } from '../controllers/auth.controller.js';
+import { changerMotDePasse, isAuthenticated, login, logout, register, resetPassword, sendResetOtp, sendVerifyOtp, verifyAccount } from '../controllers/auth.controller.js';
 import { authMiddleware } from '../middleware/auth.middleware.js';
 
 
@@ -27,5 +27,8 @@ authRouter.post('/send-reset-otp', sendResetOtp)
 
 // réinitialiser le mot de passe
 authRouter.post('/reset-password', resetPassword)
+
+// changer le mot de passe
+authRouter.put('/changer-mot-de-passe/:userId', changerMotDePasse)
 
 export default authRouter;

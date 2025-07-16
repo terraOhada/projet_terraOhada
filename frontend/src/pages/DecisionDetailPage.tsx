@@ -22,11 +22,9 @@ interface Comment {
 const DecisionDetailPage: React.FC = () => {
   const { user } = userStore();
   const { state } = useLocation();
-  // console.log(state.item);
-  // const { id } = useParams<{ id: string }>();
-  const [decision, setDecision] = useState<IDecision | null>(state?.item);
-  // const [loading, setLoading] = useState<boolean>(true);
-  // const [error, setError] = useState<string | null>(null);
+
+  const decision: IDecision = state?.item ? state.item : null;
+  // const [decision, setDecision] = useState<IDecision | null>(state?.item);
 
   // États pour les nouvelles fonctionnalités
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
@@ -37,7 +35,10 @@ const DecisionDetailPage: React.FC = () => {
   ); // Simule un nom d'utilisateur
 
   const handleFavoriteToggle = async (decisionId: string) => {
-    if (!user || !user?.id) return;
+    if (!user || !user?.id) {
+      toast.error("Veuillez vous connecter pour ajouter aux favoris.");
+      return;
+    }
     if (!decisionId) return;
     setIsFavorited((prev) => !prev);
 
@@ -99,28 +100,6 @@ const DecisionDetailPage: React.FC = () => {
       // Ex: api.addComment(decision._id, newComment);
     }
   };
-
-  // if (loading) {
-  //   return (
-  //     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-  //       <p className="text-xl text-gray-700">Chargement de la décision...</p>
-  //     </div>
-  //   );
-  // }
-
-  // if (error) {
-  //   return (
-  //     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-  //       <p className="text-xl text-red-600 mb-4">{error}</p>
-  //       <Link
-  //         to="/"
-  //         className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200"
-  //       >
-  //         Retour à la liste
-  //       </Link>
-  //     </div>
-  //   );
-  // }
 
   if (!decision) {
     return (
@@ -234,8 +213,12 @@ const DecisionDetailPage: React.FC = () => {
             </p>
             <span>
               Source :{" "}
-              <a href={decision.lienSource} className="text-ohada-blue-three">
-                {decision.lienSource}
+              <a
+                href={decision.lienSource}
+                target="_blank"
+                className="text-ohada-blue-three"
+              >
+                lien de téléchargement
               </a>
             </span>
           </div>

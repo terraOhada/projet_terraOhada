@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, type FormEvent } from "react";
-import type { Decision } from "../../pages/admin/DecisionDashboard";
 import toast from "react-hot-toast";
 import { XIcon } from "lucide-react";
 import MarkdownEditor from "./MarkdownEditor";
@@ -13,7 +12,7 @@ import type { IDecision } from "../../types";
 interface EditDecisionModalProps {
   decision: IDecision;
   onClose: () => void;
-  onDecisionUpdated: (updatedDecision: Decision) => void;
+  onDecisionUpdated: (updatedDecision: IDecision) => void;
 }
 
 const EditDecisionModal: React.FC<EditDecisionModalProps> = ({

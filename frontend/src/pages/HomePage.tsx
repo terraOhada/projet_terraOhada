@@ -1,18 +1,19 @@
 import { useState, useMemo, useEffect, useCallback } from "react"; // Importez useState et useMemo
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import Couverture from "../assets/images/couverture.jpeg";
-import { Search } from "lucide-react";
+import { LoaderCircle, Search } from "lucide-react";
 import DecisionCard from "../components/HomePage/DecisionCard"; // Assurez-vous que le chemin est correct
 import { DECISION_URL } from "../api/api";
 import toast from "react-hot-toast";
-import { userStore } from "../store/store";
+// import { userStore } from "../store/store";
 import type { IDecision } from "../types";
+import axios from "axios";
 
 // Définissez le nombre d'éléments par page
 const ITEMS_PER_PAGE = 3; // Vous pouvez ajuster ce nombre
 
 const HomePage = () => {
-  const { user } = userStore();
+  // const { user } = userStore();
   const [decisions, setDecisions] = useState<IDecision[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -45,7 +46,7 @@ const HomePage = () => {
   // Logique pour afficher un ensemble de numéros de page
   const getPageNumbers = () => {
     const pageNumbers = [];
-    const maxPagesToShow = 5; // Nombre de pages visibles dans les contrôles
+    const maxPagesToShow = 3; // Nombre de pages visibles dans les contrôles
     let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
     const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
 
@@ -64,21 +65,18 @@ const HomePage = () => {
   };
 
   const fetchDecisions = useCallback(async () => {
-    if (!user || !user.id) {
-      return;
-    }
+    // if (!user || !user.id) {
+    //   return;
+    // }
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(
-        `${DECISION_URL}/toutes-decisions/${user.id}`
-      );
-      if (!response.ok) {
+      const response = await axios.get(`${DECISION_URL}/toutes-decisions`);
+      if (!response.data.success) {
         throw new Error(`Erreur HTTP: ${response.status}`);
       }
-      const data: IDecision[] = await response.json();
-      // console.log("data", data);
-      setDecisions(data.data);
+
+      setDecisions(response.data.data);
     } catch (err) {
       console.error("Erreur lors du chargement des décisions:", err);
       setError("Impossible de charger les décisions. Veuillez réessayer.");
@@ -86,7 +84,7 @@ const HomePage = () => {
     } finally {
       setLoading(false);
     }
-  }, [user]);
+  }, []);
 
   useEffect(() => {
     fetchDecisions();
@@ -180,12 +178,8 @@ const HomePage = () => {
 
         {/* Results */}
         {loading ? (
-          <div>
-            <SkeletonTheme baseColor="#202020" highlightColor="#444">
-              <p>
-                <Skeleton count={3} height={50} />
-              </p>
-            </SkeletonTheme>
+          <div className="animate-spin flex justify-center items-center w-full h-96">
+            <LoaderCircle />
           </div>
         ) : error ? (
           <div>

@@ -82,11 +82,11 @@ export const mettreAJourDecision = async (req, res) => {
 }
 
 export const toutesDecisions = async (req, res) => {
-    const role = req.role // 
+    // const role = req.role // 
 
-    if (role !== "SUPER_ADMIN") {
-        return res.status(400).json({ success: false, message: 'Désolé, vous n\'êtes pas autorisé' })
-    }
+    // if (role !== "SUPER_ADMIN") {
+    //     return res.status(400).json({ success: false, message: 'Désolé, vous n\'êtes pas autorisé' })
+    // }
 
     try {
         const decisions = await db.decision.findMany()

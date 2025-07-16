@@ -7,8 +7,11 @@ import {
   UserIcon,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { userStore } from "../../../store/store";
+import toast from "react-hot-toast";
 
 const SidebarDash: React.FC = () => {
+  const { clearUser } = userStore(); // Assuming userStore has a clearUser method
   const { pathname } = useLocation();
   const menuItems = [
     {
@@ -43,6 +46,11 @@ const SidebarDash: React.FC = () => {
   //   const Couverture =
   //     "https://placehold.co/1920x1080/0e4194/ffffff?text=Background";
 
+  const onLogout = () => {
+    clearUser(); // Appel de la fonction pour vider l'utilisateur du store
+    toast.success("Déconnexion réussie !");
+  };
+
   return (
     <div className="bg-ohada-blue-one/50 text-white flex flex-col h-full rounded-tr-lg rounded-br-lg shadow-lg">
       <Link to={"/"} className="p-6 text-center border-b border-blue-700">
@@ -76,7 +84,7 @@ const SidebarDash: React.FC = () => {
       </ul>
       <div className="p-4 border-t bg-red-500 border-blue-700">
         <button
-          // onClick={onLogout}
+          onClick={onLogout}
           className="w-full flex items-center p-3 gap-2 rounded-md text-left text-lg font-medium text-red-300 hover:bg-red-700 transition-colors duration-200"
         >
           <LogOutIcon className="" size={20} />
