@@ -20,6 +20,8 @@ import DecisionStatistics from "./components/adminComponents/DecisionStatistics"
 import FavorisProfile from "./pages/profile/FavorisProfile";
 import UserProfilePage from "./pages/profile/UserProfilePage";
 import UserPage from "./pages/admin/UserPage";
+import CommentProfile from "./pages/profile/CommentProfile";
+import ViewComments from "./components/adminComponents/ViewComments";
 // Make sure this import is correct
 
 const App = () => {
@@ -70,6 +72,10 @@ const App = () => {
           path: "favoris",
           element: <FavorisProfile />,
         },
+        {
+          path: "commentaires",
+          element: <CommentProfile />,
+        },
       ],
     },
     {
@@ -92,7 +98,7 @@ const App = () => {
         },
         {
           path: "voir-commentaires",
-          element: <ViewDecisionsList />,
+          element: <ViewComments />,
         },
         {
           path: "statistics-decisions",

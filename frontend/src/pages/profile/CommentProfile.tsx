@@ -1,20 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from "react";
 import toast from "react-hot-toast";
 import { COMMENT_URL } from "../../api/api";
 import axios from "axios";
+import type { IComment } from "../DecisionDetailPage";
 import { userStore } from "../../store/store";
-import type { IDecision, IUser } from "../../types";
+import type { IDecision } from "../../types";
 
 interface CommentProfileProps {
   id: string;
-  createdAt: Date;
   contenu: string;
-  commentBy: string;
-  user: IUser;
+  createdAt: Date;
+  comment: IComment;
   decision: IDecision;
 }
 
-const ViewComments: React.FC = () => {
+const CommentProfile: React.FC = () => {
   const { user } = userStore();
   const [comments, setComments] = React.useState<CommentProfileProps[]>([]);
   const formatDate = (date: Date) => {
@@ -35,7 +36,9 @@ const ViewComments: React.FC = () => {
       return;
     }
     try {
-      const response = await axios.get(`${COMMENT_URL}/tous-les-commentaires`);
+      const response = await axios.get(
+        `${COMMENT_URL}/commentaire-par-utilisateur/${user.id}`
+      );
       if (response.data.success) {
         setComments(response.data.data);
       } else {
@@ -54,10 +57,10 @@ const ViewComments: React.FC = () => {
     fetchComments();
   }, [user]);
 
-  // console.log("comments:", comments);
+  //   console.log("comments:", comments);
 
   return (
-    <div className="overflow-x-auto bg-white min-h-screen rounded-lg shadow-md">
+    <div className="overflow-x-auto bg-white rounded-lg shadow-md">
       {/* Version desktop */}
       <table className="hidden md:table min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
@@ -66,7 +69,7 @@ const ViewComments: React.FC = () => {
               scope="col"
               className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              Auteur
+              Juridiction
             </th>
             <th
               scope="col"
@@ -78,7 +81,7 @@ const ViewComments: React.FC = () => {
               scope="col"
               className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              Catégorie
+              Lien téléchargement
             </th>
             <th
               scope="col"
@@ -104,28 +107,8 @@ const ViewComments: React.FC = () => {
           {comments.length > 0 ? (
             comments.map((comment) => (
               <tr key={comment.id} className="hover:bg-gray-50">
-                <td className="px-4 py-4 whitespace-nowrap">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0 h-10 w-10 rounded-full  flex items-center justify-center text-white font-bold">
-                      <img
-                        src={
-                          comment.user.photo
-                            ? comment.user.photo
-                            : comment.commentBy.charAt(0).toUpperCase()
-                        }
-                        alt="photo"
-                        className="rounded-full object-cover"
-                      />
-                    </div>
-                    <div className="ml-3">
-                      <div className="text-sm font-medium text-gray-900">
-                        {comment.commentBy}
-                      </div>
-                      <div className="text-sm text-gray-500">
-                        {comment.user.role || "N/A"}
-                      </div>
-                    </div>
-                  </div>
+                <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {comment.decision.juridiction || "N/A"}
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
                   {comment.decision.idInterne || "N/A"}
@@ -141,11 +124,11 @@ const ViewComments: React.FC = () => {
                   </a>
                 </td>
                 <td className="px-4 py-4 text-sm text-gray-900 max-w-xs">
-                  {comment.contenu}
+                  {comment.contenu || "Aucun commentaire"}
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap">
                   <span
-                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                     ${
                       comment.decision.statut === "Validé"
                         ? "bg-green-100 text-green-800"
@@ -181,24 +164,13 @@ const ViewComments: React.FC = () => {
           comments.map((comment) => (
             <div key={comment.id} className="p-4 bg-white rounded-lg shadow">
               <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0 h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-sm">
-                  <img
-                    src={
-                      comment.user.photo
-                        ? comment.user.photo
-                        : comment.commentBy.charAt(0).toUpperCase()
-                    }
-                    alt="photo"
-                    className="rounded-full object-cover"
-                  />
-                </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between">
                     <p className="text-sm font-medium text-gray-900 truncate">
-                      {comment.commentBy}
+                      {comment.decision.juridiction || "N/A"}
                     </p>
                     <span
-                      className={`ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                      className={`ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                       ${
                         comment.decision.statut === "Validé"
                           ? "bg-green-100 text-green-800"
@@ -211,14 +183,20 @@ const ViewComments: React.FC = () => {
                     </span>
                   </div>
                   <p className="text-xs text-gray-500">
-                    {comment.user.role || "N/A"}
+                    {comment.decision.idInterne || "N/A"}
                   </p>
-                  <p className="text-xs  mt-1">
-                    <strong>Commenté le :</strong>{" "}
-                    {formatDate(comment.createdAt) || "Général"}
+                  <p className="text-xs text-blue-600 mt-1">
+                    <a
+                      href={comment.decision.lienSource}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline"
+                    >
+                      Lien téléchargement
+                    </a>
                   </p>
                   <div className="mt-2 text-sm text-gray-700">
-                    <strong>Commentaire :</strong> {comment.contenu}
+                    {comment.contenu}
                   </div>
                   <div className="mt-2 text-xs text-gray-500">
                     {formatDate(comment.createdAt)}
@@ -237,4 +215,4 @@ const ViewComments: React.FC = () => {
   );
 };
 
-export default ViewComments;
+export default CommentProfile;

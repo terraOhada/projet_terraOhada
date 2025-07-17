@@ -40,7 +40,8 @@ model User {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
-  favorites Favorite[]
+  favorites    Favorite[]
+  commentaires Commentaire[] // Opposite relation field added
 }
 
 /// Modèle pour les décisions juridiques de la cour OHADA
@@ -59,9 +60,10 @@ model Decision {
   articleMisAjour String? // "Articles mis à jour" - Utilisation de @map pour un nom de colonne différent
   colonne1        String?
 
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  FavoriteBy Favorite[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  FavoriteBy   Favorite[]
+  commentaires Commentaire[] // Opposite relation field added
 
   // Vous pouvez ajouter des index pour optimiser les requêtes
   @@index([pays])
@@ -89,4 +91,21 @@ model Favorite {
   createdAt  DateTime @default(now())
 
   @@unique([userId, decisionId]) // Un utilisateur ne peut liker qu'une fois une décision
+}
+
+model Commentaire {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String   @db.ObjectId // ID de l'utilisateur
+  decisionId String   @db.ObjectId // ID de la décision
+  contenu    String // Contenu du commentaire
+  commentBy  String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  decision Decision @relation(fields: [decisionId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, decisionId], name: "userId_decisionId") // Un utilisateur ne peut commenter qu'une fois une décision
+  @@index([decisionId]) // Index pour optimiser les requêtes sur les décisions
+  @@index([userId]) // Index pour optimiser les requêtes sur les utilisateurs
 }

@@ -1,22 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // src/pages/DecisionDetailPage.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 
-import type { IDecision } from "../types";
+import type { IDecision, IUser } from "../types";
 import { userStore } from "../store/store";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { FAVORI_URL } from "../api/api";
+import { COMMENT_URL, FAVORI_URL } from "../api/api";
 // Assurez-vous d'importer l'interface
 
 // Définir une interface pour un commentaire
-interface Comment {
-  id: number;
-  author: string;
-  text: string;
+export interface IComment {
+  id: string;
+  decisionId: string;
+  userId: string;
+  commentBy: string; // Nom de l'utilisateur qui a comment
   date: string;
+  contenu: string; // Contenu du commentaire
+  user: IUser; // Informations sur l'utilisateur
+  createdAt: Date; // Date de création du commentaire
+  updatedAt: Date; // Date de mise à jour du commentaire
 }
 
 const DecisionDetailPage: React.FC = () => {
@@ -24,15 +29,13 @@ const DecisionDetailPage: React.FC = () => {
   const { state } = useLocation();
 
   const decision: IDecision = state?.item ? state.item : null;
-  // const [decision, setDecision] = useState<IDecision | null>(state?.item);
-
-  // États pour les nouvelles fonctionnalités
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
-  const [comments, setComments] = useState<Comment[]>([]);
+  const [comments, setComments] = useState<IComment[]>([]);
   const [newCommentText, setNewCommentText] = useState<string>("");
   const [commentAuthor, setCommentAuthor] = useState<string>(
     user?.nom ? user.nom : ""
   ); // Simule un nom d'utilisateur
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleFavoriteToggle = async (decisionId: string) => {
     if (!user || !user?.id) {
@@ -78,28 +81,89 @@ const DecisionDetailPage: React.FC = () => {
     }
   };
 
-  const handleAddComment = (e: React.FormEvent) => {
+  const handleAddComment = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (newCommentText.trim() && commentAuthor.trim()) {
-      const newComment: Comment = {
-        id:
-          comments.length > 0 ? Math.max(...comments.map((c) => c.id)) + 1 : 1,
-        author: commentAuthor.trim(),
-        text: newCommentText.trim(),
-        date: new Date().toLocaleDateString("fr-FR", {
-          day: "numeric",
-          month: "long",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-      };
-      setComments((prevComments) => [...prevComments, newComment]);
-      setNewCommentText(""); // Réinitialiser le champ de texte après l'ajout
-      // Ici, vous feriez un appel API pour envoyer le commentaire au backend
-      // Ex: api.addComment(decision._id, newComment);
+    if (!newCommentText.trim()) {
+      toast.error("Le commentaire ne peut pas être vide.");
+      return;
+    }
+    if (!commentAuthor.trim()) {
+      toast.error("Veuillez entrer votre nom.");
+      return;
+    }
+
+    if (!decision || !decision.id) {
+      toast.error("Aucune décision sélectionnée.");
+      return;
+    }
+
+    if (!user || !user.id) {
+      toast.error("Veuillez vous connecter pour ajouter un commentaire.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await axios.post(`${COMMENT_URL}/ajouter-commentaire`, {
+        decisionId: decision.id,
+        userId: user.id,
+        nom: commentAuthor,
+        contenu: newCommentText,
+      });
+
+      if (response.data.success) {
+        toast.success(
+          response.data.message || "Commentaire ajouté avec succès !"
+        );
+        fetchComments(); // Rafraîchir la liste des commentaires
+        setLoading(false);
+        setNewCommentText("");
+        setCommentAuthor(user.nom || "Anonyme");
+      }
+    } catch (error: any) {
+      toast.error(
+        error.response?.data?.message ||
+          "Erreur lors de l'ajout du commentaire."
+      );
+      setLoading(false);
+      console.error("Erreur lors de l'ajout du commentaire:", error);
+    } finally {
+      setLoading(false);
     }
   };
+
+  const fetchComments = async () => {
+    if (!decision || !decision.id) {
+      toast.error(
+        "Aucune décision sélectionnée pour afficher les commentaires."
+      );
+      return;
+    }
+    try {
+      const response = await axios.get(
+        `${COMMENT_URL}/commentaire-par-decision/${decision.id}`
+      );
+      if (response.data.success) {
+        setComments(response.data.data);
+      } else {
+        console.error("Erreur lors de la récupération des commentaires.");
+      }
+    } catch (error: any) {
+      console.error(
+        error.response?.data?.message ||
+          "Erreur lors de la récupération des commentaires.",
+        error
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (decision && decision.id) {
+      fetchComments();
+    }
+  }, [decision, decision.id]);
+
+  console.log("comment", comments);
 
   if (!decision) {
     return (
@@ -285,35 +349,62 @@ const DecisionDetailPage: React.FC = () => {
             </div>
             <button
               type="submit"
+              disabled={loading}
               className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition-colors duration-200"
             >
-              Envoyer le commentaire
+              {loading ? "Envoi en cours..." : "Envoyer le commentaire"}
             </button>
           </form>
 
           {/* Liste des commentaires existants */}
-          {comments.length > 0 ? (
-            <div className="space-y-6">
-              {comments.map((comment) => (
-                <div
-                  key={comment.id}
-                  className="bg-white p-4 rounded-lg shadow-sm border border-gray-100"
-                >
-                  <p className="text-gray-800 font-medium mb-1">
-                    {comment.author}
-                  </p>
-                  <p className="text-gray-500 text-xs mb-2">{comment.date}</p>
-                  <p className="text-gray-700 leading-relaxed">
-                    {comment.text}
-                  </p>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+              Commentaires récents et verifiés ({comments.length})
+            </h3>
+            {comments && comments.length > 0 ? (
+              <>
+                <div className="grid grid-cols-3 gap-4 text-sm">
+                  {comments.map((comment) => (
+                    <div
+                      key={comment.id}
+                      className="bg-ohada-blue-two/5 p-4 rounded-lg shadow-sm border border-gray-100"
+                    >
+                      <div className="flex items-start space-x-4 mb-2">
+                        <img
+                          src={
+                            comment.user.photo ? comment.user.photo : "Anonyme"
+                          }
+                          alt="photo"
+                          width={40}
+                          height={40}
+                          className="rounded-full mb-2 border border-gray-300"
+                        />
+                        <p className="flex flex-col text-gray-800 font-medium mb-1">
+                          <span>
+                            <strong>Auteur :</strong> {comment.commentBy}
+                          </span>
+                          <span>
+                            <strong>Commenté le :</strong>{" "}
+                            {new Date(comment.createdAt).toLocaleDateString()}
+                          </span>
+                        </p>
+                      </div>
+                      <p className="text-gray-500 text-xs mb-2">
+                        {comment.date}
+                      </p>
+                      <p className="text-gray-700 leading-relaxed">
+                        <strong>Commentaire :</strong> {comment.contenu}
+                      </p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-600">
-              Aucun commentaire pour l'instant. Soyez le premier !
-            </p>
-          )}
+              </>
+            ) : (
+              <p className="text-gray-600">
+                Aucun commentaire pour l'instant. Soyez le premier !
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </main>

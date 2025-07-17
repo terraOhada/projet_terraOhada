@@ -11,6 +11,7 @@ import decisionRouter from './routes/decision.route.js';
 import fileRouter from './routes/file.route.js';
 import favoriteRouter from './routes/favorite.route.js';
 import userRouter from './routes/user.route.js';
+import commentRouter from './routes/comment.route.js';
 
 
 const app = express();
@@ -51,6 +52,7 @@ app.use('/api/decision', decisionRouter)
 app.use("/api/file", fileRouter)
 app.use('/api/favorite', favoriteRouter);
 app.use('/api/users', userRouter);
+app.use('/api/comment', commentRouter);
 
 app.get('/', (req, res) => {
     res.send('API is running...');
