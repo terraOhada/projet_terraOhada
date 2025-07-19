@@ -8,12 +8,21 @@ import toast from "react-hot-toast";
 // import { userStore } from "../store/store";
 import type { IDecision } from "../types";
 import axios from "axios";
+import CountrySelect from "../components/HomePage/CountrySelect";
+import YearSelect from "../components/HomePage/YearSelect";
+import LegalSubjectSelect from "../components/HomePage/LegalSubjectSelect";
+import SearchBar from "../components/HomePage/SearchBar";
+import AdvancedFilterMobile from "../components/HomePage/AdvancedFilterMobile";
 
 // Définissez le nombre d'éléments par page
 const ITEMS_PER_PAGE = 3; // Vous pouvez ajuster ce nombre
 
 const HomePage = () => {
   // const { user } = userStore();
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [decisions, setDecisions] = useState<IDecision[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -109,24 +118,54 @@ const HomePage = () => {
             Recherche juridique des décisions de la cour OHADA
           </h1>
           <div className="bg-white rounded-lg shadow-md overflow-hidden w-full max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-6 gap-2 p-4">
-              <input
-                type="text"
-                placeholder="Rechercher..."
-                className="col-span-2 px-4 py-2 border border-gray-300 rounded-md w-full"
-              />
-              <select className="px-3 py-2 border border-gray-300 rounded-md text-sm w-full">
-                <option>Pays</option>
-              </select>
-              <select className="px-3 py-2 border border-gray-300 rounded-md text-sm w-full">
-                <option>Année</option>
-              </select>
-              <select className="px-3 py-2 border border-gray-300 rounded-md text-sm w-full">
-                <option>Sujet Juridique</option>
-              </select>
-              <button className="bg-ohada-blue-for hover:bg-ohada-blue-three text-white px-1 py-2 w-10 h-10 rounded-md flex items-center justify-center">
-                <Search size={20} />
-              </button>
+            <div className="flex flex-col md:flex-row items-center gap-2 p-4 w-full">
+              {/* Barre de recherche - prend plus d'espace */}
+              <div className="w-full md:flex-1 min-w-[150px]">
+                <SearchBar
+                  value={searchQuery}
+                  onChange={setSearchQuery}
+                  className="w-full"
+                />
+              </div>
+
+              {/* Sélecteur de pays */}
+              <div className="w-full md:w-auto md:flex-1 min-w-[180px]">
+                <CountrySelect
+                  value={selectedCountry}
+                  onChange={setSelectedCountry}
+                  required
+                  className="w-full"
+                />
+              </div>
+
+              {/* Sélecteur d'année */}
+              <div className="w-full md:w-auto md:flex-1 min-w-[120px]">
+                <YearSelect
+                  value={selectedYear}
+                  onChange={setSelectedYear}
+                  startYear={2000}
+                  endYear={2025}
+                  reverse
+                  className="w-full"
+                />
+              </div>
+
+              {/* Sélecteur de sujet juridique */}
+              <div className="w-full md:w-auto md:flex-1 min-w-[200px]">
+                <LegalSubjectSelect
+                  value={selectedSubject}
+                  onChange={setSelectedSubject}
+                  className="w-full"
+                  required
+                />
+              </div>
+
+              {/* Bouton de recherche */}
+              <div className="w-full md:w-auto">
+                <button className="bg-ohada-blue-for hover:bg-ohada-blue-three text-white px-4 py-2 h-10 rounded-md flex items-center justify-center w-full md:w-10">
+                  <Search size={20} />
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -146,9 +185,17 @@ const HomePage = () => {
       </section>
 
       {/* Filters and Results */}
+
       <section className="py-10 px-4 md:max-w-7xl mx-auto flex flex-col md:flex-row gap-5">
+        <div className="max-w-lg mx-auto">
+          {" "}
+          {/* Largeur limitée */}
+          <AdvancedFilterMobile />
+          {/* Vos résultats ici */}
+        </div>
+
         {/* Filters */}
-        <div className="bg-ohada-blue-one md:w-3/12 h-96 text-ohada-white p-4 rounded shadow-sm space-y-4">
+        {/* <div className="bg-ohada-blue-one md:w-3/12 h-96 text-ohada-white p-4 rounded shadow-sm space-y-4">
           <h4>Filtre avancé</h4>
           <div>
             <label className="block font-semibold mb-1">Pays</label>
@@ -174,7 +221,7 @@ const HomePage = () => {
               <option>Contrat</option>
             </select>
           </div>
-        </div>
+        </div> */}
 
         {/* Results */}
         {loading ? (

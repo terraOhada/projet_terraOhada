@@ -36,3 +36,49 @@ export interface IMenuLink {
   to: string;
   icon?: string; // Optional, for FontAwesome icons
 }
+
+export interface ICountryOption {
+  name: string;
+  code: string;
+}
+
+export interface ICountrySelectProps {
+  value?: string;
+  onChange: (value: string) => void;
+  className?: string;
+  required?: boolean;
+  placeholder?: string;
+}
+
+export interface IYearSelectProps {
+  value?: string;
+  onChange: (value: string) => void;
+  className?: string;
+  required?: boolean;
+  placeholder?: string;
+  startYear?: number;
+  endYear?: number;
+  reverse?: boolean;
+}
+
+export interface ILegalSubject {
+  id: string;
+  name: string;
+  category: string;
+}
+
+export interface ILegalSubjectSelectProps {
+  value?: string;
+  onChange: (value: string) => void;
+  className?: string;
+  required?: boolean;
+  placeholder?: string;
+  showCategory?: boolean;
+}
+
+export interface ISearchBarProps {
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  className?: string;
+}
