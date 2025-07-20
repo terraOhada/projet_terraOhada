@@ -39,7 +39,7 @@ const UserProfilePage: React.FC = () => {
       setMessage({ type: "error", text: "Tous les champs sont requis" });
       return;
     }
-    if (!user && !user?.id) return;
+    if (!user) return;
     try {
       const updatedData = {
         nom,
