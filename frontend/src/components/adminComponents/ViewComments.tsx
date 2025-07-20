@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from "react";
 import toast from "react-hot-toast";
 import { COMMENT_URL } from "../../api/api";

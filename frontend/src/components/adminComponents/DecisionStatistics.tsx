@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import type { Decision } from "../../pages/admin/DecisionDashboard";
 
 // --- Decision Statistics Component ---
 const DecisionStatistics: React.FC = () => {
   // Mock data for demonstration. In a real app, fetch from backend.
-  const [mostCommentedDecisions, setMostCommentedDecisions] = useState<
-    Decision[]
-  >([
+  const mostCommentedDecisions: Decision[] = [
     {
       id: "1",
       idInterne: "DEC-001",
@@ -47,7 +45,7 @@ const DecisionStatistics: React.FC = () => {
       matiere: "Travail",
       commentsCount: 18,
     },
-  ] as Decision[]); // Type assertion to include commentsCount
+  ]; // Type assertion to include commentsCount
 
   useEffect(() => {
     // In a real application, you would fetch this data from your backend:
