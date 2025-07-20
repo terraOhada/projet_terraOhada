@@ -1,14 +1,10 @@
-import React, { useState } from "react";
-import { toast } from "react-hot-toast"; // Assuming react-hot-toast is installed
+import React from "react";
+
 // import TerraOhadaLogo from './assets/logo TO.png'; // Adjust path as needed
 // import Couverture from './assets/images/couverture.jpeg'; // Adjust path as needed
 
 import SidebarDash from "../../components/adminComponents/LayoutDash/SidebarDash";
 import AddDecision from "../../components/adminComponents/AddDecision";
-import ViewDecisionsList from "../../components/adminComponents/ViewDecisionList";
-import ViewComments from "../../components/adminComponents/ViewComments";
-import DecisionStatistics from "../../components/adminComponents/DecisionStatistics";
-import { userStore } from "../../store/store";
 
 // --- Image URLs ---
 // Using direct URLs for images to avoid local path resolution issues
@@ -44,19 +40,7 @@ export interface Comment {
 
 // --- Main App Component ---
 const ModalDecision: React.FC = () => {
-  const { clearUser } = userStore(); // Assuming userStore has a clearUser method
-  const [activeSection, setActiveSection] = useState<string>("viewDecisions"); // Default active section
-
-  const handleLogout = () => {
-    clearUser(); // Clear user data from the store
-    toast.success("Déconnexion réussie !");
-  };
-
-  // Function to re-fetch decisions when a new one is added
-  const refreshDecisionsList = () => {
-    setActiveSection("viewDecisions"); // Go back to view decisions after adding
-    setTimeout(() => setActiveSection("addDecision"), 100); // Small delay to ensure re-render
-  };
+  // Default active section
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
@@ -73,21 +57,12 @@ const ModalDecision: React.FC = () => {
 
       {/* Sidebar */}
       <div className="relative z-20 h-full md:h-screen">
-        <SidebarDash
-          activeSection={activeSection}
-          setActiveSection={setActiveSection}
-          onLogout={handleLogout}
-        />
+        <SidebarDash />
       </div>
 
       {/* Main Content Area */}
       <main className="relative z-20 flex-1 p-6 md:p-10 flex items-center justify-center">
-        {activeSection === "addDecision" && (
-          <AddDecision onDecisionAdded={refreshDecisionsList} />
-        )}
-        {activeSection === "viewDecisions" && <ViewDecisionsList />}
-        {activeSection === "decisionStats" && <DecisionStatistics />}
-        {activeSection === "viewComments" && <ViewComments />}
+        <AddDecision />
       </main>
     </div>
   );

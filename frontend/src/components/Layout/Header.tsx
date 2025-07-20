@@ -138,7 +138,7 @@ const Header: React.FC = () => {
       </div>
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden bg-white  py-3 animate-slide-down py-8 border-t border-blue-200 mt-4">
+        <div className="md:hidden bg-white  py-3 animate-slide-down md:py-8 border-t border-blue-200 mt-4">
           <nav className="space-y-2 text-sm font-medium">
             <ul className="flex flex-col gap-5 items-start">
               {menuLinks.map((link, index) => (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ChevronDown, Filter, X, Search } from "lucide-react";
 import { COUNTRIES, LEGAL_SUBJECTS } from "../../data/data";
 import { generateYears } from "../../utils/util";
