@@ -165,7 +165,7 @@ export const EMAIL_RESET_PASSWORD = `
                 <table role="presentation" cellspacing="0" cellpadding="0" style="margin: 20px auto;">
                     <tr>
                         <td style="border-radius: 5px; background-color: #0e4194; text-align: center;">
-                            <a href="http://localhost:5173/reinitialisation-mot-de-passe/{{token_de_reinitialisation}}" 
+                            <a href="{{FRONTEND_URL}}/reinitialisation-mot-de-passe/{{token_de_reinitialisation}}" 
                                style="font-size: 16px; font-family: Arial, sans-serif; color: #ffffff; text-decoration: none; border-radius: 5px; padding: 12px 25px; border: 1px solid #0e4194; display: inline-block; font-weight: bold;">
                                 Réinitialiser mon mot de passe
                             </a>
@@ -174,7 +174,7 @@ export const EMAIL_RESET_PASSWORD = `
                 </table>
                 <p style="font-size: 14px; color: #7f8c8d; line-height: 1.5;">
                     Si le bouton ne fonctionne pas, copiez et collez le lien suivant dans votre navigateur :<br>
-                    <a href="http://localhost:5173/reinitialisation-mot-de-passe/{{token_de_reinitialisation}}" style="color: #0e4194; word-break: break-all;">Lien de réinitilisation</a>
+                    <a href="{{FRONTEND_URL}}/reinitialisation-mot-de-passe/{{token_de_reinitialisation}}" style="color: #0e4194; word-break: break-all;">Lien de réinitilisation</a>
                 </p>
 
                 <p style="font-size: 14px; color: #555555; line-height: 1.5;">Ce lien est valide pendant une durée limitée. Ne le partagez avec personne.</p>

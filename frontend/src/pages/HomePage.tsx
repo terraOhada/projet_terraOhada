@@ -194,35 +194,6 @@ const HomePage = () => {
           {/* Vos résultats ici */}
         </div>
 
-        {/* Filters */}
-        {/* <div className="bg-ohada-blue-one md:w-3/12 h-96 text-ohada-white p-4 rounded shadow-sm space-y-4">
-          <h4>Filtre avancé</h4>
-          <div>
-            <label className="block font-semibold mb-1">Pays</label>
-            <select className="w-full border rounded px-3 py-2 text-sm">
-              <option>Année</option>
-            </select>
-          </div>
-          <div>
-            <label className="block font-semibold mb-1">Sujet juridique</label>
-            <select className="w-full border rounded px-3 py-2 text-sm">
-              <option>Jurisdiction</option>
-            </select>
-          </div>
-          <div>
-            <label className="block font-semibold mb-1">Tags</label>
-            <select className="w-full border rounded px-3 py-2 text-sm">
-              <option>Droit</option>
-            </select>
-          </div>
-          <div>
-            <label className="block font-semibold mb-1">Juriste</label>
-            <select className="w-full border rounded px-3 py-2 text-sm">
-              <option>Contrat</option>
-            </select>
-          </div>
-        </div> */}
-
         {/* Results */}
         {loading ? (
           <div className="animate-spin flex justify-center items-center w-full h-96">
@@ -239,10 +210,14 @@ const HomePage = () => {
         ) : (
           <div className="md:col-span-3 space-y-6 lg:w-9/12 md:w-9/12">
             {/* Utilisez currentDecisions ici */}
-            {currentDecisions.map((item) => (
-              // Assurez-vous que 'item.id' est unique, sinon utilisez 'item.titre + index'
-              <DecisionCard key={item.id} decision={item} />
-            ))}
+            {currentDecisions.length > 0 ? (
+              currentDecisions.map((item) => (
+                // Assurez-vous que 'item.id' est unique, sinon utilisez 'item.titre + index'
+                <DecisionCard key={item.id} decision={item} />
+              ))
+            ) : (
+              <div>Aucune décision disponible</div>
+            )}
 
             {/* Contrôles de pagination */}
             {totalPages > 1 && (

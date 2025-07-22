@@ -251,7 +251,7 @@ export const sendResetOtp = async (req, res) => {
             from: process.env.SENDER_EMAIL,
             to: email,
             subject: 'Réinitialisation de votre mot de passe',
-            html: EMAIL_RESET_PASSWORD.replaceAll("{{token_de_reinitialisation}}", user.email + "+" + otp).replace("{{nom_utilisateur}}", user.nom)
+            html: EMAIL_RESET_PASSWORD.replaceAll("FRONTEND_URL", process.env.FRONTEND_URL).replaceAll("{{token_de_reinitialisation}}", user.email + "+" + otp).replace("{{nom_utilisateur}}", user.nom)
         }
 
         await transporter.sendMail(mailOptions)
