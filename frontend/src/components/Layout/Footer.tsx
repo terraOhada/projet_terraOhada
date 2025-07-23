@@ -1,15 +1,16 @@
 // src/components/ModernFooter.tsx
 import React from "react";
 import Logo from "../../assets/logo TO.png";
+import { FacebookIcon, LinkedinIcon } from "lucide-react";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-gray-900 text-white py-12">
+    <footer className="bg-ohada-blue-one text-white py-12">
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Section 1: Logo et Description Courte */}
         <div className="flex flex-col items-start">
           <div>
-            <img src={Logo} alt="Logo terraOhada" width={60} />
+            <img src={Logo} alt="Logo terraOhada" width={60} color="white" />
             <p className="text-[8px] mt-2">
               Comprendre, partager, faire vivre le droit Ohada
             </p>
@@ -121,35 +122,19 @@ const Footer: React.FC = () => {
           <div className="flex space-x-4">
             {/* Icônes de réseaux sociaux - remplissez les href avec vos liens */}
             <a
-              href="#"
+              target="_blank"
+              href="https://www.linkedin.com/company/terraohada/?viewAsMember=true"
               className="text-gray-400 hover:text-blue-400 transition-colors duration-200"
             >
               {/* Exemple d'icône (utiliser des librairies comme Font Awesome ou SVG) */}
-              <svg
-                className="w-6 h-6"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.502 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.77-1.63 1.563V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
-                  clipRule="evenodd"
-                />
-              </svg>
+              <LinkedinIcon />
             </a>
             <a
-              href="#"
+              target="_blank"
+              href="https://web.facebook.com/profile.php?id=61577993836853"
               className="text-gray-400 hover:text-blue-400 transition-colors duration-200"
             >
-              <svg
-                className="w-6 h-6"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path d="M.052 11.203a11.137 11.137 0 0 1 23.896 0" />
-              </svg>
+              <FacebookIcon />
             </a>
             {/* Ajoutez d'autres icônes pour Twitter, Instagram, etc. */}
           </div>
@@ -159,9 +144,15 @@ const Footer: React.FC = () => {
       {/* Droits d'auteur et bas de page */}
       <div className="border-t border-gray-800 mt-10 pt-8 text-center text-gray-500 text-sm">
         <p>
-          &copy; {new Date().getFullYear()} TerraOhada. Tous droits réservés.
+          &copy; {new Date().getFullYear()} Les 3 sens du droit. Tous droits
+          réservés.
         </p>
-        <p className="mt-2">Conçu avec ❤️ en Côte d'Ivoire</p>
+        <p className="mt-2">
+          {" "}
+          <span>Conçu avec ❤️ en Côte d'Ivoire</span>
+          {" - "}
+          <span>By @ouattara ibrahim yacouba</span>
+        </p>
       </div>
     </footer>
   );

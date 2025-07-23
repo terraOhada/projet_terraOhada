@@ -110,7 +110,7 @@ const Produit: React.FC = () => {
                 les contenus clés : textes, décisions, résumés, commentaires
                 dans une interface claire et fonctionnelle.
               </p>
-              <ul className="list-disc list-inside space-y-2">
+              <ul className="list-none list-inside space-y-2">
                 <li>
                   <strong className="text-blue-600">
                     Conformité Assurée :

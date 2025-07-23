@@ -27,16 +27,7 @@ const DecisionCard: React.FC<{ decision: IDecision }> = ({ decision }) => {
         {decision.resume ||
           "Aucune description disponible pour cette décision."}
       </p>
-      {/* <div className="flex flex-wrap gap-2 mb-4">
-        {decision.tags.map((tag, index) => (
-          <span
-            key={index}
-            className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full"
-          >
-            {tag}
-          </span>
-        ))}
-      </div> */}
+
       <button
         className=" bg-blue-500 text-white px-4 py-2 cursor-pointer rounded-md hover:bg-blue-600"
         onClick={() => handleNavigateToDecision(decision)}

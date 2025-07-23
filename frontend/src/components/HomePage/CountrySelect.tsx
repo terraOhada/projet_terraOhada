@@ -21,7 +21,7 @@ const CountrySelect: React.FC<ICountrySelectProps> = ({
     >
       <option value="">{placeholder}</option>
       {COUNTRIES.map((country) => (
-        <option key={country.code} value={country.code}>
+        <option key={country.code} value={country.name}>
           {country.name} ({country.code})
         </option>
       ))}

@@ -13,22 +13,36 @@ import YearSelect from "../components/HomePage/YearSelect";
 import LegalSubjectSelect from "../components/HomePage/LegalSubjectSelect";
 import SearchBar from "../components/HomePage/SearchBar";
 import AdvancedFilterMobile from "../components/HomePage/AdvancedFilterMobile";
+import { searchDecisions } from "../utils/util";
+import NoDataAvailable from "../components/ui/NoDataAvailable";
 
 // Définissez le nombre d'éléments par page
 const ITEMS_PER_PAGE = 3; // Vous pouvez ajuster ce nombre
 
 const HomePage = () => {
   // const { user } = userStore();
+  const [decisions, setDecisions] = useState<IDecision[]>([]);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedSubject, setSelectedSubject] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [decisions, setDecisions] = useState<IDecision[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const filteredDecisions = decisions;
+  /**
+   * Filtre les décisions selon des critères flexibles
+   * @param decisions - Tableau des décisions à filtrer
+   * @param filters - Critères de recherche (tous optionnels)
+   * @returns Décisions correspondant aux critères
+   */
+
+  const filteredDecisions = searchDecisions(decisions, {
+    query: searchQuery,
+    annee: selectedYear ? parseInt(selectedYear) : undefined,
+    pays: selectedCountry,
+    sujetJuridique: selectedSubject,
+  });
 
   const totalPages = Math.ceil(filteredDecisions.length / ITEMS_PER_PAGE);
 
@@ -36,8 +50,8 @@ const HomePage = () => {
   const currentDecisions = useMemo(() => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
-    return decisions.slice(startIndex, endIndex);
-  }, [currentPage, decisions]); // Recalcule quand la page ou les filtres changent
+    return filteredDecisions.slice(startIndex, endIndex);
+  }, [currentPage, filteredDecisions]); // Recalcule quand la page ou les filtres changent
 
   // Fonctions de navigation pour la pagination
   const goToPreviousPage = () => {
@@ -115,7 +129,7 @@ const HomePage = () => {
         ></div>
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <h1 className="text-2xl md:text-6xl max-w-4xl font-bold text-ohada-white mb-4">
-            Recherche juridique des décisions de la cour OHADA
+            Base de jurisprudence OHADA
           </h1>
           <div className="bg-white rounded-lg shadow-md overflow-hidden w-full max-w-4xl mx-auto">
             <div className="flex flex-col md:flex-row items-center gap-2 p-4 w-full">
@@ -185,12 +199,16 @@ const HomePage = () => {
       </section>
 
       {/* Filters and Results */}
-
       <section className="py-10 px-4 md:max-w-7xl mx-auto flex flex-col md:flex-row gap-5">
         <div className="max-w-lg mx-auto">
           {" "}
           {/* Largeur limitée */}
-          <AdvancedFilterMobile />
+          <AdvancedFilterMobile
+            // terme={searchQuery}
+            annee={selectedYear}
+            pays={selectedCountry}
+            matiere={selectedSubject}
+          />
           {/* Vos résultats ici */}
         </div>
 
@@ -216,7 +234,7 @@ const HomePage = () => {
                 <DecisionCard key={item.id} decision={item} />
               ))
             ) : (
-              <div>Aucune décision disponible</div>
+              <NoDataAvailable />
             )}
 
             {/* Contrôles de pagination */}

@@ -82,3 +82,10 @@ export interface ISearchBarProps {
   placeholder?: string;
   className?: string;
 }
+
+export interface ISearchFilters {
+  query?: string; // Terme de recherche global (titre, résumé, etc.)
+  annee?: number; // Année exacte
+  pays?: string; // Pays concerné
+  sujetJuridique?: string; // Sujet juridique spécifique
+}

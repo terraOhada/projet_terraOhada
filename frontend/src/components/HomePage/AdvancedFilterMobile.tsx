@@ -1,18 +1,33 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { ChevronDown, Filter, X, Search } from "lucide-react";
 import { COUNTRIES, LEGAL_SUBJECTS } from "../../data/data";
 import { generateYears } from "../../utils/util";
 
-const AdvancedFilterMobile = () => {
+interface FiltersProps {
+  query?: string;
+  pays?: string;
+  annee?: number | string;
+  matiere?: string;
+}
+
+const AdvancedFilterMobile: React.FC<FiltersProps> = ({
+  // query,
+  pays,
+  annee,
+  matiere,
+}) => {
   const [filters, setFilters] = useState({
-    country: "",
-    year: "",
-    legalSubject: "",
+    country: pays as string,
+    year: annee,
+    legalSubject: matiere,
     jurisdiction: "",
     law: "",
     lawyer: "",
     contract: "",
   });
+
+  console.log("country", pays);
+  console.log("country 2", filters.country);
 
   // Options pour les selects avec exemples
   const options = {
