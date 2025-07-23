@@ -6,6 +6,8 @@ import db from '../utils/config.js';
 import { generateAndSetCookies } from '../utils/geneateCookie.js';
 import { EMAIL_BIENVENUE, EMAIL_REINITIALISATION_CODE, EMAIL_RESET_PASSWORD, EMAIL_VERIFICATION_CODE } from '../nodemailer/template.js';
 
+const FRONTEND_URL = process.env.FRONTEND_URL || 'https://mvp-terraohada-frontend.vercel.app';
+
 export const register = async (req, res) => {
     // recuperer les informations de l'utilisateur
     const { nom, prenom, email, password } = req.body;
@@ -251,7 +253,7 @@ export const sendResetOtp = async (req, res) => {
             from: process.env.SENDER_EMAIL,
             to: email,
             subject: 'Réinitialisation de votre mot de passe',
-            html: EMAIL_RESET_PASSWORD.replaceAll("FRONTEND_URL", process.env.FRONTEND_URL).replaceAll("{{token_de_reinitialisation}}", user.email + "+" + otp).replace("{{nom_utilisateur}}", user.nom)
+            html: EMAIL_RESET_PASSWORD.replaceAll("FRONTEND_URL", FRONTEND_URL).replaceAll("{{token_de_reinitialisation}}", user.email + "+" + otp).replace("{{nom_utilisateur}}", user.nom)
         }
 
         await transporter.sendMail(mailOptions)
