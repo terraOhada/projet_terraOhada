@@ -17,17 +17,17 @@ const AdvancedFilterMobile: React.FC<FiltersProps> = ({
   matiere,
 }) => {
   const [filters, setFilters] = useState({
-    country: pays as string,
-    year: annee,
-    legalSubject: matiere,
+    country: "",
+    year: "",
+    legalSubject: "",
     jurisdiction: "",
     law: "",
     lawyer: "",
     contract: "",
   });
 
-  // console.log("country", pays);
-  // console.log("country 2");
+  // console.log("country :", pays);
+  // console.log("country2 :", filters.country);
 
   // Options pour les selects avec exemples
   const options = {
@@ -101,7 +101,7 @@ const AdvancedFilterMobile: React.FC<FiltersProps> = ({
             Pays
           </label>
           <select
-            value={filters.country}
+            value={pays}
             onChange={(e) => handleChange("country", e.target.value)}
             className="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
           >
@@ -120,7 +120,7 @@ const AdvancedFilterMobile: React.FC<FiltersProps> = ({
             Année
           </label>
           <select
-            value={filters.year}
+            value={annee}
             onChange={(e) => handleChange("year", e.target.value)}
             className="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
           >
@@ -141,7 +141,7 @@ const AdvancedFilterMobile: React.FC<FiltersProps> = ({
             Sujet juridique
           </label>
           <select
-            value={filters.legalSubject}
+            value={matiere}
             onChange={(e) => handleChange("legalSubject", e.target.value)}
             className="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
           >

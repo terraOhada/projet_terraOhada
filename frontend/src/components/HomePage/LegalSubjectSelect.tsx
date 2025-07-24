@@ -1,5 +1,5 @@
 import { LEGAL_SUBJECTS } from "../../data/data";
-import type { ILegalSubject, ILegalSubjectSelectProps } from "../../types";
+import type { ILegalSubjectSelectProps } from "../../types";
 
 const LegalSubjectSelect: React.FC<ILegalSubjectSelectProps> = ({
   value = "",
@@ -7,20 +7,10 @@ const LegalSubjectSelect: React.FC<ILegalSubjectSelectProps> = ({
   className = "",
   required = false,
   placeholder = "Sujet juridique",
-  showCategory = true,
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onChange(e.target.value);
   };
-
-  // Grouper les sujets par catégorie
-  const groupedSubjects = LEGAL_SUBJECTS.reduce((acc, subject) => {
-    if (!acc[subject.category]) {
-      acc[subject.category] = [];
-    }
-    acc[subject.category].push(subject);
-    return acc;
-  }, {} as Record<string, ILegalSubject[]>);
 
   return (
     <select
@@ -31,16 +21,10 @@ const LegalSubjectSelect: React.FC<ILegalSubjectSelectProps> = ({
     >
       <option value="">{placeholder}</option>
 
-      {Object.entries(groupedSubjects).map(([category, subjects]) => (
-        <optgroup key={category} label={category}>
-          {subjects.map((subject) => (
-            <option key={subject.id} value={subject.id}>
-              {showCategory
-                ? `${subject.name} (${subject.category})`
-                : subject.name}
-            </option>
-          ))}
-        </optgroup>
+      {LEGAL_SUBJECTS.map((opt) => (
+        <option key={opt.name} value={opt.name}>
+          {opt.name} ({opt.category})
+        </option>
       ))}
     </select>
   );

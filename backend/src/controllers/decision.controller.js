@@ -27,8 +27,10 @@ export const ajouterDecision = async (req, res) => {
 
             }
         })
+        return res.status(201).json({ success: true, message: "Décision enregistrée avec succès !" })
     } catch (error) {
         console.log(error)
+        return res.status(500).json({ success: false, message: "Erreur lors de l'ajout de la décision" })
     }
 }
 
