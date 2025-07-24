@@ -89,3 +89,12 @@ export interface ISearchFilters {
   pays?: string; // Pays concerné
   sujetJuridique?: string; // Sujet juridique spécifique
 }
+
+export type FilterParams = {
+  query?: string;
+  year?: string;
+  country?: string;
+  legalSubject?: string;
+  jurisdiction?: string;
+  legalText?: string;
+};

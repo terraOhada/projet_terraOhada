@@ -91,3 +91,19 @@ export const searchDecisions = (
     return true;
   });
 };
+const startYear = 2000;
+const reverse = false;
+const endYear = new Date().getFullYear();
+// Génère les années dans l'ordre croissant ou décroissant
+export const generateAllYears = () => {
+  const years = [];
+  const start = reverse ? endYear : startYear;
+  const end = reverse ? startYear : endYear;
+  const step = reverse ? -1 : 1;
+
+  for (let year = start; reverse ? year >= end : year <= end; year += step) {
+    years.push(year);
+  }
+
+  return years;
+};

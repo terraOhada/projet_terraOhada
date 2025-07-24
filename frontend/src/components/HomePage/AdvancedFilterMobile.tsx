@@ -1,30 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 import { ChevronDown, Filter, X, Search } from "lucide-react";
 import { COUNTRIES, LEGAL_SUBJECTS } from "../../data/data";
 import { generateYears } from "../../utils/util";
 
 interface FiltersProps {
-  query?: string;
-  pays?: string;
-  annee?: number | string;
-  matiere?: string;
+  country?: string;
+  year?: string;
+  legalSubject?: string;
+  jurisdiction?: string;
+  law?: string;
+  lawyer?: string;
+  contract?: string;
+}
+interface FiltersProps {
+  filters: FiltersProps;
+  setFilters: React.Dispatch<
+    React.SetStateAction<{
+      country: string;
+      year: string;
+      legalSubject: string;
+      jurisdiction: string;
+      law: string;
+      lawyer: string;
+      contract: string;
+    }>
+  >;
 }
 
 const AdvancedFilterMobile: React.FC<FiltersProps> = ({
-  // query,
-  pays,
-  annee,
-  matiere,
+  filters,
+  setFilters,
 }) => {
-  const [filters, setFilters] = useState({
-    country: "",
-    year: "",
-    legalSubject: "",
-    jurisdiction: "",
-    law: "",
-    lawyer: "",
-    contract: "",
-  });
+  // const [filters, setFilters] = useState({
+  //  );
 
   // console.log("country :", pays);
   // console.log("country2 :", filters.country);
@@ -101,7 +109,7 @@ const AdvancedFilterMobile: React.FC<FiltersProps> = ({
             Pays
           </label>
           <select
-            value={pays}
+            value={filters.country}
             onChange={(e) => handleChange("country", e.target.value)}
             className="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
           >
@@ -120,7 +128,7 @@ const AdvancedFilterMobile: React.FC<FiltersProps> = ({
             Année
           </label>
           <select
-            value={annee}
+            value={filters.year}
             onChange={(e) => handleChange("year", e.target.value)}
             className="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
           >
@@ -141,7 +149,7 @@ const AdvancedFilterMobile: React.FC<FiltersProps> = ({
             Sujet juridique
           </label>
           <select
-            value={matiere}
+            value={filters.legalSubject}
             onChange={(e) => handleChange("legalSubject", e.target.value)}
             className="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
           >

@@ -36,7 +36,7 @@ const FavorisProfile = () => {
     };
 
     fetchFavorites();
-  }, []);
+  }, [user]);
 
   const handleRemoveFavorite = async (decisionId: string) => {
     if (!user || !user.id) return;
