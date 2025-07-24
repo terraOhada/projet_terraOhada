@@ -1,7 +1,7 @@
-// const BASE_URL =
-// import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+const BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
 
-const BASE_URL = "https://projet-terraohada.onrender.com/api";
+// const BASE_URL = "https://projet-terraohada.onrender.com/api";
 
 export const AUTH_URL = `${BASE_URL}/auth`;
 export const DECISION_URL = `${BASE_URL}/decision`;

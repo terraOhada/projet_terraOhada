@@ -19,7 +19,6 @@ const FavorisProfile = () => {
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Récupérer les favoris
   useEffect(() => {
     const fetchFavorites = async () => {
       if (!user || !user?.id) return;
@@ -27,7 +26,6 @@ const FavorisProfile = () => {
         const response = await axios.get(
           `${FAVORI_URL}/toutes-favorites/${user?.id}`
         );
-        // console.log("response", response);
         setFavorites(response.data);
       } catch (err: any) {
         console.log(err);
@@ -68,61 +66,89 @@ const FavorisProfile = () => {
     setSelectedDecision(null);
   };
 
+  const formatSub = (text: string, taille: number = 30) => {
+    return text.substring(0, taille) + "...";
+  };
+
   if (loading) return <div className="text-center py-8">Chargement...</div>;
   if (error)
     return <div className="text-red-500 text-center py-8">{error}</div>;
 
   return (
-    <div className="max-w-4xl mx-auto py-8">
-      <h2 className="text-2xl font-bold mb-6 px-4">Mes décisions favorites</h2>
+    <div className="max-w-6xl mx-auto py-8 px-4">
+      <h2 className="text-2xl font-bold mb-6">Mes décisions favorites</h2>
 
       {favorites.length === 0 ? (
         <p className="text-gray-500 text-center">Aucune décision favorite</p>
       ) : (
-        <div className="space-y-4 px-4">
-          {favorites.map(({ decision, id }) => (
-            <div
-              key={id}
-              className="bg-white p-4 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow"
-            >
-              <div className="flex justify-between items-start">
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold">
-                    {decision.titreDecision}
-                  </h3>
-                  <p className="text-gray-600 text-sm mt-1">
-                    {decision.juridiction} • {decision.dateDecision}
-                  </p>
-                </div>
-                <div className="flex space-x-2">
-                  <button
-                    onClick={() => openModal(decision)}
-                    className="text-blue-500 hover:text-blue-700 transition-colors p-1"
-                    aria-label="Voir les détails"
-                  >
-                    <Eye size={20} />
-                  </button>
-                  <button
-                    onClick={() => handleRemoveFavorite(decision.id as string)}
-                    className="text-red-500 hover:text-red-700 transition-colors p-1"
-                    aria-label="Retirer des favoris"
-                  >
-                    <HeartOff size={20} />
-                  </button>
-                </div>
-              </div>
-
-              {decision.resume && (
-                <div className="mt-3 text-gray-700">
-                  <p className="line-clamp-2">{decision.resume}</p>
-                </div>
-              )}
-            </div>
-          ))}
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white rounded-lg overflow-hidden">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Titre
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Juridiction
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Date
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Résumé
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {favorites.map(({ decision, id }) => (
+                <tr key={id} className="hover:bg-gray-50 transition-colors">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="font-medium">
+                      {formatSub(decision.titreDecision)}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-gray-600">{decision.juridiction}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-gray-600">{decision.dateDecision}</div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="text-gray-600 line-clamp-2 max-w-xs">
+                      {decision.resume}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right">
+                    <div className="flex justify-end space-x-2">
+                      <button
+                        onClick={() => openModal(decision)}
+                        className="text-blue-500 hover:text-blue-700 transition-colors p-1"
+                        aria-label="Voir les détails"
+                      >
+                        <Eye size={20} />
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleRemoveFavorite(decision.id as string)
+                        }
+                        className="text-red-500 hover:text-red-700 transition-colors p-1"
+                        aria-label="Retirer des favoris"
+                      >
+                        <HeartOff size={20} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
 
-      {/* Modale de détails */}
+      {/* Modale de détails (identique à l'original) */}
       {isModalOpen && selectedDecision && (
         <div className="fixed inset-0 bg-ohada-blue-for/40 bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
