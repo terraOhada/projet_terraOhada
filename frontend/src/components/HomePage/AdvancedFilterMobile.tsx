@@ -26,8 +26,8 @@ const AdvancedFilterMobile: React.FC<FiltersProps> = ({
     contract: "",
   });
 
-  console.log("country", pays);
-  console.log("country 2", filters.country);
+  // console.log("country", pays);
+  // console.log("country 2");
 
   // Options pour les selects avec exemples
   const options = {

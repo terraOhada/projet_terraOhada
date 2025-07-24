@@ -172,6 +172,50 @@ const Produit: React.FC = () => {
                 favoris (fonctionnalité en cours de déploiement).
               </p>
             </div>
+            <div className="p-6 border text-sm border-gray-200 rounded-lg shadow-sm animate-fadeIn delay-600">
+              <h3 className="text-xl font-semibold mb-3 text-blue-600">
+                Annuaire OHADA des professionnels (en cours de développement)
+              </h3>
+              <p className="text-gray-700">
+                Boostez votre <strong>visibilité, crédibilité et réseau</strong>{" "}
+                en rejoignant un annuaire dédié aux experts du droit OHADA
+                (avocats, juristes, notaires, greffiers…).
+              </p>
+              {/* <ul className="text-sm">
+                <li>
+                  Pour les professionnels : valorisez votre expertise,
+                  développez votre clientèle et connectez-vous à un écosystème
+                  qualifié.
+                </li>
+                <li>
+                  Pour les particuliers et entreprises : trouvez rapidement un
+                  professionnel selon sa spécialité, son pays ou sa juridiction,
+                  et entrez facilement en contact.
+                </li>
+              </ul> */}
+            </div>
+
+            <div className="p-6 border text-sm border-gray-200 rounded-lg shadow-sm animate-fadeIn delay-600">
+              <h3 className="text-xl font-semibold mb-3 text-blue-600">
+                Job board juridique (bientôt disponible)
+              </h3>
+              <p className="text-gray-700">
+                Accédez à des offres d’emploi, de stage ou de collaboration dans
+                le domaine juridique en Afrique. Mettez en relation recruteurs
+                et candidats qualifiés.
+              </p>
+            </div>
+
+            <div className="p-6 border text-sm border-gray-200 rounded-lg shadow-sm animate-fadeIn delay-600">
+              <h3 className="text-xl font-semibold mb-3 text-blue-600">
+                Quiz juridiques interactifs (bientôt disponible)
+              </h3>
+              <p className="text-gray-700">
+                Testez vos connaissances sur le droit OHADA grâce à des quiz
+                ludiques et pédagogiques conçus pour les étudiants et jeunes
+                professionnels.
+              </p>
+            </div>
           </div>
         </div>
       </section>

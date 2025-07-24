@@ -23,11 +23,11 @@ export const menuLinks: IMenuLink[] = [
     to: "/aide-et-support",
     icon: "fa-solid fa-question-circle",
   },
-  {
-    label: "À propos",
-    to: "/a-propos",
-    icon: "fa-solid fa-question-circle",
-  },
+  // {
+  //   label: "À propos",
+  //   to: "/a-propos",
+  //   icon: "fa-solid fa-question-circle",
+  // },
 ];
 
 export const COUNTRIES: ICountryOption[] = [

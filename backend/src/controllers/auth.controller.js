@@ -50,7 +50,7 @@ export const register = async (req, res) => {
             from: process.env.SENDER_EMAIL,
             to: email,
             subject: 'Bienvenue sur note notre plateforme Terra Ohada',
-            html: EMAIL_BIENVENUE.replace("{{nom_utilisateur}}", newUser.nom).replaceAll("{{id_user}}", newUser.id),
+            html: EMAIL_BIENVENUE.replace("{{FRONTEND_URL}}", FRONTEND_URL).replace("{{nom_utilisateur}}", newUser.nom).replaceAll("{{id_user}}", newUser.id),
         }
 
         await transporter.sendMail(mailOptions)

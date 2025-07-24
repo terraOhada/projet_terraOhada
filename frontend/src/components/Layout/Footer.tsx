@@ -1,7 +1,9 @@
 // src/components/ModernFooter.tsx
 import React from "react";
 import Logo from "../../assets/logo TO.png";
-import { FacebookIcon, LinkedinIcon } from "lucide-react";
+import { FacebookIcon, Instagram, LinkedinIcon } from "lucide-react";
+import { menuLinks } from "../../data/data";
+import { Link } from "react-router-dom";
 
 const Footer: React.FC = () => {
   return (
@@ -16,10 +18,10 @@ const Footer: React.FC = () => {
             </p>
           </div>
 
-          <p className="text-gray-400 text-sm leading-relaxed mt-4">
+          {/* <p className="text-gray-400 text-sm leading-relaxed mt-4">
             Votre partenaire pour une gestion juridique et financière simplifiée
             et conforme dans l'espace OHADA.
-          </p>
+          </p> */}
         </div>
 
         {/* Section 2: Liens Rapides */}
@@ -28,38 +30,16 @@ const Footer: React.FC = () => {
             Liens Rapides
           </h4>
           <ul className="space-y-2">
-            <li>
-              <a
-                href="/"
-                className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm"
-              >
-                Accueil
-              </a>
-            </li>
-            <li>
-              <a
-                href="/about"
-                className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm"
-              >
-                À Propos
-              </a>
-            </li>
-            <li>
-              <a
-                href="/features"
-                className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm"
-              >
-                Fonctionnalités
-              </a>
-            </li>
-            <li>
-              <a
-                href="/contact"
-                className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm"
-              >
-                Contact
-              </a>
-            </li>
+            {menuLinks.map((link) => (
+              <li>
+                <Link
+                  to={link.to}
+                  className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -68,36 +48,28 @@ const Footer: React.FC = () => {
           <h4 className="text-lg font-semibold text-white mb-4">Ressources</h4>
           <ul className="space-y-2">
             <li>
-              <a
-                href="/blog"
-                className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm"
-              >
-                Blog
-              </a>
-            </li>
-            <li>
-              <a
-                href="/faq"
+              <Link
+                to="/faq"
                 className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm"
               >
                 FAQ
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/support"
+              <Link
+                to="/support"
                 className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm"
               >
                 Support
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/privacy-policy"
+              <Link
+                to="/privacy-policy"
                 className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm"
               >
                 Politique de Confidentialité
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -136,13 +108,20 @@ const Footer: React.FC = () => {
             >
               <FacebookIcon />
             </a>
+            <a
+              target="_blank"
+              href="https://www.instagram.com/terraohada/"
+              className="text-gray-400 hover:text-blue-400 transition-colors duration-200"
+            >
+              <Instagram />
+            </a>
             {/* Ajoutez d'autres icônes pour Twitter, Instagram, etc. */}
           </div>
         </div>
       </div>
 
       {/* Droits d'auteur et bas de page */}
-      <div className="border-t border-gray-800 mt-10 pt-8 text-center text-gray-500 text-sm">
+      <div className="border-t border-white mt-10 pt-8 text-center text-gray-500 text-sm">
         <p>
           &copy; {new Date().getFullYear()} Les 3 sens du droit. Tous droits
           réservés.

@@ -28,7 +28,7 @@ export const EMAIL_BIENVENUE = `
                 <table role="presentation" cellspacing="0" cellpadding="0" style="margin: 20px auto;">
                     <tr>
                         <td style="border-radius: 5px; background-color: #0e4194; text-align: center;">
-                            <a href="http://localhost:5173/verification-compte/{{id_user}}" 
+                            <a href="{{FRONTEND_URL}}/verification-compte/{{id_user}}" 
                                style="font-size: 16px; font-family: Arial, sans-serif; color: #ffffff; text-decoration: none; border-radius: 5px; padding: 12px 25px; border: 1px solid #0e4194; display: inline-block; font-weight: bold;">
                                 Vérifier mon compte
                             </a>
