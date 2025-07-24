@@ -1,20 +1,25 @@
 // src/components/TerraOhadaPresentation.tsx
 import React from "react";
+import Video from "../assets/video/terraOhada_video.mp4";
+import Illustration from "../assets/images/illustration.jpg";
 
 const Produit: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800">
       {/* Section Héro - Titre et Vision */}
-      <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16 md:py-24">
-        <div className="container mx-auto px-4 text-center">
+      <section className="relative text-white py-16 md:py-24">
+        {/* <div className="absolute py-20 bg-ohada-blue-one h-[320px] opacity-30 inset-0 z-50 container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4 animate-fadeInDown">
             Présentation du produit{" "}
             <span className="text-yellow-300">TerraOhada</span>
           </h1>
-          <p className="text-xl md:text-2xl opacity-90 leading-relaxed max-w-3xl mx-auto animate-fadeInUp">
+          <p className="text-xl md:text-2xl  leading-relaxed max-w-3xl mx-auto animate-fadeInUp">
             Notre vision : rendre le droit OHADA accessible, compréhensible et
             exploitable.
           </p>
+        </div> */}
+        <div className="absolute inset-0 z-20 h-[200px]">
+          <video src={Video} muted loop autoPlay></video>
         </div>
       </section>
 
@@ -100,54 +105,42 @@ const Produit: React.FC = () => {
           <div className="flex flex-col md:flex-row items-center justify-center gap-8">
             <div className="md:w-1/2 lg:w-2/3 text-lg leading-relaxed space-y-4 animate-fadeInLeft">
               <p>
-                Terraohada répond à un besoin clair :{" "}
-                <strong>
-                  rendre le droit OHADA accessible, compréhensible et
-                  exploitable.
-                </strong>{" "}
-                Dans un environnement où l’accès à l’information juridique reste
-                souvent complexe, dispersé ou inégal, la plateforme centralise
-                les contenus clés : textes, décisions, résumés, commentaires
-                dans une interface claire et fonctionnelle.
+                TerraOhada, c’est bien plus qu’une base de données juridiques.
+                C’est un véritable écosystème conçu pour faciliter l’accès au
+                droit OHADA, connecter les professionnels et accompagner les
+                juristes de demain. <br /> <strong>Notre objectif :</strong>{" "}
+                centraliser l’information, fluidifier les usages, et créer une
+                communauté engagée autour du droit OHADA.
+                <br /> <br /> <strong>Ce que TerraOhada vous apporte :</strong>
               </p>
               <ul className="list-none list-inside space-y-2">
                 <li>
-                  <strong className="text-blue-600">
-                    Conformité Assurée :
-                  </strong>{" "}
-                  Bénéficiez d'une plateforme toujours à jour avec les dernières
-                  réglementations OHADA.
+                  Une interface claire, moderne et adaptée aux usages mobiles
                 </li>
                 <li>
-                  <strong className="text-blue-600">Gain de Temps :</strong>{" "}
-                  Automatisez les tâches répétitives et concentrez-vous sur des
-                  activités à plus forte valeur ajoutée.
+                  Un gain de temps significatif dans vos recherches juridiques
                 </li>
                 <li>
-                  <strong className="text-blue-600">
-                    Réduction des Erreurs :
-                  </strong>{" "}
-                  Minimisez les risques liés aux erreurs manuelles et aux
-                  omissions.
+                  Un accès à une information fiable, continue et contextualisée
                 </li>
                 <li>
-                  <strong className="text-blue-600">
-                    Collaboration Fluidifiée :
-                  </strong>{" "}
-                  Travaillez en équipe de manière synchronisée et sécurisée.
+                  Une plateforme conçue en Afrique, pour les acteurs du droit en
+                  Afrique
                 </li>
                 <li>
-                  <strong className="text-blue-600">Accès Simplifié :</strong>{" "}
-                  Accédez à vos données et outils où que vous soyez, quand vous
-                  le voulez.
+                  Une démarche collaborative au service de toute la communauté
+                  OHADA
                 </li>
               </ul>
             </div>
             <div className="md:w-1/2 lg:w-1/3 flex justify-center md:justify-end animate-fadeInRight">
               {/* Vous pouvez remplacer ceci par une image ou une illustration */}
-              <div className="w-64 h-64 bg-blue-200 rounded-full flex items-center justify-center text-blue-700 text-center text-sm font-semibold p-4">
-                [Zone pour une illustration ou un graphique représentant les
-                bénéfices]
+              <div className=" bg-blue-200 rounded-full flex items-center justify-center text-blue-700 text-center text-sm font-semibold p-4">
+                <img
+                  src={Illustration}
+                  alt="illustration"
+                  className="rounded-full"
+                />
               </div>
             </div>
           </div>
