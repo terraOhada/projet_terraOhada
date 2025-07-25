@@ -29,7 +29,7 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({ onSearch }) => {
 
   return (
     <div
-      className="relative border p-4 md:p-8 h-[300px]"
+      className="relative border p-4 md:p-8 h-[400px] lg:h-[300px]"
       style={{
         backgroundImage: `url(${Couverture})`,
         backgroundSize: "cover",
@@ -38,7 +38,7 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({ onSearch }) => {
     >
       <div className="absolute inset-0 bg-gradient-to-b from-blue-700 to-ohada-blue-one z-0 opacity-50"></div>
 
-      <div className="absolute inset-x-10 z-20 bg-white/80 p-4 md:p-6 rounded-lg shadow-sm mb-6 border">
+      <div className="absolute inset-x-5 md:inset-x-10 z-20 bg-white/80 p-4 md:p-6 rounded-lg shadow-sm mb-6 border">
         <h1 className="text-2xl font-bold text-gray-800 mb-4">Rechercher...</h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">

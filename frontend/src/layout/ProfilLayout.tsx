@@ -14,6 +14,7 @@ import {
 import { userStore } from "../store/store";
 import LogoTerraOhada from "../assets/logo TO.png";
 import toast from "react-hot-toast";
+import Couverture from "../assets/images/couverture.jpeg";
 
 const ProfileLayout: React.FC = () => {
   const navigate = useNavigate();
@@ -34,8 +35,15 @@ const ProfileLayout: React.FC = () => {
   };
 
   return (
-    <div className=" flex flex-col md:flex-row min-h-screen bg-gray-100">
-      {" "}
+    <div
+      className=" relative flex flex-col md:flex-row min-h-screen"
+      style={{
+        backgroundImage: `url(${Couverture})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+      }}
+    >
+      <div className="absolute h-full w-full bg-ohada-blue-for/40"></div>{" "}
       {/* Passe en flex-row sur md */}
       <ScrollToTop />
       {/* Mobile Toggle Button */}
@@ -57,8 +65,8 @@ const ProfileLayout: React.FC = () => {
         ></div>
       )}
       {/* Sidebar */}
-      <aside
-        className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg p-6 flex flex-col z-50 transform 
+      <div
+        className={`fixed rounded-e-md h-screen inset-y-0 left-0 w-64 bg-white shadow-lg p-6 flex flex-col z-50 transform 
                    ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} 
                    md:relative md:translate-x-0 md:border-r md:border-gray-200 
                    transition-transform duration-300 ease-in-out`}
@@ -137,9 +145,9 @@ const ProfileLayout: React.FC = () => {
             </button>
           </div>
         </nav>
-      </aside>
+      </div>
       {/* Main Content Area */}
-      <div className="flex-grow p-4 md:p-8 mt-16 md:mt-0">
+      <div className="z-40 flex-grow p-4 md:p-8 mt-16 md:mt-0">
         {" "}
         {/* Add top margin on mobile to clear the button */}
         <Outlet />

@@ -159,7 +159,7 @@ const Header: React.FC = () => {
 
             {user ? (
               <button
-                className="mt-2 w-[25%] text-left border border-red-800 px-4 py-1 rounded text-sm text-red-800 hover:bg-blue-50"
+                className="mt-2 w-[30%] text-left border border-red-800 px-4 py-1 rounded text-sm text-red-800 hover:bg-blue-50"
                 onClick={() => navigate("/connexion")}
               >
                 Déconnexion

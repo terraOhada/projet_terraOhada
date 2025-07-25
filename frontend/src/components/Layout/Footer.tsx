@@ -30,8 +30,8 @@ const Footer: React.FC = () => {
             Liens Rapides
           </h4>
           <ul className="space-y-2">
-            {menuLinks.map((link) => (
-              <li>
+            {menuLinks.map((link, i) => (
+              <li key={i}>
                 <Link
                   to={link.to}
                   className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm"
