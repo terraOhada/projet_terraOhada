@@ -91,7 +91,7 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
         </div>
 
         {/* Boutons */}
-        <div className="grid grid-cols-2 gap-3 pt-2">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 pt-2">
           <button
             type="button"
             onClick={onReset}

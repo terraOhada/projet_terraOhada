@@ -12,6 +12,12 @@
   --color-ohada-blue-three: #0292d8; /* bleu tertiare */
   --color-ohada-blue-for: #36529c; /* bleu quatrieme */
   --color-ohada-white: #ffffff; /* Couleur secondaire */
+
+  /* les break-point */
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
 }
 
 h1,
