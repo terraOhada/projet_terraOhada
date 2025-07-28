@@ -112,13 +112,13 @@ const FeaturesSections = () => {
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-8">
             <AnimatedSection delay={0.2}>
-              <motion.div className="md:w-1/2 lg:w-2/3 text-lg leading-relaxed space-y-4">
+              <motion.div className="md:w-2/3 lg:w-3/4 text-lg leading-relaxed space-y-4">
                 <p>
                   TerraOhada, c'est bien plus qu'une base de données juridiques.
                   C'est un véritable écosystème conçu pour faciliter l'accès au
                   droit OHADA.
                 </p>
-                <ul className="list-none list-inside space-y-2">
+                <ul className="list-none list-inside space-y-2 text-ohada-blue-for">
                   <motion.li whileHover={{ x: 5 }}>
                     Interface claire et moderne
                   </motion.li>
@@ -141,7 +141,7 @@ const FeaturesSections = () => {
             <AnimatedSection delay={0.4}>
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="md:w-1/2 lg:w-1/3 flex justify-center md:justify-end"
+                className="md:w-1/3 lg:w-3/4 flex justify-center md:justify-end"
               >
                 <div className="bg-blue-200 rounded-full flex items-center justify-center text-blue-700 text-center p-4 overflow-hidden">
                   <img
