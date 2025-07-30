@@ -57,8 +57,89 @@ const DecisionList: React.FC<DecisionListProps> = ({
     navigate(`/decisions/${decision.id}`, { state: { item: decision } });
   };
 
+  // Fonction pour générer les boutons de pagination avec points de suspension
+  const renderPaginationButtons = () => {
+    const buttons = [];
+    const maxVisiblePages = 5; // Nombre maximum de pages visibles
+    const halfVisiblePages = Math.floor(maxVisiblePages / 2);
+
+    // Bouton Première page
+    if (currentPage > 1) {
+      buttons.push(
+        <button
+          key="first"
+          onClick={() => goToPage(1)}
+          className="px-3 py-1 rounded-md bg-white text-gray-700 hover:bg-gray-50 hidden sm:inline-block"
+        >
+          1
+        </button>
+      );
+    }
+
+    // Points de suspension après la première page si nécessaire
+    if (currentPage > halfVisiblePages + 1 && totalPages > maxVisiblePages) {
+      buttons.push(
+        <span key="left-ellipsis" className="px-2 py-1">
+          ...
+        </span>
+      );
+    }
+
+    // Boutons des pages centrales
+    let startPage = Math.max(1, currentPage - halfVisiblePages);
+    let endPage = Math.min(totalPages, currentPage + halfVisiblePages);
+
+    if (totalPages <= maxVisiblePages) {
+      startPage = 1;
+      endPage = totalPages;
+    }
+
+    for (let page = startPage; page <= endPage; page++) {
+      buttons.push(
+        <button
+          key={page}
+          onClick={() => goToPage(page)}
+          className={`px-3 py-1 rounded-md ${
+            currentPage === page
+              ? "bg-blue-600 text-white"
+              : "bg-white text-gray-700 hover:bg-gray-50"
+          }`}
+        >
+          {page}
+        </button>
+      );
+    }
+
+    // Points de suspension avant la dernière page si nécessaire
+    if (
+      currentPage < totalPages - halfVisiblePages &&
+      totalPages > maxVisiblePages
+    ) {
+      buttons.push(
+        <span key="right-ellipsis" className="px-2 py-1">
+          ...
+        </span>
+      );
+    }
+
+    // Bouton Dernière page
+    if (currentPage < totalPages && totalPages > maxVisiblePages) {
+      buttons.push(
+        <button
+          key="last"
+          onClick={() => goToPage(totalPages)}
+          className="px-3 py-1 rounded-md bg-white text-gray-700 hover:bg-gray-50 hidden sm:inline-block"
+        >
+          {totalPages}
+        </button>
+      );
+    }
+
+    return buttons;
+  };
+
   return (
-    <div className="space-y-6 ">
+    <div className="space-y-6">
       {/* Liste des décisions */}
       <div className="space-y-4">
         {paginatedDecisions.map((decision) => (
@@ -71,7 +152,7 @@ const DecisionList: React.FC<DecisionListProps> = ({
                 <h3 className="text-lg font-medium text-blue-600">
                   {decision.idInterne}
                 </h3>
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[8px] md:text-xs font-medium bg-blue-100 text-blue-800">
                   {decision.pays}
                 </span>
               </div>
@@ -120,7 +201,7 @@ const DecisionList: React.FC<DecisionListProps> = ({
             {decisions.length} décisions
           </div>
 
-          <div className="flex gap-1">
+          <div className="flex items-center gap-1">
             {/* Bouton Précédent */}
             <button
               onClick={() => goToPage(currentPage - 1)}
@@ -131,23 +212,12 @@ const DecisionList: React.FC<DecisionListProps> = ({
                   : "bg-white text-gray-700 hover:bg-gray-50"
               }`}
             >
-              &larr; Précédent
+              <span className="hidden sm:inline">&larr; Précédent</span>
+              <span className="sm:hidden">&larr;</span>
             </button>
 
-            {/* Pages numérotées */}
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                onClick={() => goToPage(page)}
-                className={`px-3 py-1 rounded-md ${
-                  currentPage === page
-                    ? "bg-blue-600 text-white"
-                    : "bg-white text-gray-700 hover:bg-gray-50"
-                }`}
-              >
-                {page}
-              </button>
-            ))}
+            {/* Pages numérotées avec points de suspension */}
+            {renderPaginationButtons()}
 
             {/* Bouton Suivant */}
             <button
@@ -159,7 +229,8 @@ const DecisionList: React.FC<DecisionListProps> = ({
                   : "bg-white text-gray-700 hover:bg-gray-50"
               }`}
             >
-              Suivant &rarr;
+              <span className="hidden sm:inline">Suivant &rarr;</span>
+              <span className="sm:hidden">&rarr;</span>
             </button>
           </div>
         </div>
