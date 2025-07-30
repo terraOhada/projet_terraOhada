@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-ohada-blue-one text-white py-12">
+    <footer className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-12">
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Section 1: Logo et Description Courte */}
         <div className="flex flex-col items-start">
