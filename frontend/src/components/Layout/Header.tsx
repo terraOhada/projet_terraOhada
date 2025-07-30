@@ -159,14 +159,14 @@ const Header: React.FC = () => {
 
             {user ? (
               <button
-                className="mt-2 w-[30%] text-left border border-red-800 px-4 py-1 rounded text-sm text-red-800 hover:bg-blue-50"
+                className="mt-2 w-[30%] text-center border border-red-800 px-4 py-1 rounded text-sm text-red-800 hover:bg-blue-50"
                 onClick={() => navigate("/connexion")}
               >
                 Déconnexion
               </button>
             ) : (
               <button
-                className="mt-2 w-[25%] text-left bg-ohada-blue-one border border-blue-800 px-4 py-1 rounded text-sm text-blue-800 hover:bg-blue-50"
+                className="mt-2 w-[25%] text-center text-ohada-white bg-ohada-blue-one border border-blue-800 px-4 py-1 rounded text-sm hover:bg-blue-50"
                 onClick={() => navigate("/connexion")}
               >
                 Connexion
