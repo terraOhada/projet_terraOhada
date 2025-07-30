@@ -22,6 +22,7 @@ import UserProfilePage from "./pages/profile/UserProfilePage";
 import UserPage from "./pages/admin/UserPage";
 import CommentProfile from "./pages/profile/CommentProfile";
 import ViewComments from "./components/adminComponents/ViewComments";
+import AnnuairePage from "./pages/AnnuairePage";
 // Make sure this import is correct
 
 const App = () => {
@@ -55,6 +56,10 @@ const App = () => {
         {
           path: "aide-et-support",
           element: <HelpAndSupportPage />,
+        },
+        {
+          path: "annuaire",
+          element: <AnnuairePage />,
         },
       ],
     },
