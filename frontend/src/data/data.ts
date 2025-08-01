@@ -14,8 +14,8 @@ export const menuLinks: IMenuLink[] = [
     icon: "fa-solid fa-scroll",
   },
   {
-    label: "Jurisprudence",
-    to: "/jurisprudence",
+    label: "Annuaire",
+    to: "/annuaire",
     icon: "fa-solid fa-briefcase",
   },
   {

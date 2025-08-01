@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { IProfile } from "../types";
+import { NOTION_URL } from "../api/api";
 
 export const useProfiles = () => {
   const [profiles, setProfiles] = useState<IProfile[]>([]);
@@ -8,7 +9,7 @@ export const useProfiles = () => {
 
   const fetchProfiles = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/notion/juristes");
+      const response = await fetch(`${NOTION_URL}/juristes`);
       const data = await response.json();
       setProfiles(data.profiles);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars

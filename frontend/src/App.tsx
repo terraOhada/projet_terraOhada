@@ -23,6 +23,8 @@ import UserPage from "./pages/admin/UserPage";
 import CommentProfile from "./pages/profile/CommentProfile";
 import ViewComments from "./components/adminComponents/ViewComments";
 import AnnuairePage from "./pages/AnnuairePage";
+import RejoindreAnnuaire from "./pages/RejoindreAnnuaire";
+import ExplorerAnnuaire from "./pages/ExplorerAnnuaire";
 // Make sure this import is correct
 
 const App = () => {
@@ -60,6 +62,14 @@ const App = () => {
         {
           path: "annuaire",
           element: <AnnuairePage />,
+        },
+        {
+          path: "annuaire/rejoindre-annuaire",
+          element: <RejoindreAnnuaire />,
+        },
+        {
+          path: "annuaire/explorer-annuaire",
+          element: <ExplorerAnnuaire />,
         },
       ],
     },
