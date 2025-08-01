@@ -98,3 +98,15 @@ export type FilterParams = {
   jurisdiction?: string;
   legalText?: string;
 };
+
+export interface IProfile {
+  id: string;
+  notionId: string;
+  name: string;
+  photo?: string;
+  country: string;
+  jobTitle: string;
+  specialties: string[];
+  email: string;
+  experience: number;
+}

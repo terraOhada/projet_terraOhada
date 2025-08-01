@@ -1,6 +1,16 @@
 // import React from 'react'
 
+import ProfileCard from "../components/annuaire/ProfileCard";
+import { useProfiles } from "../hooks/useProfiles";
+
 const AnnuairePage = () => {
+  const { profiles, loading, error } = useProfiles();
+
+  console.log(profiles);
+
+  if (loading) return <div className="text-center py-8">Chargement...</div>;
+  if (error)
+    return <div className="text-center py-8 text-red-500">{error}</div>;
   return (
     <div>
       <section className="bg-gradient-to-r from-blue-700 to-blue-900 text-white py-16">
@@ -211,8 +221,14 @@ const AnnuairePage = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {profiles &&
+              profiles.length > 0 &&
+              profiles.map((profile) => (
+                <ProfileCard profile={profile} key={profile.notionId} />
+              ))}
+
             {/* <!-- Profile 1 --> */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            {/* <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="p-6">
                 <div className="flex items-center mb-4">
                   <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 mr-4">
@@ -235,10 +251,10 @@ const AnnuairePage = () => {
                   Voir le profil complet
                 </button>
               </div>
-            </div>
+            </div> */}
 
             {/* <!-- Profile 2 --> */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            {/* <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="p-6">
                 <div className="flex items-center mb-4">
                   <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 mr-4">
@@ -262,10 +278,10 @@ const AnnuairePage = () => {
                   Voir le profil complet
                 </button>
               </div>
-            </div>
+            </div> */}
 
             {/* <!-- Profile 3 --> */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            {/* <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="p-6">
                 <div className="flex items-center mb-4">
                   <img
@@ -300,10 +316,10 @@ const AnnuairePage = () => {
                   Voir le profil complet
                 </button>
               </div>
-            </div>
+            </div> */}
 
             {/* <!-- Profile 4 --> */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            {/* <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="p-6">
                 <div className="flex items-center mb-4">
                   <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 mr-4">
@@ -327,10 +343,10 @@ const AnnuairePage = () => {
                   Voir le profil complet
                 </button>
               </div>
-            </div>
+            </div> */}
 
             {/* <!-- Profile 5 --> */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            {/* <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="p-6">
                 <div className="flex items-center mb-4">
                   <img
@@ -365,10 +381,10 @@ const AnnuairePage = () => {
                   Voir le profil complet
                 </button>
               </div>
-            </div>
+            </div> */}
 
             {/* <!-- Profile 6 --> */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            {/* <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="p-6">
                 <div className="flex items-center mb-4">
                   <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 mr-4">
@@ -392,7 +408,7 @@ const AnnuairePage = () => {
                   Voir le profil complet
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* <!-- Pagination --> */}

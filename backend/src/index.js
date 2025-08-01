@@ -12,6 +12,7 @@ import fileRouter from './routes/file.route.js';
 import favoriteRouter from './routes/favorite.route.js';
 import userRouter from './routes/user.route.js';
 import commentRouter from './routes/comment.route.js';
+import notionRouter from './routes/notion.routes.js';
 
 
 const app = express();
@@ -53,6 +54,7 @@ app.use("/api/file", fileRouter)
 app.use('/api/favorite', favoriteRouter);
 app.use('/api/users', userRouter);
 app.use('/api/comment', commentRouter);
+app.use('/api/notion', notionRouter);
 
 app.get('/', (req, res) => {
     res.send('API is running...');

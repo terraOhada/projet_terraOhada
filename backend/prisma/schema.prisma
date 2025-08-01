@@ -109,3 +109,18 @@ model Commentaire {
   @@index([decisionId]) // Index pour optimiser les requêtes sur les décisions
   @@index([userId]) // Index pour optimiser les requêtes sur les utilisateurs
 }
+
+
+model Juristes {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  notionId    String   @unique
+  name        String
+  photo       String?
+  country     String
+  jobTitle    String
+  specialties String[]
+  email       String   @unique
+  experience  Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
