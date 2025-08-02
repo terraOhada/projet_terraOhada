@@ -67,7 +67,7 @@ const SidebarDash: React.FC = () => {
             <li
               key={item.name}
               // onClick={() => setActiveSection(item.url)}
-              className={`w-full flex items-center cursor-pointer p-3 rounded-md text-left text-lg font-medium transition-colors duration-200
+              className={`w-full flex items-center cursor-pointer p-3 text-sm rounded-md text-left font-medium transition-colors duration-200
               ${
                 pathname === item.url
                   ? "bg-blue-700 text-white shadow-md"
@@ -82,10 +82,10 @@ const SidebarDash: React.FC = () => {
           );
         })}
       </ul>
-      <div className="p-4 border-t bg-red-500 border-blue-700">
+      <div className="px-2 border-t  border-blue-700">
         <button
           onClick={onLogout}
-          className="w-full flex items-center p-3 gap-2 rounded-md text-left text-lg font-medium text-red-300 hover:bg-red-700 transition-colors duration-200"
+          className="w-full flex items-center py-3 px-6 gap-2 rounded-md text-left text-lg font-medium text-red-600 hover:text-red-700 transition-colors duration-200"
         >
           <LogOutIcon className="" size={20} />
           <span className="hidden md:block">Déconnexion</span>

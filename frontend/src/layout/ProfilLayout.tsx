@@ -66,7 +66,7 @@ const ProfileLayout: React.FC = () => {
       )}
       {/* Sidebar */}
       <div
-        className={`fixed rounded-e-md h-screen inset-y-0 left-0 w-64 bg-white shadow-lg p-6 flex flex-col z-50 transform 
+        className={`fixed rounded-e-md h-screen inset-y-0 left-0 w-64 bg-white shadow-lg p-6 flex flex-col z-40 transform 
                    ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} 
                    md:relative md:translate-x-0 md:border-r md:border-gray-200 
                    transition-transform duration-300 ease-in-out`}

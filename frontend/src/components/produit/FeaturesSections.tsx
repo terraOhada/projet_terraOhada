@@ -176,15 +176,15 @@ const FeaturesSections = () => {
                 desc: "L'historique de vos recherches et enregistrer vos contenus favoris.",
               },
               {
-                title: "Annuaire OHADA des professionnels",
+                title: "Annuaire OHADA des professionnels(En cours...)",
                 desc: "Boostez votre visibilité, crédibilité et réseau en rejoignant un annuaire dédié.",
               },
               {
-                title: "Job board juridique",
+                title: "Job board juridique(En cours...)",
                 desc: "Accédez à des offres d'emploi, de stage ou de collaboration dans le domaine juridique.",
               },
               {
-                title: "Quiz juridiques interactifs",
+                title: "Quiz juridiques interactifs(En cours...)",
                 desc: "Testez vos connaissances sur le droit OHADA grâce à des quiz ludiques.",
               },
             ].map((feature, index) => (

@@ -4,6 +4,7 @@ import type { FilterParams } from "../types";
 import SearchHeader from "../components/HomePage/SearchHeader";
 import AdvancedFilters from "../components/HomePage/AdvancedFilters";
 import DecisionList from "../components/HomePage/DecisionList";
+import { DecisionListSkeleton } from "../components/ui/DecisionSkeleton";
 
 const HomePage: React.FC = () => {
   const { decisions, isLoading, filters, setFilters, resetFilters } =
@@ -37,9 +38,10 @@ const HomePage: React.FC = () => {
           {/* Liste des résultats */}
           <div className="lg:col-span-3">
             {isLoading ? (
-              <div className="flex justify-center items-center h-64">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-              </div>
+              // <div className="flex justify-center items-center h-64">
+              //   <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+              // </div>
+              <DecisionListSkeleton />
             ) : (
               <DecisionList decisions={decisions} />
             )}
