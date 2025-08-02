@@ -1,61 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { HeartOff, Eye, X, ExternalLink } from "lucide-react";
-import axios from "axios";
 import MarkdownPreview from "@uiw/react-markdown-preview";
-import { userStore } from "../../store/store";
-import { FAVORI_URL } from "../../api/api";
-import type { IDecision, IFavorite } from "../../types";
+import type { IDecision } from "../../types";
 import DetailItem from "../../components/ui/DetailItem";
-import toast from "react-hot-toast";
 import { motion } from "motion/react";
+import { useFavorites } from "../../query";
 
 const FavorisProfile = () => {
-  const { user } = userStore();
-  const [favorites, setFavorites] = useState<IFavorite[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [selectedDecision, setSelectedDecision] = useState<IDecision | null>(
     null
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchFavorites = async () => {
-      if (!user || !user?.id) return;
-      try {
-        const response = await axios.get(
-          `${FAVORI_URL}/toutes-favorites/${user?.id}`
-        );
-        setFavorites(response.data);
-      } catch (err: any) {
-        console.log(err);
-        setError(err.response?.data?.message || "Erreur de chargement");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchFavorites();
-  }, [user]);
-
-  const handleRemoveFavorite = async (decisionId: string) => {
-    if (!user || !user.id) return;
-    try {
-      const response = await axios.delete(
-        `${FAVORI_URL}/supprimer-favorite/${user?.id}`,
-        {
-          data: { decisionId },
-        }
-      );
-      if (response.data.success) {
-        toast.success(response.data.message);
-        setFavorites(favorites.filter((fav) => fav.decisionId !== decisionId));
-      }
-    } catch (err) {
-      console.error("Erreur suppression:", err);
-    }
-  };
+  const {
+    favorites,
+    isLoading,
+    isError,
+    error,
+    handleRemoveFavorite,
+    isRemoving,
+  } = useFavorites();
 
   const openModal = (decision: IDecision) => {
     setSelectedDecision(decision);
@@ -71,9 +36,11 @@ const FavorisProfile = () => {
     return text.substring(0, taille) + "...";
   };
 
-  if (loading) return <div className="text-center py-8">Chargement...</div>;
-  if (error)
-    return <div className="text-red-500 text-center py-8">{error}</div>;
+  if (isLoading) return <div className="text-center py-8">Chargement...</div>;
+  if (isError)
+    return (
+      <div className="text-red-500 text-center py-8">{error?.message}</div>
+    );
 
   return (
     <div className="max-w-6xl mx-auto py-8 px-4">
@@ -140,7 +107,7 @@ const FavorisProfile = () => {
                         className="text-red-500 hover:text-red-700 transition-colors p-1"
                         aria-label="Retirer des favoris"
                       >
-                        <HeartOff size={20} />
+                        {isRemoving ? "Suppression..." : <HeartOff size={20} />}
                       </button>
                     </div>
                   </td>

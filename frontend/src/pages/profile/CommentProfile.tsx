@@ -1,13 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect } from "react";
-import toast from "react-hot-toast";
-import { COMMENT_URL } from "../../api/api";
-import axios from "axios";
+import React from "react";
 import type { IComment } from "../DecisionDetailPage";
-import { userStore } from "../../store/store";
 import type { IDecision } from "../../types";
+import { useUserComments } from "../../query/comment";
 
-interface CommentProfileProps {
+export interface CommentProfileProps {
   id: string;
   contenu: string;
   createdAt: Date;
@@ -16,8 +13,8 @@ interface CommentProfileProps {
 }
 
 const CommentProfile: React.FC = () => {
-  const { user } = userStore();
-  const [comments, setComments] = React.useState<CommentProfileProps[]>([]);
+  const { comments, isLoading, isError, error, refetchComments } =
+    useUserComments();
   const formatDate = (date: Date) => {
     return new Date(date).toLocaleDateString("fr-FR", {
       day: "2-digit",
@@ -28,36 +25,18 @@ const CommentProfile: React.FC = () => {
     });
   };
 
-  const fetchComments = async () => {
-    if (!user || !user.id) {
-      toast.error(
-        "Aucune décision sélectionnée pour afficher les commentaires."
-      );
-      return;
-    }
-    try {
-      const response = await axios.get(
-        `${COMMENT_URL}/commentaire-par-utilisateur/${user.id}`
-      );
-      if (response.data.success) {
-        setComments(response.data.data);
-      } else {
-        console.error("Erreur lors de la récupération des commentaires.");
-      }
-    } catch (error: any) {
-      console.error(
-        error.response?.data?.message ||
-          "Erreur lors de la récupération des commentaires.",
-        error
-      );
-    }
-  };
+  if (isLoading) {
+    return <div>Chargement des commentaires...</div>;
+  }
 
-  useEffect(() => {
-    fetchComments();
-  }, [user]);
-
-  //   console.log("comments:", comments);
+  if (isError) {
+    return (
+      <div>
+        Erreur: {error?.message}
+        <button onClick={() => refetchComments()}>Réessayer</button>
+      </div>
+    );
+  }
 
   return (
     <div className="overflow-x-auto bg-white rounded-lg shadow-md">

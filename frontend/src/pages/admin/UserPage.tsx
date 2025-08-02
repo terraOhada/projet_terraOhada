@@ -1,131 +1,107 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { USERS_URL } from "../../api/api";
 import { userStore } from "../../store/store";
 import EditUserModal from "../../components/adminComponents/EditUserModal";
 import type { IUser } from "../../types";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 const UserPage = () => {
-  const { user } = userStore(); // Assuming userStore is defined and imported correctly
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [users, setUsers] = useState<IUser[]>([]);
-
-  const [currentPage, setCurrentPage] = useState(1);
+  const { user: currentUser } = userStore();
+  const queryClient = useQueryClient();
   const [editingUser, setEditingUser] = useState<IUser | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 5;
+
+  // Fetch users
+  const {
+    data: users = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery<IUser[], Error>({
+    queryKey: ["users", currentUser?.id],
+    queryFn: async () => {
+      if (!currentUser?.id) throw new Error("Utilisateur non authentifié");
+      const response = await axios.get(
+        `${USERS_URL}/tous-utilisateurs/${currentUser.id}`
+      );
+      if (!response.data.success)
+        throw new Error(response.data.message || "Erreur de chargement");
+      return response.data.data;
+    },
+    enabled: !!currentUser?.id,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
+
+  // Update role mutation
+  const { mutate: updateRole } = useMutation({
+    mutationFn: async ({
+      userId,
+      newRole,
+    }: {
+      userId: string;
+      newRole: IUser["role"];
+    }) => {
+      if (!currentUser?.id) throw new Error("Utilisateur non authentifié");
+      const response = await axios.put(
+        `${USERS_URL}/changer-role/${currentUser.id}`,
+        {
+          newRole,
+          userId,
+        }
+      );
+      return response.data;
+    },
+    onSuccess: (data) => {
+      toast.success(data.message || "Rôle mis à jour avec succès");
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
+    onError: (error: any) => {
+      toast.error(
+        error.response?.data?.message || "Erreur lors de la mise à jour du rôle"
+      );
+    },
+  });
+
+  // Delete user mutation
+  const { mutate: deleteUser } = useMutation({
+    mutationFn: async (userId: string) => {
+      if (!currentUser?.id) throw new Error("Utilisateur non authentifié");
+      const response = await axios.delete(
+        `${USERS_URL}/changer-role/${currentUser.id}`,
+        {
+          data: { userId },
+        }
+      );
+      return response.data;
+    },
+    onSuccess: (data) => {
+      toast.success(data.message || "Utilisateur supprimé avec succès");
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
+    onError: (error: any) => {
+      toast.error(
+        error.response?.data?.message || "Erreur lors de la suppression"
+      );
+    },
+  });
+
+  // Handle save after edit
+  const handleSave = (updatedUser: IUser) => {
+    queryClient.setQueryData<IUser[]>(["users"], (oldUsers = []) =>
+      oldUsers.map((user) => (user.id === updatedUser.id ? updatedUser : user))
+    );
+    setEditingUser(null);
+  };
 
   // Pagination logic
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
   const totalPages = Math.ceil(users.length / usersPerPage);
-
-  const handleRoleChange = async (userId: string, newRole: IUser["role"]) => {
-    if (!user || !user.id) {
-      setError("Utilisateur non authentifié");
-      return;
-    }
-    try {
-      const response = await axios.put(`${USERS_URL}/changer-role/${user.id}`, {
-        newRole,
-        userId,
-      });
-      if (response.data.success) {
-        toast.success("Rôle mis à jour avec succès");
-        handleUsers();
-      } else {
-        toast.error(
-          response.data.message || "Désolé, vous n'êtes pas autorisé"
-        );
-        setError(response.data.message || "Désolé, vous n'êtes pas autorisé");
-      }
-    } catch (error: any) {
-      toast.error(
-        error.response?.data?.message || "Erreur lors de la mise à jour du rôle"
-      );
-      // console.error("Erreur lors de la mise à jour du rôle:", error);
-      setError(
-        error.response?.data?.message || "Erreur lors de la mise à jour du rôle"
-      );
-    }
-  };
-
-  const handleDelete = async (userId: string) => {
-    if (!user || !user.id) {
-      setError("Utilisateur non authentifié");
-      return;
-    }
-    try {
-      const response = await axios.delete(
-        `${USERS_URL}/changer-role/${user.id}`,
-        {
-          data: { userId },
-        }
-      );
-      if (response.data.success) {
-        toast.success(
-          response.data.message || "Utilisateur supprimé avec succès"
-        );
-        handleUsers();
-      } else {
-        toast.error(
-          response.data.message || "Désolé, vous n'êtes pas autorisé"
-        );
-        setError(response.data.message || "Désolé, vous n'êtes pas autorisé");
-      }
-    } catch (error: any) {
-      toast.error(
-        error.response?.data?.message || "Erreur lors de la mise à jour du rôle"
-      );
-      // console.error("Erreur lors de la mise à jour du rôle:", error);
-      setError(
-        error.response?.data?.message || "Erreur lors de la mise à jour du rôle"
-      );
-    }
-  };
-
-  const handleSave = (updatedUser: IUser) => {
-    setUsers(
-      users.map((user) => (user.id === updatedUser.id ? updatedUser : user))
-    );
-    setEditingUser(null);
-  };
-
-  const handleUsers = async () => {
-    if (!user || !user.id) {
-      setError("Utilisateur non authentifié");
-      return;
-    }
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await axios.get(
-        `${USERS_URL}/tous-utilisateurs/${user?.id}`
-      );
-      console.log(response);
-      if (response.data.success) {
-        setLoading(false);
-        setError(null);
-        setUsers(response.data.data);
-        // console.log("objects", response.data.data);
-      }
-    } catch (error: any) {
-      setLoading(false);
-      setError(
-        error.response.data.message ||
-          "Erreur lors de la récupération des utilisateurs"
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    handleUsers();
-  }, []);
 
   return (
     <div className="container mx-auto px-4 py-8 bg-white min-h-screen">
@@ -158,7 +134,7 @@ const UserPage = () => {
               </th>
             </tr>
           </thead>
-          {loading ? (
+          {isLoading ? (
             <tbody>
               <tr>
                 <td colSpan={7} className="text-center py-4">
@@ -166,11 +142,11 @@ const UserPage = () => {
                 </td>
               </tr>
             </tbody>
-          ) : error ? (
+          ) : isError ? (
             <tbody>
               <tr>
                 <td colSpan={7} className="text-center text-red-500 py-4">
-                  {error}
+                  {error?.message}
                 </td>
               </tr>
             </tbody>
@@ -184,9 +160,7 @@ const UserPage = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <img
-                        src={
-                          user.photo ? user.photo : "https://i.pravatar.cc/150"
-                        }
+                        src={user.photo || "https://i.pravatar.cc/150"}
                         alt={`${user.prenom} ${user.nom}`}
                         className="h-10 w-10 rounded-full"
                       />
@@ -204,10 +178,10 @@ const UserPage = () => {
                       <select
                         value={user.role}
                         onChange={(e) =>
-                          handleRoleChange(
-                            user.id as string,
-                            e.target.value as IUser["role"]
-                          )
+                          updateRole({
+                            userId: user.id as string,
+                            newRole: e.target.value as IUser["role"],
+                          })
                         }
                         className="border border-gray-300 rounded-md shadow-sm p-1 text-sm"
                       >
@@ -224,7 +198,7 @@ const UserPage = () => {
                         Modifier
                       </button>
                       <button
-                        onClick={() => handleDelete(user.id)}
+                        onClick={() => deleteUser(user.id as string)}
                         className="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 text-sm"
                       >
                         Supprimer
