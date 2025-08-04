@@ -2,8 +2,10 @@
 import React from "react";
 import Video from "../assets/video/terraOhada_video.mp4";
 import FeaturesSections from "../components/produit/FeaturesSections";
+// import { SET_SUJETS_JURIDIQUES } from "../data/data";
 
 const Produit: React.FC = () => {
+  // console.log("object", SET_SUJETS_JURIDIQUES);
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800">
       {/* Section Héro - Titre et Vision */}

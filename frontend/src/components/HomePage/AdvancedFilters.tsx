@@ -1,5 +1,6 @@
 import React from "react";
 import type { FilterParams } from "../../types";
+import { SUJETS_JURIDIQUES_FINAUX } from "../../data/data";
 
 interface AdvancedFiltersProps {
   filters: FilterParams;
@@ -39,10 +40,12 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
             value={filters.legalSubject || ""}
             onChange={handleChange}
           >
-            <option value="">Sélectionnez un sujet</option>
-            <option value="Droit commercial">Droit commercial</option>
-            <option value="Droit des assurances">Droit des assurances</option>
-            <option value="Droit des sociétés">Droit des sociétés</option>
+            <option value="">Sélectionnez un sujet juridique</option>
+            {SUJETS_JURIDIQUES_FINAUX.map((juridiction, i) => (
+              <option key={i} value={juridiction}>
+                {juridiction.substring(0, 30) + "..."}
+              </option>
+            ))}
           </select>
         </div>
 

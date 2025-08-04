@@ -36,6 +36,15 @@ const useDecisions = (initialFilters: FilterParams = {}) => {
             .includes(filters.query.toLowerCase()) ||
           decision.resume.toLowerCase().includes(filters.query.toLowerCase());
 
+        const matchesLegalSubject =
+          !filters.legalSubject ||
+          decision.matiere
+            .toLowerCase()
+            .includes(filters.legalSubject.toLowerCase()) ||
+          decision.matiere
+            .toLowerCase()
+            .includes(filters.legalSubject.toLowerCase());
+
         const matchesYear =
           !filters.year || decision.dateDecision.includes(filters.year);
 
@@ -47,7 +56,11 @@ const useDecisions = (initialFilters: FilterParams = {}) => {
           decision.juridiction === filters.jurisdiction;
 
         return (
-          matchesQuery && matchesYear && matchesCountry && matchesJurisdiction
+          matchesQuery &&
+          matchesYear &&
+          matchesCountry &&
+          matchesJurisdiction &&
+          matchesLegalSubject
         );
       });
 
