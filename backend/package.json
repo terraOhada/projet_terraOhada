@@ -8,7 +8,6 @@
     "sync": "node src/scripts/sync.js",
     "dev": "nodemon src/index.js",
     "build": "prisma generate",
-    "postinstall": "prisma generate",
     "vercel-build": "prisma generate"
   },
   "keywords": [],
