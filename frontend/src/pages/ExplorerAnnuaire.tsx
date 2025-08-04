@@ -6,7 +6,7 @@ import { useProfiles } from "../hooks/useProfiles";
 const ExplorerAnnuaire = () => {
   const { profiles, loading, error } = useProfiles();
 
-  // console.log(profiles);
+  // console.log("profiles", profiles);
 
   if (loading) return <div className="text-center py-8">Chargement...</div>;
   if (error)

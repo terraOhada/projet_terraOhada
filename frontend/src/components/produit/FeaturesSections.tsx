@@ -165,44 +165,107 @@ const FeaturesSections = () => {
             </h2>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Recherche simplifiée de jurisprudence",
-                desc: "Tapez un mot-clé, un pays, une juridiction ou un thème pour retrouver les décisions pertinentes.",
-              },
-              {
-                title: "Espace personnel sécurisé",
-                desc: "L'historique de vos recherches et enregistrer vos contenus favoris.",
-              },
-              {
-                title: "Annuaire OHADA des professionnels(En cours...)",
-                desc: "Boostez votre visibilité, crédibilité et réseau en rejoignant un annuaire dédié.",
-              },
-              {
-                title: "Job board juridique(En cours...)",
-                desc: "Accédez à des offres d'emploi, de stage ou de collaboration dans le domaine juridique.",
-              },
-              {
-                title: "Quiz juridiques interactifs(En cours...)",
-                desc: "Testez vos connaissances sur le droit OHADA grâce à des quiz ludiques.",
-              },
-            ].map((feature, index) => (
-              <AnimatedSection key={index} delay={0.1 * (index + 1)}>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Bloc des 4 éléments courts */}
+            <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+              <AnimatedSection delay={0.1}>
                 <motion.div
-                  whileHover={{
-                    y: -5,
-                    boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
-                  }}
-                  className="p-6 border border-gray-200 rounded-lg shadow-sm transition-all duration-300"
+                  whileHover={{ y: -5 }}
+                  className="p-6 border rounded-lg h-full"
                 >
                   <h3 className="text-xl font-semibold mb-3 text-blue-600">
-                    {feature.title}
+                    Recherche simplifiée de jurisprudence
                   </h3>
-                  <p className="text-gray-700">{feature.desc}</p>
+                  <p className="text-gray-700">
+                    Tapez un mot-clé, un pays, une juridiction ou un thème.
+                  </p>
                 </motion.div>
               </AnimatedSection>
-            ))}
+
+              <AnimatedSection delay={0.2}>
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="p-6 border rounded-lg h-full"
+                >
+                  <h3 className="text-xl font-semibold mb-3 text-blue-600">
+                    Espace personnel sécurisé
+                  </h3>
+                  <p className="text-gray-700">
+                    Historique de recherches et contenus favoris.
+                  </p>
+                </motion.div>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.3}>
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="p-6 border rounded-lg h-full"
+                >
+                  <h3 className="text-xl font-semibold mb-3 text-blue-600">
+                    Job board juridique (bientôt disponible)
+                  </h3>
+                  <p className="text-gray-700">
+                    Accédez à des offres d’emploi, de stage ou de collaboration
+                    dans le domaine juridique en Afrique. Mettez en relation
+                    recruteurs et candidats qualifiés.
+                  </p>
+                </motion.div>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.4}>
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="p-6 border rounded-lg h-full"
+                >
+                  <h3 className="text-xl font-semibold mb-3 text-blue-600">
+                    Quiz juridiques interactifs (bientôt disponible)
+                  </h3>
+                  <p className="text-gray-700">
+                    Testez vos connaissances sur le droit OHADA grâce à des quiz
+                    ludiques et pédagogiques conçus pour les étudiants et jeunes
+                    professionnels.
+                  </p>
+                </motion.div>
+              </AnimatedSection>
+            </div>
+
+            {/* Élément long isolé à droite */}
+            <div className="lg:col-span-1">
+              <AnimatedSection delay={0.5}>
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="p-6 border rounded-lg h-full"
+                >
+                  <h3 className="text-xl font-semibold mb-3 text-blue-600">
+                    Annuaire OHADA des professionnels(en cours de developpement)
+                  </h3>
+                  <p
+                    className="text-gray-700 mb-4"
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        "Boostez votre <strong>visibilité</strong>, <strong>crédibilité</strong> et <strong>réseau</strong> avec notre annuaire dédié.",
+                    }}
+                  />
+
+                  <div className="space-y-3 pl-4 border-l-2 border-blue-100">
+                    <p
+                      className="text-gray-600 text-sm"
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          "<strong>Pour les professionnels</strong> :  valorisez votre expertise, développez votre clientèle et connectez-vous à un écosystème qualifié.",
+                      }}
+                    />
+                    <p
+                      className="text-gray-600 text-sm"
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          "<strong>Pour les particuliers et entreprises : trouvez rapidement un professionnel selon sa spécialité, son pays ou sa juridiction, et entrez facilement en contact.",
+                      }}
+                    />
+                  </div>
+                </motion.div>
+              </AnimatedSection>
+            </div>
           </div>
         </div>
       </section>
