@@ -110,3 +110,11 @@ export interface IProfile {
   email: string;
   experience: number;
 }
+
+export interface Plan {
+  id: string;
+  name: string;
+  priceMonthly?: number | null;
+  priceYearly?: number | null;
+  features: string[];
+}

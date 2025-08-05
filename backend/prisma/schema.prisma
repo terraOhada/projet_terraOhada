@@ -110,17 +110,22 @@ model Commentaire {
   @@index([userId]) // Index pour optimiser les requêtes sur les utilisateurs
 }
 
-
 model Juristes {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  notionId    String   @unique
-  name        String
-  photo       String?
-  country     String
-  jobTitle    String
-  specialties String[]
-  email       String   @unique
-  experience  Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  notionId          String   @unique
+  name              String
+  photo             String?
+  country           String
+  jobTitle          String
+  specialties       String
+  email             String   @unique
+  phone             String
+  structure         String?
+  bio               String?
+  experience        String?
+  wantsContact      String[]
+  structureSize     String[]
+  exerciseStructure String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }

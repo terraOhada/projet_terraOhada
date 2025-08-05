@@ -1,4 +1,4 @@
-import type { ICountryOption, ILegalSubject, IMenuLink } from "../types";
+import type { ICountryOption, ILegalSubject, IMenuLink, Plan } from "../types";
 
 // src/data/data.ts (ou le chemin de votre fichier de données)
 
@@ -176,3 +176,48 @@ export const SUJETS_JURIDIQUES_FINAUX = [...SUJETS_UNIQUES];
 
 // Résultat final trié par ordre alphabétique
 // console.log(SUJETS_JURIDIQUES_FINAUX.sort());
+
+export const plans: Plan[] = [
+  {
+    id: "1",
+    name: "Basique",
+    priceMonthly: 0,
+    priceYearly: 0,
+    features: [
+      "Fiche profil simplifiée",
+      "Nom et pays d'exercice",
+      "Métier et spécialité",
+      "Photo de profil (non inclus)",
+      "Bio détaillée (non inclus)",
+      "Contacts visibles (non inclus)",
+    ],
+  },
+  {
+    id: "2",
+    name: "Premium",
+    priceMonthly: 5000,
+    priceYearly: 20000,
+    features: [
+      "Tous les avantages du profil basique",
+      "Photo de profil professionnelle",
+      "Bio détaillée et expérience",
+      "Tous vos contacts visibles",
+      "Liens vers vos réseaux sociaux",
+      "Mise en avant dans les résultats",
+    ],
+  },
+  {
+    id: "3",
+    name: "Sponsorisé",
+    priceMonthly: null, // Sur devis
+    priceYearly: null,
+    features: [
+      "Tous les avantages Premium",
+      "Position en tête de liste",
+      "Bannière de profil mise en avant",
+      "Logo visible sur la page d'accueil",
+      "Statistiques de visites",
+      "Option 'Nous contacter' directe",
+    ],
+  },
+];

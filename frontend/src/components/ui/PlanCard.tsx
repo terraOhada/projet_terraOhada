@@ -1,0 +1,105 @@
+import type { Plan } from "../../types";
+
+interface PlanCardProps {
+  plan: Plan;
+  isPopular?: boolean;
+  onSelect: (planId: string, paymentType?: "monthly" | "yearly") => void;
+}
+
+const PlanCard = ({ plan, isPopular = false, onSelect }: PlanCardProps) => {
+  // Détermine la couleur en fonction du plan
+  const getPlanColor = () => {
+    switch (plan.name) {
+      case "Premium":
+        return "blue";
+      case "Sponsorisé":
+        return "yellow";
+      default:
+        return "gray";
+    }
+  };
+
+  const color = getPlanColor();
+  const isFree = plan.priceMonthly === 0;
+
+  return (
+    <div
+      className={`bg-white rounded-lg shadow-md overflow-hidden border ${
+        isPopular
+          ? "border-2 border-blue-600 transform scale-105"
+          : "border-gray-200"
+      }`}
+    >
+      {/* Header */}
+      <div
+        className={`px-6 py-4 ${
+          isPopular
+            ? "bg-blue-600 text-white"
+            : color === "yellow"
+            ? "bg-yellow-100"
+            : "bg-gray-100"
+        }`}
+      >
+        <h3 className="text-xl font-bold">{plan.name}</h3>
+        {isFree ? (
+          <p className="text-gray-600">Gratuit</p>
+        ) : (
+          <>
+            <p>
+              {plan.priceMonthly} FCFA/mois ou {plan.priceYearly} FCFA/an
+            </p>
+            {isPopular && (
+              <span className="bg-white text-blue-600 text-xs px-2 py-1 rounded-full mt-2 inline-block">
+                Économisez {plan.priceMonthly! * 12 - plan.priceYearly!} FCFA
+              </span>
+            )}
+          </>
+        )}
+      </div>
+
+      {/* Features */}
+      <div className="p-6">
+        <ul className="space-y-3 mb-8">
+          {plan.features.map((feature, index) => (
+            <li key={index} className="flex items-center">
+              <i
+                className={`fas ${
+                  feature.includes("(non inclus)")
+                    ? "fa-times text-red-400"
+                    : "fa-check text-green-500"
+                } mr-2`}
+              ></i>
+              <span>{feature.replace("(non inclus)", "")}</span>
+            </li>
+          ))}
+        </ul>
+
+        {/* Bouton */}
+        <button
+          onClick={() =>
+            isFree
+              ? onSelect(plan.id)
+              : plan.name === "Sponsorisé"
+              ? (window.location.href = "/contact")
+              : onSelect(plan.id, "monthly")
+          }
+          className={`w-full py-3 rounded-md font-medium hover:opacity-90 ${
+            isPopular
+              ? "bg-blue-600 text-white"
+              : color === "yellow"
+              ? "bg-yellow-500 text-white"
+              : "bg-gray-200 text-gray-800"
+          }`}
+        >
+          {isFree
+            ? "Sélectionner"
+            : plan.name === "Sponsorisé"
+            ? "Nous contacter"
+            : "Sélectionner"}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default PlanCard;

@@ -1,6 +1,7 @@
 // import React from 'react'
 
 import { Link } from "react-router-dom";
+import PricingSection from "../components/ui/PricingSection";
 
 const AnnuairePage = () => {
   return (
@@ -32,135 +33,7 @@ const AnnuairePage = () => {
       </section>
 
       {/* <!-- Pricing Section --> */}
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-          Choisissez votre formule
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {/* <!-- Free Plan --> */}
-          <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
-            <div className="bg-gray-100 px-6 py-4">
-              <h3 className="text-xl font-bold text-gray-800">
-                Profil Basique
-              </h3>
-              <p className="text-gray-600">Gratuit</p>
-            </div>
-            <div className="p-6">
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center">
-                  <i className="fas fa-check text-green-500 mr-2"></i>
-                  <span>Fiche profil simplifiée</span>
-                </li>
-                <li className="flex items-center">
-                  <i className="fas fa-check text-green-500 mr-2"></i>
-                  <span>Nom et pays d'exercice</span>
-                </li>
-                <li className="flex items-center">
-                  <i className="fas fa-check text-green-500 mr-2"></i>
-                  <span>Métier et spécialité</span>
-                </li>
-                <li className="flex items-center text-gray-400">
-                  <i className="fas fa-times text-red-400 mr-2"></i>
-                  <span>Photo de profil</span>
-                </li>
-                <li className="flex items-center text-gray-400">
-                  <i className="fas fa-times text-red-400 mr-2"></i>
-                  <span>Bio détaillée</span>
-                </li>
-                <li className="flex items-center text-gray-400">
-                  <i className="fas fa-times text-red-400 mr-2"></i>
-                  <span>Contacts visibles</span>
-                </li>
-              </ul>
-              <button className="w-full bg-gray-200 text-gray-800 py-3 rounded-md font-medium hover:bg-gray-300">
-                Sélectionner
-              </button>
-            </div>
-          </div>
-
-          {/* <!-- Premium Plan --> */}
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-blue-600 transform scale-105">
-            <div className="bg-blue-600 px-6 py-4 text-white">
-              <h3 className="text-xl font-bold">Profil Premium</h3>
-              <p>5,000 FCFA/mois ou 20,000 FCFA/an</p>
-              <span className="bg-white text-blue-600 text-xs px-2 py-1 rounded-full mt-2 inline-block">
-                Économisez 4,000 FCFA
-              </span>
-            </div>
-            <div className="p-6">
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center">
-                  <i className="fas fa-check text-green-500 mr-2"></i>
-                  <span>Tous les avantages du profil basique</span>
-                </li>
-                <li className="flex items-center">
-                  <i className="fas fa-check text-green-500 mr-2"></i>
-                  <span>Photo de profil professionnelle</span>
-                </li>
-                <li className="flex items-center">
-                  <i className="fas fa-check text-green-500 mr-2"></i>
-                  <span>Bio détaillée et expérience</span>
-                </li>
-                <li className="flex items-center">
-                  <i className="fas fa-check text-green-500 mr-2"></i>
-                  <span>Tous vos contacts visibles</span>
-                </li>
-                <li className="flex items-center">
-                  <i className="fas fa-check text-green-500 mr-2"></i>
-                  <span>Liens vers vos réseaux sociaux</span>
-                </li>
-                <li className="flex items-center">
-                  <i className="fas fa-check text-green-500 mr-2"></i>
-                  <span>Mise en avant dans les résultats</span>
-                </li>
-              </ul>
-              <button className="w-full bg-blue-600 text-white py-3 rounded-md font-medium hover:bg-blue-700">
-                Sélectionner
-              </button>
-            </div>
-          </div>
-
-          {/* <!-- Sponsoring Plan --> */}
-          <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
-            <div className="bg-yellow-100 px-6 py-4">
-              <h3 className="text-xl font-bold text-gray-800">Sponsoring</h3>
-              <p className="text-gray-600">Sur devis</p>
-            </div>
-            <div className="p-6">
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center">
-                  <i className="fas fa-check text-green-500 mr-2"></i>
-                  <span>Tous les avantages Premium</span>
-                </li>
-                <li className="flex items-center">
-                  <i className="fas fa-check text-green-500 mr-2"></i>
-                  <span>Position en tête de liste</span>
-                </li>
-                <li className="flex items-center">
-                  <i className="fas fa-check text-green-500 mr-2"></i>
-                  <span>Bannière de profil mise en avant</span>
-                </li>
-                <li className="flex items-center">
-                  <i className="fas fa-check text-green-500 mr-2"></i>
-                  <span>Logo visible sur la page d'accueil</span>
-                </li>
-                <li className="flex items-center">
-                  <i className="fas fa-check text-green-500 mr-2"></i>
-                  <span>Statistiques de visites</span>
-                </li>
-                <li className="flex items-center">
-                  <i className="fas fa-check text-green-500 mr-2"></i>
-                  <span>Option "Nous contacter" directe</span>
-                </li>
-              </ul>
-              <button className="w-full bg-yellow-500 text-white py-3 rounded-md font-medium hover:bg-yellow-600">
-                Nous contacter
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PricingSection />
 
       {/* <!-- Testimonials --> */}
       <section className="bg-gray-100 py-16">

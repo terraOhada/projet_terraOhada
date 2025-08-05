@@ -7,7 +7,7 @@ export const syncJuristes = async (req, res) => {
         const profiles = await fetchJuristesFromNotion();
         const results = await Promise.all(profiles.map(upsertJuriste));
 
-        console.log("profiles", profiles)
+        // console.log("profiles", profiles)
 
         res.status(200).json({
             success: true,
