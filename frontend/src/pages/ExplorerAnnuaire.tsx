@@ -9,6 +9,8 @@ import { PaginationAnnuaireProfile } from "../components/ui/PaginationAnnuairePr
 import { AllProfilesSkeleton } from "../components/ui/AllProfilesSkeleton";
 import { FeaturedProfilesSkeleton } from "../components/ui/FeaturedProfilesSkeleton";
 import { Link } from "react-router-dom";
+import PricingTable from "../components/ui/PricingTable";
+// import QuizOHADA from "../components/ui/QuizOhada";
 // import ProfileCardVedette from "../components/ui/ProfileCardVedette";
 
 const ExplorerAnnuaire = () => {
@@ -301,6 +303,8 @@ const ExplorerAnnuaire = () => {
 
       {/* <!-- Pricing Section --> */}
       <PricingSection />
+      <PricingTable />
+      {/* <QuizOHADA /> */}
     </div>
   );
 };

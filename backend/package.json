@@ -30,7 +30,8 @@
     "mongoose": "^8.16.1",
     "morgan": "^1.10.0",
     "multer": "^2.0.1",
-    "nodemailer": "^7.0.5"
+    "nodemailer": "^7.0.5",
+    "paydunya": "^1.0.12"
   },
   "prisma": {
     "schema": "prisma/schema.prisma"

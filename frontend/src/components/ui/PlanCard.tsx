@@ -28,7 +28,7 @@ const PlanCard = ({ plan, isPopular = false, onSelect }: PlanCardProps) => {
         isPopular
           ? "border-2 border-blue-600 transform scale-105"
           : "border-gray-200"
-      }`}
+      } ${plan.name !== "Premium" ? "h-86" : ""}`}
     >
       {/* Header */}
       <div
@@ -49,8 +49,9 @@ const PlanCard = ({ plan, isPopular = false, onSelect }: PlanCardProps) => {
               {plan.priceMonthly} FCFA/mois ou {plan.priceYearly} FCFA/an
             </p>
             {isPopular && (
-              <span className="bg-white text-blue-600 text-xs px-2 py-1 rounded-full mt-2 inline-block">
+              <span className="bg-white text-blue-600 text-[8px] font-bold px-2 text-center py-1 rounded-full mt-2 inline-block">
                 Économisez {plan.priceMonthly! * 12 - plan.priceYearly!} FCFA
+                avec l’abonnement annuel
               </span>
             )}
           </>
@@ -58,10 +59,10 @@ const PlanCard = ({ plan, isPopular = false, onSelect }: PlanCardProps) => {
       </div>
 
       {/* Features */}
-      <div className="p-6">
+      <div className={`p-2 `}>
         <ul className="space-y-3 mb-8">
           {plan.features.map((feature, index) => (
-            <li key={index} className="flex items-center">
+            <li key={index} className="flex items-center text-xs">
               <i
                 className={`fas ${
                   feature.includes("(non inclus)")

@@ -168,6 +168,21 @@ const sujetsSepares = [
   "Exécution des obligations",
 ];
 
+export const SUJETS_JURIDIQUES = [
+  "Droit commercial général",
+  "Droit des sociétés commerciales et du groupement d’intérêt économique",
+  "Droit des sûretés",
+  "Droit des procédures collectives d’apurement du passif",
+  "Droit de l’arbitrage",
+  "Droit de la médiation",
+  "Droit du transport de marchandises par route",
+  "Droit des sociétés coopératives",
+  "Droit comptable",
+  "Droit des contrats de partenariat public-privé",
+  "Contentieux institutionnel OHADA",
+  "Application du droit OHADA (matière transversale ou interprétative) Droit des entreprises en difficulté",
+];
+
 // Étape 2: Création d'un Set pour éliminer les doublons
 const SUJETS_UNIQUES = new Set(sujetsSepares);
 
@@ -185,25 +200,31 @@ export const plans: Plan[] = [
     priceYearly: 0,
     features: [
       "Fiche profil simplifiée",
-      "Nom et pays d'exercice",
-      "Métier et spécialité",
-      "Photo de profil (non inclus)",
-      "Bio détaillée (non inclus)",
-      "Contacts visibles (non inclus)",
+      "Affichage du nom et du pays d’exercice",
+      "Mention du métier et de la spécialité",
+      "Photo de profil non affichée",
+      "Biographie non visible",
+      "Coordonnées et contacts non accessibles",
     ],
   },
   {
     id: "2",
     name: "Premium",
     priceMonthly: 5000,
-    priceYearly: 20000,
+    priceYearly: 50000,
     features: [
       "Tous les avantages du profil basique",
       "Photo de profil professionnelle",
-      "Bio détaillée et expérience",
-      "Tous vos contacts visibles",
-      "Liens vers vos réseaux sociaux",
-      "Mise en avant dans les résultats",
+      "Bio détaillée avec vos expériences et domaines d’expertise",
+      "Coordonnées complètes et contacts visibles sans restriction",
+      "Liens vers vos réseaux sociaux professionnels",
+      "Mise en avant prioritaire dans les résultats de recherche",
+      "Badge Premium affiché sur votre profil (ex. : “Avocat Premium”, “Juriste vérifié”)",
+      "Statistiques mensuelles sur les consultations de votre profil",
+      "Mise en relation directe facilitée avec les autres membres",
+      "Possibilité de publier sur la plateforme (articles, analyses, événements)",
+      "Accès prioritaire à des offres exclusives (emplois, appels à projets, partenariats)",
+      "Réductions sur des services partenaires (formations, outils, conférences)",
     ],
   },
   {
