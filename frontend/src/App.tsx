@@ -25,6 +25,7 @@ import ViewComments from "./components/adminComponents/ViewComments";
 import AnnuairePage from "./pages/AnnuairePage";
 import RejoindreAnnuaire from "./pages/RejoindreAnnuaire";
 import ExplorerAnnuaire from "./pages/ExplorerAnnuaire";
+import OhadaQuizzPage from "./components/ui/OhadaQuizzPage";
 // Make sure this import is correct
 
 const App = () => {
@@ -70,6 +71,10 @@ const App = () => {
         {
           path: "annuaire/explorer-annuaire",
           element: <ExplorerAnnuaire />,
+        },
+        {
+          path: "quizz-ohada",
+          element: <OhadaQuizzPage />,
         },
       ],
     },
