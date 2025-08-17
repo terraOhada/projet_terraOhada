@@ -73,7 +73,7 @@ const App = () => {
           element: <ExplorerAnnuaire />,
         },
         {
-          path: "quizz-ohada",
+          path: "quizz-terraOhada",
           element: <OhadaQuizzPage />,
         },
       ],
