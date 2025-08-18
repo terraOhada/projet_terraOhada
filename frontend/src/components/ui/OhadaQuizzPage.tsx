@@ -5,6 +5,7 @@
 import { useState, useEffect } from "react";
 import Papa from "papaparse";
 import { userStore } from "../../store/store";
+import { Link } from "react-router-dom";
 // Import du store Zustand
 
 // --- INTERFACES ET TYPES ---
@@ -297,6 +298,7 @@ const OhadaQuizzPage = () => {
           connecter.
         </p>
         {/* Le bouton de connexion est maintenant géré globalement (ex: dans le header) */}
+        <Link to={"/connexion"}>Se connecter</Link>
       </div>
     );
   }
