@@ -298,7 +298,12 @@ const OhadaQuizzPage = () => {
           connecter.
         </p>
         {/* Le bouton de connexion est maintenant géré globalement (ex: dans le header) */}
-        <Link to={"/connexion"}>Se connecter</Link>
+        <Link
+          to={"/connexion"}
+          className="text-center p-4 rounded-xl shadow-sm transition-all duration-300 font-medium text-slate-700 bg-white hover:bg-sky-100/50 hover:shadow-md disabled:cursor-not-allowed"
+        >
+          Se connecter
+        </Link>
       </div>
     );
   }
