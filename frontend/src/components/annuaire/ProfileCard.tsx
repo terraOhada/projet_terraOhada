@@ -7,7 +7,7 @@ export default function ProfileCard({ profile }: { profile: IProfile }) {
         <div className="flex items-start space-x-4">
           {profile.photo ? (
             <img
-              src={profile.photo}
+              src={"https://avatar.iran.liara.run/public/18"}
               alt={profile.name}
               className="w-16 h-16 rounded-full object-cover"
             />

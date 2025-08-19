@@ -2,6 +2,7 @@
 
 import { Link } from "react-router-dom";
 import PricingSection from "../components/ui/PricingSection";
+import PricingTable from "../components/ui/PricingTable";
 
 const AnnuairePage = () => {
   return (
@@ -34,6 +35,9 @@ const AnnuairePage = () => {
 
       {/* <!-- Pricing Section --> */}
       <PricingSection />
+
+      {/* tableSection */}
+      <PricingTable />
 
       {/* <!-- Testimonials --> */}
       <section className="bg-gray-100 py-16">

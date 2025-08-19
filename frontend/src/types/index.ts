@@ -97,18 +97,21 @@ export type FilterParams = {
   legalSubject?: string;
   jurisdiction?: string;
   legalText?: string;
+  typeDecisions?: string;
 };
 
 export interface IProfile {
-  id: string;
+  id: string | number; // Use string for MongoDB ObjectId compatibility
   notionId: string;
   name: string;
   photo?: string;
   country: string;
   jobTitle: string;
-  specialties: string[];
+  specialties: string[] | string; // Array of specialties or a single string
   email: string;
-  experience: number;
+  experience: string; // Number of years or a string like "5 ans"
+  // isFeatured?: boolean; // Optional, for featured profiles
+  isFeatured?: boolean; // Optional, for featured profiles
 }
 
 export interface Plan {

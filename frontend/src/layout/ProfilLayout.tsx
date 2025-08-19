@@ -66,7 +66,7 @@ const ProfileLayout: React.FC = () => {
       )}
       {/* Sidebar */}
       <div
-        className={`fixed rounded-e-md h-screen inset-y-0 left-0 w-64 bg-white shadow-lg p-6 flex flex-col z-40 transform 
+        className={`fixed rounded-e-md h-screen inset-y-0 left-0 w-64 bg-white shadow-lg p-6 flex flex-col z-50 transform 
                    ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} 
                    md:relative md:translate-x-0 md:border-r md:border-gray-200 
                    transition-transform duration-300 ease-in-out`}
@@ -82,12 +82,12 @@ const ProfileLayout: React.FC = () => {
           />
           <h2 className="text-2xl font-bold text-gray-900 ml-3">Mon profile</h2>
           {/* Close button for mobile sidebar */}
-          <button
+          {/* <button
             className="md:hidden absolute top-4 right-4 p-1 text-gray-500 hover:text-gray-700"
             onClick={() => setIsSidebarOpen(false)}
           >
             <X className="w-6 h-6" />
-          </button>
+          </button> */}
         </div>
 
         <nav className="flex-grow space-y-2">

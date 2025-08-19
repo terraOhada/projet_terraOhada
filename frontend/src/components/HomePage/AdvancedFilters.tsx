@@ -71,6 +71,28 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
           </select>
         </div>
 
+        {/* Juridiction */}
+        <div>
+          <label
+            htmlFor="jurisdiction"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Types de décisions
+          </label>
+          <select
+            id="typeDecisions"
+            name="typeDecisions"
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+            value={filters.typeDecisions || ""}
+            onChange={handleChange}
+          >
+            <option value="">Sélectionnez type de décisions</option>
+            <option value="Ordonnance">Ordonnance</option>
+            <option value="Arrêt">Arrêt</option>
+            <option value="Avis">Avis</option>
+          </select>
+        </div>
+
         {/* Texte de droit */}
         <div>
           <label

@@ -56,12 +56,12 @@ const PricingTable = () => {
           </button>
         </div>
         <div className="flex justify-center">
-          <button className="px-6 py-3 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition">
+          <button className="px-6 py-3 bg-ohada-blue-two text-white rounded-lg font-medium hover:bg-ohada-blue-for transition">
             S'abonner Premium Afrique
           </button>
         </div>
         <div className="flex justify-center">
-          <button className="px-6 py-3 bg-purple-500 text-white rounded-lg font-medium hover:bg-purple-600 transition">
+          <button className="px-6 py-3 bg-ohada-blue-for text-white rounded-lg font-medium hover:bg-ohada-blue-two transition">
             S'abonner Premium Europe
           </button>
         </div>

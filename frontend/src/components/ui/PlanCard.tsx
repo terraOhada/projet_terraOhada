@@ -26,7 +26,7 @@ const PlanCard = ({ plan, isPopular = false, onSelect }: PlanCardProps) => {
     <div
       className={`bg-white rounded-lg shadow-md overflow-hidden border ${
         isPopular
-          ? "border-2 border-blue-600 transform scale-105"
+          ? "border-2 border-ohada-blue-for transform scale-105"
           : "border-gray-200"
       } ${plan.name !== "Premium" ? "h-86" : ""}`}
     >
@@ -34,9 +34,9 @@ const PlanCard = ({ plan, isPopular = false, onSelect }: PlanCardProps) => {
       <div
         className={`px-6 py-4 ${
           isPopular
-            ? "bg-blue-600 text-white"
+            ? "bg-ohada-blue-for text-white"
             : color === "yellow"
-            ? "bg-yellow-100"
+            ? "bg-ohada-blue-two"
             : "bg-gray-100"
         }`}
       >
@@ -46,7 +46,8 @@ const PlanCard = ({ plan, isPopular = false, onSelect }: PlanCardProps) => {
         ) : (
           <>
             <p>
-              {plan.priceMonthly} FCFA/mois ou {plan.priceYearly} FCFA/an
+              {/* {plan.priceMonthly} FCFA/mois ou {plan.priceYearly} FCFA/an */}
+              Payant
             </p>
             {isPopular && (
               <span className="bg-white text-blue-600 text-[8px] font-bold px-2 text-center py-1 rounded-full mt-2 inline-block">
@@ -59,7 +60,7 @@ const PlanCard = ({ plan, isPopular = false, onSelect }: PlanCardProps) => {
       </div>
 
       {/* Features */}
-      <div className={`p-2 `}>
+      <div className={`p-2`}>
         <ul className="space-y-3 mb-8">
           {plan.features.map((feature, index) => (
             <li key={index} className="flex items-center text-xs">
@@ -86,9 +87,9 @@ const PlanCard = ({ plan, isPopular = false, onSelect }: PlanCardProps) => {
           }
           className={`w-full py-3 rounded-md font-medium hover:opacity-90 ${
             isPopular
-              ? "bg-blue-600 text-white"
+              ? "bg-ohada-blue-for text-white"
               : color === "yellow"
-              ? "bg-yellow-500 text-white"
+              ? "bg-ohada-blue-two text-white"
               : "bg-gray-200 text-gray-800"
           }`}
         >

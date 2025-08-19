@@ -166,69 +166,6 @@ const FeaturesSections = () => {
           </AnimatedSection>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Bloc des 4 éléments courts */}
-            <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-              <AnimatedSection delay={0.1}>
-                <motion.div
-                  whileHover={{ y: -5 }}
-                  className="p-6 border rounded-lg h-full"
-                >
-                  <h3 className="text-xl font-semibold mb-3 text-blue-600">
-                    Recherche simplifiée de jurisprudence
-                  </h3>
-                  <p className="text-gray-700">
-                    Tapez un mot-clé, un pays, une juridiction ou un thème.
-                  </p>
-                </motion.div>
-              </AnimatedSection>
-
-              <AnimatedSection delay={0.2}>
-                <motion.div
-                  whileHover={{ y: -5 }}
-                  className="p-6 border rounded-lg h-full"
-                >
-                  <h3 className="text-xl font-semibold mb-3 text-blue-600">
-                    Espace personnel sécurisé
-                  </h3>
-                  <p className="text-gray-700">
-                    Historique de recherches et contenus favoris.
-                  </p>
-                </motion.div>
-              </AnimatedSection>
-
-              <AnimatedSection delay={0.3}>
-                <motion.div
-                  whileHover={{ y: -5 }}
-                  className="p-6 border rounded-lg h-full"
-                >
-                  <h3 className="text-xl font-semibold mb-3 text-blue-600">
-                    Job board juridique (bientôt disponible)
-                  </h3>
-                  <p className="text-gray-700">
-                    Accédez à des offres d’emploi, de stage ou de collaboration
-                    dans le domaine juridique en Afrique. Mettez en relation
-                    recruteurs et candidats qualifiés.
-                  </p>
-                </motion.div>
-              </AnimatedSection>
-
-              <AnimatedSection delay={0.4}>
-                <motion.div
-                  whileHover={{ y: -5 }}
-                  className="p-6 border rounded-lg h-full"
-                >
-                  <h3 className="text-xl font-semibold mb-3 text-blue-600">
-                    Quiz juridiques interactifs (bientôt disponible)
-                  </h3>
-                  <p className="text-gray-700">
-                    Testez vos connaissances sur le droit OHADA grâce à des quiz
-                    ludiques et pédagogiques conçus pour les étudiants et jeunes
-                    professionnels.
-                  </p>
-                </motion.div>
-              </AnimatedSection>
-            </div>
-
             {/* Élément long isolé à droite */}
             <div className="lg:col-span-1">
               <AnimatedSection delay={0.5}>
@@ -263,6 +200,72 @@ const FeaturesSections = () => {
                       }}
                     />
                   </div>
+                </motion.div>
+              </AnimatedSection>
+            </div>
+
+            {/* Bloc des 4 éléments courts */}
+            <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Base juridique ohada */}
+              <AnimatedSection delay={0.1}>
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="p-6 border rounded-lg h-full"
+                >
+                  <h3 className="text-xl font-semibold mb-3 text-blue-600">
+                    Base juridique ohada
+                  </h3>
+                  <p className="text-gray-700">
+                    Tapez un mot-clé, un pays, une juridiction ou un thème.
+                  </p>
+                </motion.div>
+              </AnimatedSection>
+
+              {/* espace personel */}
+              <AnimatedSection delay={0.2}>
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="p-6 border rounded-lg h-full"
+                >
+                  <h3 className="text-xl font-semibold mb-3 text-blue-600">
+                    Espace personnel sécurisé
+                  </h3>
+                  <p className="text-gray-700">
+                    Historique de recherches et contenus favoris.
+                  </p>
+                </motion.div>
+              </AnimatedSection>
+
+              {/* job board */}
+              <AnimatedSection delay={0.3}>
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="p-6 border rounded-lg h-full"
+                >
+                  <h3 className="text-xl font-semibold mb-3 text-blue-600">
+                    Job board juridique (bientôt disponible)
+                  </h3>
+                  <p className="text-gray-700">
+                    Accédez à des offres d’emploi, de stage ou de collaboration
+                    dans le domaine juridique en Afrique. Mettez en relation
+                    recruteurs et candidats qualifiés.
+                  </p>
+                </motion.div>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.4}>
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="p-6 border rounded-lg h-full"
+                >
+                  <h3 className="text-xl font-semibold mb-3 text-blue-600">
+                    Quizz juridiques interactifs
+                  </h3>
+                  <p className="text-gray-700">
+                    Testez vos connaissances sur le droit OHADA grâce à des quiz
+                    ludiques et pédagogiques conçus pour les étudiants et jeunes
+                    professionnels.
+                  </p>
                 </motion.div>
               </AnimatedSection>
             </div>
