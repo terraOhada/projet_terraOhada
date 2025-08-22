@@ -330,7 +330,7 @@ const AddDecision: React.FC = () => {
             htmlFor="colonne1"
             className="block text-sm font-medium text-gray-700"
           >
-            Colonne 1
+            TypeDecision
           </label>
           <input
             id="typeDecision"

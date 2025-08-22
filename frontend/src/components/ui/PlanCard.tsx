@@ -49,12 +49,6 @@ const PlanCard = ({ plan, isPopular = false, onSelect }: PlanCardProps) => {
               {/* {plan.priceMonthly} FCFA/mois ou {plan.priceYearly} FCFA/an */}
               Payant
             </p>
-            {isPopular && (
-              <span className="bg-white text-blue-600 text-[8px] font-bold px-2 text-center py-1 rounded-full mt-2 inline-block">
-                Économisez {plan.priceMonthly! * 12 - plan.priceYearly!} FCFA
-                avec l’abonnement annuel
-              </span>
-            )}
           </>
         )}
       </div>
