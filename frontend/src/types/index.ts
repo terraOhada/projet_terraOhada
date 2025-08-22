@@ -13,6 +13,7 @@ export interface IDecision {
   annee?: number; // Optional, can be derived from date
   article?: string;
   articleMisAjour?: string; // Optional, for full text display
+  typeDecision?: string;
 }
 
 export interface IFavorite {
