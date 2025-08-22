@@ -71,6 +71,8 @@ export const mettreAJourDecision = async (req, res) => {
 
     const { id, ...rest } = updatedData;
 
+    console.log("rest", rest.typeDecsion)
+
     try {
         const updatedDecision = await db.decision.update({
             where: { id: decisionId },
