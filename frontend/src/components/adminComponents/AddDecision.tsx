@@ -19,7 +19,7 @@ interface DecisionFormData {
   statut?: string; // Status (optional)
   article?: string; // Article (optional)
   articleMisAjour?: string; // Updated article (optional)
-  colonne1?: string; // Additional column (optional)
+  typeDecision?: string; // Additional column (optional)
 }
 
 const AddDecision: React.FC = () => {
@@ -36,7 +36,7 @@ const AddDecision: React.FC = () => {
     statut: "",
     article: "",
     articleMisAjour: "",
-    colonne1: "",
+    typeDecision: "",
   });
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -66,7 +66,8 @@ const AddDecision: React.FC = () => {
       !formData.juridiction ||
       !formData.dateDecision ||
       !formData.pays ||
-      !formData.matiere
+      !formData.matiere ||
+      !formData.typeDecision
     ) {
       setError("Veuillez remplir tous les champs obligatoires.");
       setLoading(false);
@@ -100,7 +101,7 @@ const AddDecision: React.FC = () => {
           statut: "",
           article: "",
           articleMisAjour: "",
-          colonne1: "",
+          typeDecision: "",
         });
         // onDecisionAdded(); // Notify parent to refresh list
       } else {
@@ -332,11 +333,11 @@ const AddDecision: React.FC = () => {
             Colonne 1
           </label>
           <input
-            id="colonne1"
-            name="colonne1"
+            id="typeDecision"
+            name="typeDecision"
             type="text"
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            value={formData.colonne1}
+            value={formData.typeDecision}
             onChange={handleChange}
           />
         </div>

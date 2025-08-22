@@ -58,7 +58,7 @@ model Decision {
   statut          String // "Statut (validé/incomplet)" - Optionnel, pourrait être un Enum si les valeurs sont fixes
   article         String? // "Articles" - Optionnel
   articleMisAjour String? // "Articles mis à jour" - Utilisation de @map pour un nom de colonne différent
-  colonne1        String?
+  typeDecision    String?
 
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt

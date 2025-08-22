@@ -23,7 +23,7 @@ export const ajouterDecision = async (req, res) => {
                 statut: decision.statut,       // "Statut (validé/incomplet)" - Optionnel, pourrait être un Enum si les valeurs sont fixes
                 article: decision.article,        // "Articles" - Optionnel
                 articleMisAjour: decision.articleMisAjour,  // "Articles mis à jour" - Utilisation de @map pour un nom de colonne différent
-                colonne1: decision.colonne1
+                typeDecision: decision.typeDecision
 
             }
         })

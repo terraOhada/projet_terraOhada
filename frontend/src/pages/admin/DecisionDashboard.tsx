@@ -26,7 +26,7 @@ export interface Decision {
   statut?: string;
   article?: string;
   articleMisAjour?: string;
-  colonne1?: string;
+  typeDecision?: string;
   commentsCount?: number; // Added for statistics
 }
 
