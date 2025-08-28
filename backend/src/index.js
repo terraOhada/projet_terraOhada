@@ -1,6 +1,6 @@
-import express from 'express';
 import dotenv from 'dotenv'
 dotenv.config();
+import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from "cors"
 
@@ -13,6 +13,8 @@ import favoriteRouter from './routes/favorite.route.js';
 import userRouter from './routes/user.route.js';
 import commentRouter from './routes/comment.route.js';
 import notionRouter from './routes/notion.routes.js';
+import planRouter from './routes/plan.route.js';
+
 
 
 const app = express();
@@ -46,6 +48,7 @@ app.use(cors({
 
 app.use('/documents', express.static('uploads/documents'));
 
+// cancelPlan(225460)
 
 // les routes
 app.use("/api/auth", authRouter);
@@ -55,6 +58,7 @@ app.use('/api/favorite', favoriteRouter);
 app.use('/api/users', userRouter);
 app.use('/api/comment', commentRouter);
 app.use('/api/notion', notionRouter);
+app.use('/api/plan', planRouter);
 
 app.get('/', (req, res) => {
     res.send('API is running...');

@@ -40,8 +40,12 @@ model User {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
+  //  les relations
+
   favorites    Favorite[]
   commentaires Commentaire[] // Opposite relation field added
+
+  Payment Payment[]
 }
 
 /// Modèle pour les décisions juridiques de la cour OHADA
@@ -128,4 +132,36 @@ model Juristes {
   exerciseStructure String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+}
+
+// Modèle pour vos plans (peut être synchronisé avec Flutterwave)
+model Plan {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  planId   Int       @unique // L'ID numérique venant de Flutterwave
+  name     String
+  amount   Int // En centimes
+  interval String
+  // Relation: un plan peut être lié à plusieurs paiements
+  payments Payment[]
+}
+
+// Modèle pour enregistrer chaque transaction
+model Payment {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  transactionId Int    @unique // L'ID de transaction de Flutterwave, ex: 4958495
+  txRef         String @unique // Votre référence unique, ex: sub-xxxxx
+  status        String // "successful", "failed", "pending"
+  amount        Int // En centimes
+  currency      String
+
+  // Relation avec l'utilisateur qui a payé
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+
+  // Relation avec le plan souscrit
+  planId String? @db.ObjectId // Optionnel si le paiement n'est pas lié à un plan
+  plan   Plan?   @relation(fields: [planId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
