@@ -332,14 +332,26 @@ const AddDecision: React.FC = () => {
           >
             TypeDecision
           </label>
-          <input
+
+          <select
+            name="typeDecision"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all"
+            value={formData.typeDecision}
+            onChange={handleChange}
+          >
+            <option value="">Sélectionner un type de décision</option>
+            <option value="Ordonnance">Ordonnance</option>
+            <option value="Avis">Avis</option>
+            <option value="Arrêt">Arrêt</option>
+          </select>
+          {/* <input
             id="typeDecision"
             name="typeDecision"
             type="text"
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             value={formData.typeDecision}
             onChange={handleChange}
-          />
+          /> */}
         </div>
 
         {/* Résumé */}
