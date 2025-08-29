@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { plans } from "../../data/data";
 import type { PaidPlan } from "../../types";
 import { userStore } from "../../store/store";
