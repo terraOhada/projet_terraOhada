@@ -26,6 +26,8 @@ import AnnuairePage from "./pages/AnnuairePage";
 import RejoindreAnnuaire from "./pages/RejoindreAnnuaire";
 import ExplorerAnnuaire from "./pages/ExplorerAnnuaire";
 import OhadaQuizzPage from "./components/ui/OhadaQuizzPage";
+import PaymentPage from "./pages/admin/PaymentPage";
+import PaymentCallbackPage from "./components/ui/PaymentCallbackPage";
 // Make sure this import is correct
 
 const App = () => {
@@ -128,7 +130,16 @@ const App = () => {
           path: "utilisateurs",
           element: <UserPage />,
         },
+        {
+          path: "payment",
+          element: <PaymentPage />,
+        },
       ],
+    },
+
+    {
+      path: "payment-callback",
+      element: <PaymentCallbackPage />,
     },
     {
       path: "/connexion",

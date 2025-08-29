@@ -4,6 +4,7 @@ import {
   LogOutIcon,
   MessageSquareIcon,
   PlusCircleIcon,
+  StoreIcon,
   UserIcon,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
@@ -38,6 +39,11 @@ const SidebarDash: React.FC = () => {
       name: "Utilisateurs",
       icon: UserIcon,
       url: "utilisateurs",
+    },
+    {
+      name: "paiements",
+      icon: StoreIcon,
+      url: "payment",
     },
   ];
 

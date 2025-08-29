@@ -115,10 +115,32 @@ export interface IProfile {
   isFeatured?: boolean; // Optional, for featured profiles
 }
 
-export interface Plan {
+// Une interface de base commune à tous les plans
+interface BasePlan {
   id: string;
   name: string;
-  priceMonthly?: number | null;
-  priceYearly?: number | null;
   features: string[];
 }
+
+// Type pour le plan gratuit
+interface FreePlan extends BasePlan {
+  type: "free";
+}
+
+// Type pour les plans payants avec un prix fixe
+export interface PaidPlan extends BasePlan {
+  type: "paid";
+  amount: number; // Montant en plus petite unité (centimes ou centimes de franc)
+  currency: "XOF" | "EUR";
+  interval: "monthly" | "yearly";
+  flutterwaveId: number; // L'ID du plan côté Flutterwave (optionnel)
+}
+
+// Type pour les plans sur devis
+export interface QuotePlan extends BasePlan {
+  type: "quote";
+  contactText: string; // Texte d'appel à l'action
+}
+
+// Le type final est une union de tous les types de plans possibles
+export type IPlan = FreePlan | PaidPlan | QuotePlan;

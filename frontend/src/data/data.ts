@@ -2,8 +2,8 @@ import type {
   ICountryOption,
   ILegalSubject,
   IMenuLink,
+  IPlan,
   IProfile,
-  Plan,
 } from "../types";
 
 // src/data/data.ts (ou le chemin de votre fichier de données)
@@ -198,12 +198,12 @@ export const SUJETS_JURIDIQUES_FINAUX = [...SUJETS_UNIQUES];
 // Résultat final trié par ordre alphabétique
 // console.log(SUJETS_JURIDIQUES_FINAUX.sort());
 
-export const plans: Plan[] = [
+export const plans: IPlan[] = [
+  // Type: 'free'
   {
-    id: "1",
+    id: "plan_free_01",
     name: "Basique",
-    priceMonthly: 0,
-    priceYearly: 0,
+    type: "free",
     features: [
       "Fiche profil simplifiée",
       "Affichage du nom et du pays d’exercice",
@@ -213,38 +213,124 @@ export const plans: Plan[] = [
       "Coordonnées et contacts non accessibles",
     ],
   },
+  // Type: 'paid' (Mensuel en XOF)
   {
-    id: "2",
-    name: "Premium",
-    priceMonthly: 5000,
-    priceYearly: 50000,
+    id: "plan_premium_monthly_xof",
+    name: "Premium Mensuel",
+    type: "paid",
+    amount: 500000, // 5000 XOF en centimes
+    currency: "XOF",
+    interval: "monthly",
+    flutterwaveId: 225463, // ID Flutterwave
     features: [
       "Tous les avantages du profil basique",
       "Photo de profil professionnelle",
-      "Bio détaillée avec vos expériences et domaines d’expertise",
-      "Coordonnées complètes et contacts visibles sans restriction",
-      "Liens vers vos réseaux sociaux professionnels",
-      "Mise en avant prioritaire dans les résultats de recherche",
-      "Badge Premium affiché sur votre profil (ex. : “Avocat Premium”, “Juriste vérifié”)",
-      "Statistiques mensuelles sur les consultations de votre profil",
-      "Mise en relation directe facilitée avec les autres membres",
-      "Possibilité de publier sur la plateforme (articles, analyses, événements)",
-      "Accès prioritaire à des offres exclusives (emplois, appels à projets, partenariats)",
-      "Réductions sur des services partenaires (formations, outils, conférences)",
-      "Une formation professionnelle de 2 heures offerte chaque semestre sur des sujets juridiques et transverses",
+      "Bio détaillée avec vos expériences",
+      "Coordonnées complètes et contacts visibles",
+      "Liens vers vos réseaux sociaux",
+      "Mise en avant prioritaire dans les recherches",
+      "Badge Premium affiché sur votre profil",
+      "Statistiques mensuelles de votre profil",
+      "Mise en relation directe facilitée",
+      "Possibilité de publier sur la plateforme",
+      "Accès prioritaire à des offres exclusives",
+      "Réductions sur des services partenaires",
+      "Une formation professionnelle offerte chaque semestre",
     ],
   },
+  // Type: 'paid' (Mensuel en EUR)
   {
-    id: "3",
+    id: "plan_premium_monthly_eur",
+    name: "Premium Mensuel",
+    type: "paid",
+    amount: 900, // 9 EUR en centimes
+    currency: "EUR",
+    interval: "monthly",
+    flutterwaveId: 225463,
+    // flutterwaveId: ID_FLUTTERWAVE_POUR_EUR, // Un ID de plan différent est nécessaire
+    features: [
+      "Tous les avantages du profil basique",
+      "Photo de profil professionnelle",
+      "Bio détaillée avec vos expériences",
+      "Coordonnées complètes et contacts visibles",
+      "Liens vers vos réseaux sociaux",
+      "Mise en avant prioritaire dans les recherches",
+      "Badge Premium affiché sur votre profil",
+      "Statistiques mensuelles de votre profil",
+      "Mise en relation directe facilitée",
+      "Possibilité de publier sur la plateforme",
+      "Accès prioritaire à des offres exclusives",
+      "Réductions sur des services partenaires",
+      "Une formation professionnelle offerte chaque semestre",
+    ],
+  },
+  // Type: 'paid' (Annuel en XOF)
+  {
+    id: "plan_premium_yearly_xof",
+    name: "Premium Annuel",
+    type: "paid",
+    amount: 5000000, // 50000 XOF en centimes
+    currency: "XOF",
+    interval: "yearly",
+    flutterwaveId: 225473,
+    // flutterwaveId: ID_FLUTTERWAVE_POUR_ANNUEL, // Un ID de plan différent est nécessaire
+    features: [
+      "Tous les avantages du profil basique",
+      "Photo de profil professionnelle",
+      "Photo de profil professionnelle",
+      "Bio détaillée avec vos expériences",
+      "Coordonnées complètes et contacts visibles",
+      "Liens vers vos réseaux sociaux",
+      "Mise en avant prioritaire dans les recherches",
+      "Badge Premium affiché sur votre profil",
+      "Statistiques mensuelles de votre profil",
+      "Mise en relation directe facilitée",
+      "Possibilité de publier sur la plateforme",
+      "Accès prioritaire à des offres exclusives",
+      "Réductions sur des services partenaires",
+      "Une formation professionnelle offerte chaque semestre",
+    ],
+  },
+  // Type: 'paid' (Annuel en EUR)
+  {
+    id: "plan_premium_yearly_eur",
+    name: "Premium Annuel",
+    type: "paid",
+    amount: 8900, // 89 EUR en centimes
+    currency: "EUR",
+    interval: "yearly",
+    flutterwaveId: 225473,
+    // flutterwaveId: ID_FLUTTERWAVE_POUR_ANNUEL, // Un ID de plan différent est nécessaire
+    features: [
+      "Tous les avantages du profil basique",
+      "Photo de profil professionnelle",
+      "Photo de profil professionnelle",
+      "Bio détaillée avec vos expériences",
+      "Coordonnées complètes et contacts visibles",
+      "Liens vers vos réseaux sociaux",
+      "Mise en avant prioritaire dans les recherches",
+      "Badge Premium affiché sur votre profil",
+      "Statistiques mensuelles de votre profil",
+      "Mise en relation directe facilitée",
+      "Possibilité de publier sur la plateforme",
+      "Accès prioritaire à des offres exclusives",
+      "Réductions sur des services partenaires",
+      "Une formation professionnelle offerte chaque semestre",
+    ],
+  },
+  // Type: 'quote'
+
+  {
+    id: "plan_sponsored_01",
     name: "Sponsorisé",
-    priceMonthly: null, // Sur devis
-    priceYearly: null,
+    type: "quote",
+    contactText: "Contactez-nous pour un devis",
     features: [
       "Tous les avantages Premium",
       "Position en tête de liste",
       "Bannière de profil mise en avant",
       "Logo visible sur la page d'accueil",
-      "Statistiques de visites",
+      "Statistiques de visites détaillées",
       "Option 'Nous contacter' directe",
     ],
   },
