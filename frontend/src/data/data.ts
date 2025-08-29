@@ -458,3 +458,7 @@ export const PROFILES: IProfile[] = [
     isFeatured: false,
   },
 ];
+
+export const getPlanId = (planName: string) => {
+  return planName === "Premium Mensuel" ? 225463 : 225473;
+};

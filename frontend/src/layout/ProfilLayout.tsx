@@ -10,6 +10,7 @@ import {
   Menu,
   X,
   MessageCircleIcon,
+  ShoppingBag,
 } from "lucide-react"; // Importez Menu et X pour le toggle
 import { userStore } from "../store/store";
 import LogoTerraOhada from "../assets/logo TO.png";
@@ -131,6 +132,15 @@ const ProfileLayout: React.FC = () => {
               >
                 <MessageCircleIcon className="w-5 h-5 mr-3" />
                 Commentaires
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => scrollToSection("abonnement")}
+                className="flex items-center w-full px-4 py-2 text-md font-medium text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
+              >
+                <ShoppingBag className="w-5 h-5 mr-3" />
+                Abonnement
               </button>
             </li>
           </ul>

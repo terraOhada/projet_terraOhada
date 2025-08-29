@@ -187,10 +187,10 @@ export const verifyPayment = async (req, res) => {
             return res.status(400).json({ status: 'failed', message: "Le paiement a échoué ou est en attente." });
         }
 
-        // 2. Logique d'enregistrement avec Prisma
+        // 2. Logique d'enregistrement avec db
         const paymentData = response.data;
 
-        console.log("paymentdata :", paymentData)
+        // console.log("paymentdata :", paymentData)
 
         // Vérifier si ce paiement a déjà été enregistré pour éviter les doublons
         const existingPayment = await db.payment.findUnique({
@@ -238,10 +238,145 @@ export const verifyPayment = async (req, res) => {
 
     } catch (error) {
         console.error("Erreur lors de la vérification du paiement:", error);
-        // Gérer les erreurs Prisma (ex: contrainte unique violée)
+        // Gérer les erreurs db (ex: contrainte unique violée)
         if (error.code === 'P2002') {
             return res.status(409).json({ status: 'error', message: "Un paiement avec cet ID existe déjà." });
         }
         res.status(500).json({ status: 'error', message: "Impossible de vérifier le paiement." });
+    }
+};
+
+
+
+/**
+ * @description Récupérer l'historique des paiements pour un utilisateur
+ * @route GET /api/user/payments
+ */
+export const getUserPayments = async (req, res) => {
+    try {
+        // On suppose que vous avez l'ID de l'utilisateur connecté
+        // (par exemple, via un middleware d'authentification qui ajoute `req.user`)
+        const { userId } = req.params;
+
+        const payments = await db.payment.findMany({
+            where: {
+                userId: userId,
+            },
+            // Optionnel : trier du plus récent au plus ancien
+            orderBy: {
+                createdAt: 'desc',
+            },
+            //   // Optionnel : inclure les détails du plan associé
+            //   include: {
+            //     plan: true,
+            //   }
+        });
+
+        res.status(200).json({ status: 'success', data: payments });
+
+    } catch (error) {
+        console.error("Erreur lors de la récupération des paiements de l'utilisateur:", error);
+        res.status(500).json({ status: 'error', message: "Impossible de récupérer l'historique." });
+    }
+};
+
+
+
+/**
+ * @description Vérifier si un utilisateur a un abonnement actif
+ * @route GET /api/user/subscription-status
+ */
+export const getSubscriptionStatus = async (req, res) => {
+    try {
+        const { userId } = req.params;
+
+        // On cherche le dernier paiement réussi de l'utilisateur
+        const lastSuccessfulPayment = await db.payment.findFirst({
+            where: {
+                userId: userId,
+                status: 'successful',
+            },
+            orderBy: {
+                createdAt: 'desc',
+            },
+            // include: {
+            //     plan: true,
+            // },
+        });
+
+        if (!lastSuccessfulPayment) {
+            return res.status(200).json({ status: 'success', data: { isActive: false, plan: null } });
+        }
+
+        // Ici, vous pouvez ajouter une logique pour vérifier si l'abonnement a expiré
+        // Exemple simple : si le dernier paiement date de plus de 31 jours pour un plan mensuel
+        const now = new Date();
+        const paymentDate = new Date(lastSuccessfulPayment.createdAt);
+        const planInterval = lastSuccessfulPayment.amount === 900 ? "monthly" : "yearly";
+
+        let isActive = false;
+        if (planInterval === 'monthly') {
+            const expirationDate = new Date(paymentDate.setDate(paymentDate.getDate() + 31));
+            isActive = now < expirationDate;
+        } else if (planInterval === 'yearly') {
+            const expirationDate = new Date(paymentDate.setFullYear(paymentDate.getFullYear() + 1));
+            isActive = now < expirationDate;
+        }
+
+        const plan = {
+            name: planInterval === "monthly" ? "Premium Mensuel" : "Premium Annuel",
+            interval: planInterval
+        }
+
+        res.status(200).json({ status: 'success', data: { isActive, plan: plan } });
+
+    } catch (error) {
+        console.error("Erreur lors de la vérification du statut:", error);
+        res.status(500).json({ status: 'error', message: "Impossible de vérifier le statut." });
+    }
+};
+
+/**
+ * @description Résilier un abonnement (annule le plan de paiement)
+ * @route PUT /api/subscriptions/cancel/:planId
+ */
+export const cancelSubscription = async (req, res) => {
+    try {
+        const { planId } = req.params;
+        // On suppose que l'ID de l'utilisateur est disponible via un middleware d'authentification
+        const { userId } = req.query
+
+        if (!userId && !planId) return res.status(400).json({ status: 'failed', message: "merci de vous connnecter" })
+
+        // console.log(userId)
+
+        // 1. Appel à Flutterwave pour annuler le plan de paiement
+        // Cela empêchera les futures facturations automatiques.
+        await flw.PaymentPlan.cancel({ id: planId });
+
+        // 2. Mettre à jour le statut dans votre base de données
+        // On cherche le dernier paiement réussi pour ce plan et cet utilisateur pour le marquer comme résilié.
+        // Note : Vous pourriez avoir un modèle 'Subscription' dédié pour simplifier cela.
+        const lastPayment = await db.payment.findFirst({
+            where: {
+                user: { id: userId },
+                // plan: { planId: parseInt(planId) },
+                status: 'successful'
+            },
+            orderBy: { createdAt: 'desc' }
+        });
+
+        if (lastPayment) {
+            await db.payment.update({
+                where: { id: lastPayment.id },
+                data: { status: 'cancelled' } // Ou un champ dédié `subscriptionStatus`
+            });
+        }
+
+        res.status(200).json({ status: 'success', message: 'Abonnement résilié avec succès.' });
+
+    } catch (error) {
+        console.error("Erreur lors de la résiliation de l'abonnement:", error.response ? error.response.data : error.message);
+        res.status(500).json({ status: 'error', message: "Impossible de résilier l'abonnement." });
     }
 };

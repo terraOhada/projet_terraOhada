@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { cancelPlan, createPaymentPlan, fetchAllPlans, fetchPlan, initiateSubscriptionPayment, updatePlan, verifyPayment } from "../controllers/plan.controller.js"
+import { cancelPlan, cancelSubscription, createPaymentPlan, fetchAllPlans, fetchPlan, getSubscriptionStatus, getUserPayments, initiateSubscriptionPayment, updatePlan, verifyPayment } from "../controllers/plan.controller.js"
 
 const planRouter = Router()
 
@@ -23,6 +23,11 @@ planRouter.post('/payments/subscribe', initiateSubscriptionPayment);
 // Route pour vérifier un paiement après redirection
 planRouter.get('/payments/verify', verifyPayment);
 
+planRouter.get('/user/payments/:userId', getUserPayments);
 
+planRouter.get('/user/subscription-status/:userId', getSubscriptionStatus);
+
+// Route pour qu'un utilisateur résilie son abonnement
+planRouter.put('/subscriptions/cancel/:planId', cancelSubscription);
 
 export default planRouter

@@ -28,6 +28,7 @@ import ExplorerAnnuaire from "./pages/ExplorerAnnuaire";
 import OhadaQuizzPage from "./components/ui/OhadaQuizzPage";
 import PaymentPage from "./pages/admin/PaymentPage";
 import PaymentCallbackPage from "./components/ui/PaymentCallbackPage";
+import AbonnementProfile from "./pages/profile/AbonnementProfile";
 // Make sure this import is correct
 
 const App = () => {
@@ -97,6 +98,10 @@ const App = () => {
         {
           path: "commentaires",
           element: <CommentProfile />,
+        },
+        {
+          path: "abonnement",
+          element: <AbonnementProfile />,
         },
       ],
     },
