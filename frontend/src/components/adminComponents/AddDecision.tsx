@@ -324,7 +324,7 @@ const AddDecision: React.FC = () => {
           />
         </div>
 
-        {/* Colonne 1 */}
+        {/* Type Décision */}
         <div>
           <label
             htmlFor="colonne1"
