@@ -1,5 +1,18 @@
 # DOCUMENTATION TECHNIQUE DE TERRAOHADA
 
+![terraohada logo](https://res.cloudinary.com/dq0suzd5m/image/upload/v1751902233/logo_TO_lqulsn.png)
+
+## 📋 Sommaire
+
+- [📖 1. Vue d'Ensemble](##-1-vue-densemble)
+- [🏗 2. Stack Technique & Architecture](##-2-stack-technique--architecture)
+- [🚀 3. Démarrage Rapide (Développement Local)](##-3-démarrage-rapide-développement-local)
+- [📁 4. Structure du Projet](##-4-structure-du-projet)
+- [🤝 6. Guide de Contribution](##-6-guide-de-contribution)
+- [🚀 7. Déploiement](##-7-déploiement)
+- [👥 8. Guide Utilisateur](##-8-déploiement)
+- [🚀 9. Procédures de Déploiement Détaillées](##-9-procédures-de-déploiement-détaillées)
+
 ## 📖 1. Vue d'Ensemble
 
 **TerraOhada** répond à un besoin clair : rendre le droit OHADA accessible, compréhensible et exploitable. Dans un environnement où l’accès à l’information juridique reste souvent complexe, dispersé ou inégal, la plateforme centralise les contenus clés : textes, décisions, résumés, commentaires dans une interface claire et fonctionnelle.
@@ -249,3 +262,113 @@ Le déploiement est entièrement automatisé via GitHub Actions :
 - **Branche `develop`** : Un push déclenche un déploiement automatique en **environnement de staging** (URL de preview).
 
 Les variables d'environnement sont gérées directement sur les plateformes d'hébergement (Vercel & Render).
+
+### 👥 8. Guide Utilisateur
+
+Cette section décrit les fonctionnalités principales du point de vue de l'utilisateur final et comment les utiliser.
+
+#### **8.1. Création de Compte et Connexion**
+
+- **Inscription** : Rendez-vous sur la page d'accueil et cliquez sur "Connexion". Remplissez le formulaire avec votre email, un mot de passe et les informations requises (nom, prénom,). Un email de confirmation vous sera envoyé.
+- **Connexion** : Utilisez votre email et mot de passe pour vous connecter à votre espace personnel sécurisé.
+- **Mot de passe oublié** : Utilisez le lien "Mot de passe oublié" pour réinitialiser votre accès via email.
+
+#### **8.2. Utilisation de la Base Juridique OHADA**
+
+- **Recherche simple** : Dans la barre de recherche principale, tapez un mot-clé (ex: "société", "contrat", "sûreté").
+- **Année** : Sélectionner une année
+- **Pays** : Côte d'Ivoire, Sénégal, Cameroun...
+- **Filtres avancés** : Utilisez les filtres pour affiner votre recherche par :
+
+  Année
+
+  - **Sujet juridique** : Droit commercial ,Droits de sureté...
+  - **Types de décisions** : Ordonnance, Arrêt, Avis...
+  - **Juridiction** : CCJA, Juridictions nationales...
+  - **Texte juridique** : Actes uniformes, Code OHADA...
+
+- **Consultation d'une décision** : Cliquez sur [lire une décision]() pour voir le détail de la décision, y compris le texte intégral, les commentaires de la communauté et les références.
+
+#### **8.3. Gestion de l'Espace Personnel**
+
+- **Favoris** : Cliquez sur l'icône [♡]() ou "Ajouter aux favoris" pour la sauvegarder dans votre espace personnel pour un accès ultérieur.
+- **Historique** : Consultez l'historique de toutes vos recherches et consultations.
+- **Profil** : Modifiez vos informations personnelles et vos préférences depuis l'onglet "Mon Profile" en cliquant sur votre photo de profil.
+
+#### **8.4. Résolution des Quiz Juridiques**
+
+- Accédez à la section "Quizz TerraOhada" depuis le menu principal.
+- Répondez aux questions à choix multiples. Votre score s'affichera à la fin avec les corrections.
+- Relevez le défi pour améliorer votre score et vos connaissances.
+
+#### **8.5. Gestion de l'Abonnement et Paiement (Le cas échéant)**
+
+- Accédez à la page "Abonnement" pour voir les formules disponibles (Gratuit, Premium, etc.).
+- Le paiement des formules payantes est sécurisé et s'effectue via Flutterwave (carte bancaire, mobile money, etc.).
+- Gérez et consultez vos factures dans votre espace personnel.
+
+### 🚀 9. Procédures de Déploiement Détaillées
+
+Cette section décrit les étapes précises pour déployer manuellement l'application en environnement de production ou de staging.
+
+#### **9.1. Déploiement du Backend (API) sur Render**
+
+1.  **Préparation du Build :**
+
+    - Assurez-vous que la branche `main` (ou `develop` pour le staging) est à jour et stable.
+    - Vérifiez que toutes les variables d'environnement dans le fichier `backend/.env` sont correctement configurées pour la production (`NODE_ENV=production`, URLs de base de données et services externes de production).
+
+2.  **Déploiement sur Render :**
+
+    - Render se connecte automatiquement à votre dépôt GitHub et déploie à chaque push sur la branche liée.
+    - **Variables d'environnement sur Render :** Renseignez toutes les variables du fichier `.env` directement dans l'interface web de Render (Dashboard > votre service > Environment).
+    - **Build Command :** `npm install` (Render détecte automatiquement le `package.json`).
+    - **Start Command :** `npm start` (Assurez-vous que le script `"start": "node dist/index.js"` existe dans `package.json`).
+
+3.  **Vérification Post-Déploiement :**
+
+    - Accédez aux logs de l'application sur le dashboard Render pour vérifier qu'aucune erreur ne s'est produite au démarrage.
+    - Testez l'endpoint health-check ou un endpoint API public (ex: `GET /api/health`) pour confirmer que l'API répond.
+
+#### **9.2. Déploiement du Frontend (React) sur Vercel**
+
+1.  **Préparation du Build :**
+
+    - Assurez-vous que la branche `main` est à jour.
+    - Vérifiez que la variable `VITE_API_BASE_URL` dans `frontend/.env.production` pointe vers l'URL de votre backend déployé sur Render (et non `localhost`).
+
+2.  **Déploiement sur Vercel :**
+
+    - Connectez votre dépôt GitHub à Vercel.
+    - Configurez le projet :
+
+      - **Framework Preset :** Vite
+      - **Root Directory :** `frontend`
+      - **Build Command :** `npm run build` (ou `yarn build`)
+      - **Output Directory :** `dist`
+
+    - **Variables d'environnement :** Ajoutez toutes les variables préfixées par `VITE_` depuis votre `.env.production` dans les settings du projet sur Vercel.
+
+3.  **Vérification Post-Déploiement :**
+
+    - Vercel fournit une URL de preview pour chaque déploiement. Visitez-la pour tester le bon fonctionnement de l'interface.
+    - Testez les fonctionnalités clés : chargement des pages, appel API (login, recherche), etc.
+
+#### **9.3. Déploiement de la Base de Données (Migrations)**
+
+- **Environnement de Production :** Les migrations de base de données doivent être effectuées avec prudence.
+- **Processus :**
+
+  1.  **Localement :** Exécutez `npx prisma migrate dev --name nom_de_la_migration` pour créer une nouvelle migration.
+  2.  **Pousser la migration :** Poussez le dossier `prisma/migrations` généré sur la branche `main`.
+  3.  **Appliquer en production :** Render exécute automatiquement les commandes de build définies. Ajoutez la commande `npx prisma generate` dans le **Build Command** de Render (`npm run build` pourrait déjà le contenir) pour appliquer automatiquement les migrations à chaque déploiement.
+
+- **Alternative (Recommandée pour la production) :** Exécutez manuellement et en toute sécurité la commande de migration via un script ou une connexion SSH après le déploiement du backend : `npx prisma migrate deploy`.
+
+#### **9.4. Rollback (Procédure de Retour Arrière)**
+
+En cas de problème critique après un déploiement :
+
+1.  **Frontend (Vercel) :** Dans le dashboard Vercel, allez dans la section "Deployments", trouvez le dernier déploiement stable et cliquez sur "⋮" > "Redeploy".
+2.  **Backend (Render) :** Dans le dashboard Render, allez dans la section "Deploys" et utilisez la fonction "Rollback" pour revenir à la version précédente.
+3.  **Base de données :** Les migrations Prisma sont conçues pour être irréversibles. Un rollback de code backend est souvent préférable. Pour des changements de schéma critiques, une restauration de sauvegarde (backup) de la base de données peut être nécessaire.
