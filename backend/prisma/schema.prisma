@@ -14,14 +14,31 @@ datasource db {
 }
 
 enum Role {
+  CANDIDATE
   ADMIN
   USER
+  RECRUITER
   SUPER_ADMIN
 }
 
 enum Statut {
   VALIDE
   INCOMPLET
+}
+
+enum ContractType {
+  CDI
+  CDD
+  STAGE
+  FREELANCE
+  ALTERNANCE
+}
+
+enum ExperienceLevel {
+  DEBUTANT
+  JUNIOR
+  CONFIRME
+  SENIOR
 }
 
 model User {
@@ -40,12 +57,23 @@ model User {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
-  //  les relations
+  // --- RELATIONS ---
+  // Un utilisateur peut avoir un profil candidat détaillé
+  profile      Profile?
+  // Un utilisateur peut être le recruteur d'une entreprise
+  company      Company?
+  // Un utilisateur peut sauvegarder plusieurs offres
+  savedJobs    SavedJob[]
+  // Un utilisateur peut laisser plusieurs commentaires
+  commentaires Commentaire[]
+  // Un utilisateur peut effectuer plusieurs paiements
+  payments     Payment[]
+  // Un utilisateur peut faire plusieurs candidatures
+  applications Application[]
 
-  favorites    Favorite[]
-  commentaires Commentaire[] // Opposite relation field added
+  Favorite Favorite[]
 
-  Payment Payment[]
+  JobCommentaire JobCommentaire[]
 }
 
 /// Modèle pour les décisions juridiques de la cour OHADA
@@ -108,6 +136,8 @@ model Commentaire {
 
   decision Decision @relation(fields: [decisionId], references: [id])
   user     User     @relation(fields: [userId], references: [id])
+  Job      Job?     @relation(fields: [jobId], references: [id])
+  jobId    String?  @db.ObjectId
 
   @@unique([userId, decisionId], name: "userId_decisionId") // Un utilisateur ne peut commenter qu'une fois une décision
   @@index([decisionId]) // Index pour optimiser les requêtes sur les décisions
@@ -164,4 +194,107 @@ model Payment {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Job       Job?     @relation(fields: [jobId], references: [id])
+  jobId     String?  @db.ObjectId
+}
+
+// Profil détaillé pour un CANDIDAT
+model Profile {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  headline  String? // Ex: "Développeur Web Full-Stack"
+  bio       String? // Description détaillée
+  location  String? // Ex: "Bingerville, Abidjan"
+  resumeUrl String? // URL du CV (PDF)
+
+  // Relation un-à-un avec User
+  userId String @unique @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+// Entreprise gérée par un RECRUITER
+model Company {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String  @unique
+  description String?
+  logoUrl     String?
+  websiteUrl  String?
+  location    String?
+
+  // Relation un-à-un avec le recruteur
+  recruiterId String @unique @db.ObjectId
+  recruiter   User   @relation(fields: [recruiterId], references: [id])
+
+  // Une entreprise a plusieurs offres
+  jobs Job[]
+}
+
+// Offre d'emploi
+model Job {
+  id              String          @id @default(auto()) @map("_id") @db.ObjectId
+  title           String
+  description     String
+  location        String
+  contractType    ContractType
+  experienceLevel ExperienceLevel
+  published       Boolean         @default(false)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  // Relation avec l'entreprise qui poste
+  companyId String  @db.ObjectId
+  company   Company @relation(fields: [companyId], references: [id])
+
+  // Relations avec les actions des utilisateurs
+  savedBy      SavedJob[]
+  applications Application[]
+  commentaires JobCommentaire[]
+  // payments     Payment[] // Pour les offres sponsorisées
+  Commentaire  Commentaire[]
+  Payment      Payment[]
+}
+
+// =========================================
+// MODÈLES DE LIAISON ET FONCTIONNALITÉS
+// =========================================
+
+// Candidature d'un User à un Job
+model Application {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  status    String   @default("Soumise")
+  appliedAt DateTime @default(now())
+
+  jobId  String @db.ObjectId
+  job    Job    @relation(fields: [jobId], references: [id])
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@unique([jobId, userId]) // Empêche de postuler deux fois
+}
+
+// Offre sauvegardée (votre "Favorite")
+model SavedJob {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  savedAt DateTime @default(now())
+
+  jobId  String @db.ObjectId
+  job    Job    @relation(fields: [jobId], references: [id])
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@unique([jobId, userId]) // Empêche de sauvegarder deux fois
+}
+
+// Commentaire sur une offre d'emploi
+model JobCommentaire {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  text      String
+  createdAt DateTime @default(now())
+
+  // Qui a écrit le commentaire
+  authorId String @db.ObjectId
+  author   User   @relation(fields: [authorId], references: [id])
+
+  // Sur quelle offre
+  jobId String @db.ObjectId
+  job   Job    @relation(fields: [jobId], references: [id])
 }

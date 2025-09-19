@@ -29,6 +29,9 @@ import OhadaQuizzPage from "./components/ui/OhadaQuizzPage";
 import PaymentPage from "./pages/admin/PaymentPage";
 import PaymentCallbackPage from "./components/ui/PaymentCallbackPage";
 import AbonnementProfile from "./pages/profile/AbonnementProfile";
+import JobBoard from "./pages/JobBoard/JobBoard";
+import JobDetailPage from "./pages/JobBoard/JobDetailPage";
+import DashboardApplicationsPage from "./pages/profile/DashboardApplicationsPage";
 // Make sure this import is correct
 
 const App = () => {
@@ -79,6 +82,14 @@ const App = () => {
           path: "quizz-terraOhada",
           element: <OhadaQuizzPage />,
         },
+        {
+          path: "job-board",
+          element: <JobBoard />,
+        },
+        {
+          path: "jobs/:id",
+          element: <JobDetailPage />,
+        },
       ],
     },
     {
@@ -102,6 +113,10 @@ const App = () => {
         {
           path: "abonnement",
           element: <AbonnementProfile />,
+        },
+        {
+          path: "candidatures",
+          element: <DashboardApplicationsPage />,
         },
       ],
     },

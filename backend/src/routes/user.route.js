@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { isAdmin } from "../middleware/admin.middleware.js";
-import { changerProfil, modifierUtilisateur, supprimerUtilisateur, tousUtilisateurs, unUtilisateur, utilisateurRole } from "../controllers/user.controller.js";
+import { candidatures, changerProfil, modifierUtilisateur, profileCandidat, supprimerUtilisateur, tousUtilisateurs, unUtilisateur, utilisateurRole } from "../controllers/user.controller.js";
 
 const userRouter = Router();
 
@@ -11,5 +11,9 @@ userRouter.put('/modifier-utilisateur/:userId', modifierUtilisateur);
 userRouter.delete('/supprimer-utilisateur/:userId', supprimerUtilisateur);
 userRouter.put('/changer-role/:userId', isAdmin, utilisateurRole);
 userRouter.put('/changer-utilisateur', changerProfil);
+
+// jobs
+userRouter.get('/:userId/applications', candidatures);
+userRouter.get('/:userId/profile', profileCandidat);
 
 export default userRouter;

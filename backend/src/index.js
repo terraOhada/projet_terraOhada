@@ -14,6 +14,7 @@ import userRouter from './routes/user.route.js';
 import commentRouter from './routes/comment.route.js';
 import notionRouter from './routes/notion.routes.js';
 import planRouter from './routes/plan.route.js';
+import jobRouter from './routes/job.route.js';
 
 
 
@@ -59,6 +60,7 @@ app.use('/api/users', userRouter);
 app.use('/api/comment', commentRouter);
 app.use('/api/notion', notionRouter);
 app.use('/api/plan', planRouter);
+app.use('/api/job', jobRouter);
 
 app.get('/', (req, res) => {
     res.send('API is running...');

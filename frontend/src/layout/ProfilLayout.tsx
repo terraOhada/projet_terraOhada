@@ -16,6 +16,7 @@ import { userStore } from "../store/store";
 import LogoTerraOhada from "../assets/logo TO.png";
 import toast from "react-hot-toast";
 import Couverture from "../assets/images/couverture.jpeg";
+import { HiDesktopComputer } from "react-icons/hi";
 
 const ProfileLayout: React.FC = () => {
   const navigate = useNavigate();
@@ -141,6 +142,15 @@ const ProfileLayout: React.FC = () => {
               >
                 <ShoppingBag className="w-5 h-5 mr-3" />
                 Abonnement
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => scrollToSection("candidatures")}
+                className="flex items-center w-full px-4 py-2 text-md font-medium text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
+              >
+                <HiDesktopComputer className="w-5 h-5 mr-3" />
+                Candidatures
               </button>
             </li>
           </ul>

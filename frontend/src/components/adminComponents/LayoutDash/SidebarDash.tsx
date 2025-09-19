@@ -45,6 +45,11 @@ const SidebarDash: React.FC = () => {
       icon: StoreIcon,
       url: "payment",
     },
+    // {
+    //   name: "candidatures",
+    //   icon: UserIcon,
+    //   url: "candidature",
+    // },
   ];
 
   const TerraOhadaLogo =

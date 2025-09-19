@@ -15,6 +15,7 @@ export const USERS_URL = `${BASE_URL}/users`;
 export const COMMENT_URL = `${BASE_URL}/comment`;
 export const NOTION_URL = `${BASE_URL}/notion`;
 export const PLAN_URL = `${BASE_URL}/plan`;
+export const JOB_URL = `${BASE_URL}/job`;
 
 export const login = async (email: string, password: string) => {
   try {

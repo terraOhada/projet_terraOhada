@@ -1,3 +1,5 @@
+import { applicationsData, userProfileData } from "../data/applicationData.js"
+import { jobsData } from "../data/data.js"
 import db from "../utils/config.js"
 
 export const utilisateurRole = async (req, res) => {
@@ -116,5 +118,35 @@ export const changerProfil = async (req, res) => {
     } catch (error) {
         console.log(error)
         return res.status(500).json({ success: false, message: 'Erreur lors de la mise à jour de l\'utilisateur' })
+    }
+}
+
+export const candidatures = async (req, res) => {
+    const { userId } = req.params;
+
+    // console.log("userId", userId)
+
+    // 1. Filtrer les candidatures pour ne garder que celles de l'utilisateur demandé
+    const userApplications = applicationsData.filter(app => app.userId === userId);
+
+    // 2. Enrichir les données : ajouter les détails de l'offre (titre, entreprise) à chaque candidature
+    const enrichedApplications = userApplications.map(application => {
+        const jobDetails = jobsData.find(job => job.id === application.jobId);
+        return {
+            ...application,
+            jobTitle: jobDetails ? jobDetails.title : "Offre expirée",
+            companyName: jobDetails ? jobDetails.company : "N/A",
+        };
+    });
+
+    res.status(200).json(enrichedApplications);
+}
+
+export const profileCandidat = async (req, res) => {
+    const { userId } = req.params;
+    if (userId === userProfileData.userId) {
+        res.status(200).json(userProfileData);
+    } else {
+        res.status(404).json({ message: "Profil non trouvé" });
     }
 }

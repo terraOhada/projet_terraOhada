@@ -144,3 +144,26 @@ export interface QuotePlan extends BasePlan {
 
 // Le type final est une union de tous les types de plans possibles
 export type IPlan = FreePlan | PaidPlan | QuotePlan;
+
+export interface Job {
+  id: number;
+  title: string;
+  company: string;
+  logo?: string; // URL du logo
+  location: string;
+  contractType: string;
+  experienceLevel: string;
+  sector: string;
+  remote: string;
+  postedDate: string;
+}
+
+export interface Filters {
+  q: string;
+  location: string;
+  contract: string[];
+  experience: string[]; // <-- AJOUTER
+  remote: string[]; // <-- AJOUTER
+  date: string;
+  sortBy: string;
+}
