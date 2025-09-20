@@ -30,7 +30,19 @@ export const applicationsData = [
 ];
 
 // Données fictives pour le profil de l'utilisateur
-export const userProfileData = {
+export let userProfileData = {
     userId: "user_123",
-    completion: 75, // Pourcentage de complétion du profil
+    nom: "DAO",
+    prenom: "Awa",
+    email: "awa.dao@example.com",
+    telephone: "+225 0708091011",
+    photoUrl: "/avatars/awa.png",
+    headline: "Développeuse Full-Stack spécialisée en React & Node.js",
+    bio: "Passionnée par la création d'applications web intuitives et performantes...",
+    resumeUrl: "/cv/CV_Awa_DAO_2025.pdf",
+    linkedinUrl: "https://linkedin.com/in/awadao",
+    // --- AJOUTS ---
+    specialities: ["Développement Web", "Applications Mobiles", "Gestion de Projet Agile"],
+    skills: ["React.js", "Node.js", "TypeScript", "MongoDB", "Express.js", "Figma", "REST APIs", "GraphQL"],
+    completion: 75,
 };

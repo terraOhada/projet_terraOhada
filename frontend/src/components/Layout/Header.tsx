@@ -20,6 +20,8 @@ const Header: React.FC = () => {
     toogleMenu();
   }, [pathname]);
 
+  // console.log("user", user);
+
   return (
     <header className="bg-white shadow-sm px-4 py-3 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -64,7 +66,7 @@ const Header: React.FC = () => {
                 {user && (
                   <div className="md:hidden items-center space-x-4">
                     <Link
-                      to={`/profile/${user.nom}-${user.prenom}`}
+                      to={`/profile/${user.nom}-${user.prenom.split(" ")[0]}`}
                       className="text-blue-800 hover:text-blue-600"
                     >
                       <img
@@ -88,7 +90,7 @@ const Header: React.FC = () => {
                 {user && (
                   <div className="flex md:hidden items-center space-x-4">
                     <Link
-                      to={`/profile/${user.nom}-${user.prenom}`}
+                      to={`/profile/${user.nom}-${user.prenom.split(" ")[0]}`}
                       className="text-blue-800 hover:text-blue-600"
                     >
                       <img

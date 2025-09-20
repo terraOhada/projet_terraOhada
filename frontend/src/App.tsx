@@ -31,7 +31,14 @@ import PaymentCallbackPage from "./components/ui/PaymentCallbackPage";
 import AbonnementProfile from "./pages/profile/AbonnementProfile";
 import JobBoard from "./pages/JobBoard/JobBoard";
 import JobDetailPage from "./pages/JobBoard/JobDetailPage";
-import DashboardApplicationsPage from "./pages/profile/DashboardApplicationsPage";
+import DashboardApplicationsPage from "./pages/profile/JobApplicationsPage";
+import CandidateLayout from "./layout/CandidateLayout";
+import JobProfilePage from "./pages/profile/JobProfilePage";
+import RecruiterLayout from "./layout/RecruiterLayout";
+import RecruiterDashboardPage from "./pages/JobBoard/recruiter/RecruiterDashboardPage";
+import RecruiterJobsListPage from "./pages/JobBoard/recruiter/RecruiterJobsListPage";
+import ApplicantManagementPage from "./pages/JobBoard/recruiter/ApplicantManagementPage";
+import CreateJobPage from "./pages/JobBoard/recruiter/CreateJobPage";
 // Make sure this import is correct
 
 const App = () => {
@@ -93,6 +100,28 @@ const App = () => {
       ],
     },
     {
+      path: "recruiter",
+      element: <RecruiterLayout />,
+      children: [
+        {
+          path: "dashboard",
+          element: <RecruiterDashboardPage />,
+        },
+        {
+          path: "jobs",
+          element: <RecruiterJobsListPage />,
+        },
+        {
+          path: "jobs/new",
+          element: <CreateJobPage />,
+        },
+        {
+          path: "jobs/:id/applicants",
+          element: <ApplicantManagementPage />, // You can create a separate component if needed
+        },
+      ],
+    },
+    {
       path: "/profile/:id", // The /profil route uses ProfileLayout
       element: <ProfileLayout />,
       errorElement: <NotFoundPage />,
@@ -114,9 +143,20 @@ const App = () => {
           path: "abonnement",
           element: <AbonnementProfile />,
         },
+
         {
           path: "candidatures",
-          element: <DashboardApplicationsPage />,
+          element: <CandidateLayout />,
+          children: [
+            {
+              path: "", // This will match /profile/:id/candidatures
+              element: <DashboardApplicationsPage />,
+            },
+            {
+              path: "profile", // This will match /profile/:id/candidatures/profile
+              element: <JobProfilePage />,
+            },
+          ],
         },
       ],
     },

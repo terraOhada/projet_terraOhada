@@ -155,6 +155,7 @@ export interface Job {
   experienceLevel: string;
   sector: string;
   remote: string;
+  description?: string;
   postedDate: string;
 }
 

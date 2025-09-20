@@ -150,3 +150,25 @@ export const profileCandidat = async (req, res) => {
         res.status(404).json({ message: "Profil non trouvé" });
     }
 }
+
+export const mettreAJourProfileCandidat = async (req, res) => {
+    const { userId } = req.params;
+    const updatedData = req.body;
+
+    if (userId !== userProfileData.userId) {
+        return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+
+    // Dans une vraie BDD, vous feriez un UPDATE. Ici, on fusionne les objets.
+    userProfileData = { ...userProfileData, ...updatedData };
+
+    console.log("✅ Profil mis à jour :", userProfileData);
+
+    // On simule un petit délai
+    setTimeout(() => {
+        res.status(200).json({
+            message: "Profil mis à jour avec succès !",
+            profile: userProfileData
+        });
+    }, 1000);
+}

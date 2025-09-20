@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { JOB_URL } from "../../api/api";
 import type { Job } from "../../types"; // Réutiliser le type Job
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 // Icônes
 import {
@@ -104,7 +106,7 @@ const JobDetailPage: React.FC = () => {
               </div>
 
               {/* Corps de la description */}
-              <div className="mt-10 prose prose-lg max-w-none">
+              {/* <div className="mt-10 prose prose-lg max-w-none">
                 <h4>À propos de {job.company}</h4>
                 <p>
                   {job.company} est un leader dans le secteur de la {job.sector}{" "}
@@ -128,7 +130,16 @@ const JobDetailPage: React.FC = () => {
                   les technologies modernes et êtes passionné(e) par la création
                   de produits de qualité.
                 </p>
-              </div>
+              </div> */}
+
+              {/* Quand je vais bien implementer */}
+
+              {/* --- Corps de la description (MODIFIÉ) --- */}
+              <article className="mt-10 prose prose-lg max-w-none">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {job.description}
+                </ReactMarkdown>
+              </article>
             </main>
 
             {/* --- BARRE LATÉRALE --- */}

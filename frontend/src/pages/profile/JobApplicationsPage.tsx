@@ -37,7 +37,7 @@ const StatusBadge = ({ status }: { status: EnrichedApplication["status"] }) => {
   );
 };
 
-const DashboardApplicationsPage: React.FC = () => {
+const JobApplicationsPage: React.FC = () => {
   const currentUserId = "user_123";
 
   const {
@@ -50,7 +50,7 @@ const DashboardApplicationsPage: React.FC = () => {
   });
 
   return (
-    <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm border">
+    <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm">
       <h1 className="text-3xl font-extrabold text-gray-900 mb-6">
         Mes Candidatures
       </h1>
@@ -97,4 +97,4 @@ const DashboardApplicationsPage: React.FC = () => {
   );
 };
 
-export default DashboardApplicationsPage;
+export default JobApplicationsPage;
