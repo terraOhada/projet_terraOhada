@@ -32,20 +32,29 @@ app.use(cookieParser());
 // Middleware to set CORS headers
 const CLIENT_URL = process.env.CORS_ORIGIN || 'http://localhost:5173'
 
+const allowedOrigins = ['https://www.terraohada.com', 'https://mvp-terraohada-frontend.vercel.app', 'http://localhost:3000'];
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:5173'); // Remplacez par l'origine de votre site web
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Ajoutez les méthodes HTTP autorisées
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Ajoutez les en-têtes autorisés
-    next();
-});
 
-app.use(cors({
-    origin: CLIENT_URL,  // L'URL de ton frontend Vercel
-    methods: "GET,POST,PUT,DELETE,OPTIONS",
-    allowedHeaders: "Content-Type,Authorization",
-    credentials: true,
-}));
+
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', 'http://localhost:5173'); // Remplacez par l'origine de votre site web
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Ajoutez les méthodes HTTP autorisées
+//     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Ajoutez les en-têtes autorisés
+//     next();
+// });
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Non autorisé par CORS'));
+        }
+    },
+    credentials: true, // <-- 4. AJOUTER CETTE LIGNE
+};
+
+app.use(cors(corsOptions));
 
 app.use('/documents', express.static('uploads/documents'));
 
