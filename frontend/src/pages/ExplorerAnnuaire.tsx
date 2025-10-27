@@ -269,134 +269,139 @@ const ExplorerAnnuaire = () => {
           {loading ? (
             <FeaturedProfilesSkeleton />
           ) : (
-            <div className="mb-12">
-              <h2 className="text-2xl font-bold mb-6 text-gray-800">
-                Profils en vedette
-              </h2>
-              {/* Votre contenu des profils vedettes */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Cette partie sera disponible plus tard */}
+            // profiles en vedettes à ouvrir plus tard
+            <div></div>
+            // profiles en vedettes à ouvrir plus tard
 
-                {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {featuredProfiles.slice(0, 3).map((profile) => (
-                    <ProfileCardVedette profile={profile} key={profile.id} />
-                  ))}
-                </div> */}
 
-                {/* <!-- Sponsored Profile 1 --> */}
-                <div className="bg-white rounded-lg shadow-md overflow-hidden border-l-4 border-blue-600">
-                  <div className="p-6">
-                    <div className="flex items-center mb-4">
-                      <img
-                        src="https://randomuser.me/api/portraits/women/45.jpg"
-                        alt="Profile"
-                        className="w-16 h-16 rounded-full object-cover mr-4"
-                      />
-                      <div>
-                        <h3 className="font-bold text-lg">
-                          Me Fatoumata Diallo
-                        </h3>
-                        <p className="text-blue-600">Avocate | Burkina Faso</p>
-                        <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">
-                          Sponsorisé
-                        </span>
-                      </div>
-                    </div>
-                    <p className="text-gray-600 mb-4">
-                      Spécialiste en droit des sociétés et fiscalité OHADA avec
-                      10 ans d'expérience.
-                    </p>
-                    <div className="flex space-x-2">
-                      <a href="#" className="text-blue-500 hover:text-blue-700">
-                        <i className="fab fa-linkedin"></i>
-                      </a>
-                      <a href="#" className="text-blue-500 hover:text-blue-700">
-                        <i className="fas fa-envelope"></i>
-                      </a>
-                    </div>
-                    <button className="mt-4 bg-blue-100 text-blue-800 px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-200">
-                      Voir le profil complet
-                    </button>
-                  </div>
-                </div>
+            // <div className="mb-12">
+            //   <h2 className="text-2xl font-bold mb-6 text-gray-800">
+            //     Profils en vedette
+            //   </h2>
+            //   {/* Votre contenu des profils vedettes */}
+            //   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            //     {/* Cette partie sera disponible plus tard */}
 
-                {/* <!-- Sponsored Profile 2 --> */}
-                <div className="bg-white rounded-lg shadow-md overflow-hidden border-l-4 border-blue-600">
-                  <div className="p-6">
-                    <div className="flex items-center mb-4">
-                      <img
-                        src="https://randomuser.me/api/portraits/men/32.jpg"
-                        alt="Profile"
-                        className="w-16 h-16 rounded-full object-cover mr-4"
-                      />
-                      <div>
-                        <h3 className="font-bold text-lg">Dr. Jean Koffi</h3>
-                        <p className="text-blue-600">
-                          Enseignant | Côte d'Ivoire
-                        </p>
-                        <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">
-                          Sponsorisé
-                        </span>
-                      </div>
-                    </div>
-                    <p className="text-gray-600 mb-4">
-                      Professeur de droit OHADA à l'Université Félix
-                      Houphouët-Boigny, expert en droit des contrats.
-                    </p>
-                    <div className="flex space-x-2">
-                      <a href="#" className="text-blue-500 hover:text-blue-700">
-                        <i className="fab fa-linkedin"></i>
-                      </a>
-                      <a href="#" className="text-blue-500 hover:text-blue-700">
-                        <i className="fas fa-envelope"></i>
-                      </a>
-                    </div>
-                    <button className="mt-4 bg-blue-100 text-blue-800 px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-200">
-                      Voir le profil complet
-                    </button>
-                  </div>
-                </div>
+            //     {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            //       {featuredProfiles.slice(0, 3).map((profile) => (
+            //         <ProfileCardVedette profile={profile} key={profile.id} />
+            //       ))}
+            //     </div> */}
 
-                {/* <!-- Sponsored Profile 3 --> */}
-                <div className="bg-white rounded-lg shadow-md overflow-hidden border-l-4 border-blue-600">
-                  <div className="p-6">
-                    <div className="flex items-center mb-4">
-                      <img
-                        src="https://randomuser.me/api/portraits/women/68.jpg"
-                        alt="Profile"
-                        className="w-16 h-16 rounded-full object-cover mr-4"
-                      />
-                      <div>
-                        <h3 className="font-bold text-lg">
-                          Maître Amina Ndiaye
-                        </h3>
-                        <p className="text-blue-600">
-                          Juriste d'entreprise | Sénégal
-                        </p>
-                        <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">
-                          Sponsorisé
-                        </span>
-                      </div>
-                    </div>
-                    <p className="text-gray-600 mb-4">
-                      Juriste senior spécialisée en conformité et gouvernance
-                      d'entreprise en zone OHADA.
-                    </p>
-                    <div className="flex space-x-2">
-                      <a href="#" className="text-blue-500 hover:text-blue-700">
-                        <i className="fab fa-linkedin"></i>
-                      </a>
-                      <a href="#" className="text-blue-500 hover:text-blue-700">
-                        <i className="fas fa-envelope"></i>
-                      </a>
-                    </div>
-                    <button className="mt-4 bg-blue-100 text-blue-800 px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-200">
-                      Voir le profil complet
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            //     {/* <!-- Sponsored Profile 1 --> */}
+            //     <div className="bg-white rounded-lg shadow-md overflow-hidden border-l-4 border-blue-600">
+            //       <div className="p-6">
+            //         <div className="flex items-center mb-4">
+            //           <img
+            //             src="https://randomuser.me/api/portraits/women/45.jpg"
+            //             alt="Profile"
+            //             className="w-16 h-16 rounded-full object-cover mr-4"
+            //           />
+            //           <div>
+            //             <h3 className="font-bold text-lg">
+            //               Me Fatoumata Diallo
+            //             </h3>
+            //             <p className="text-blue-600">Avocate | Burkina Faso</p>
+            //             <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">
+            //               Sponsorisé
+            //             </span>
+            //           </div>
+            //         </div>
+            //         <p className="text-gray-600 mb-4">
+            //           Spécialiste en droit des sociétés et fiscalité OHADA avec
+            //           10 ans d'expérience.
+            //         </p>
+            //         <div className="flex space-x-2">
+            //           <a href="#" className="text-blue-500 hover:text-blue-700">
+            //             <i className="fab fa-linkedin"></i>
+            //           </a>
+            //           <a href="#" className="text-blue-500 hover:text-blue-700">
+            //             <i className="fas fa-envelope"></i>
+            //           </a>
+            //         </div>
+            //         <button className="mt-4 bg-blue-100 text-blue-800 px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-200">
+            //           Voir le profil complet
+            //         </button>
+            //       </div>
+            //     </div>
+
+            //     {/* <!-- Sponsored Profile 2 --> */}
+            //     <div className="bg-white rounded-lg shadow-md overflow-hidden border-l-4 border-blue-600">
+            //       <div className="p-6">
+            //         <div className="flex items-center mb-4">
+            //           <img
+            //             src="https://randomuser.me/api/portraits/men/32.jpg"
+            //             alt="Profile"
+            //             className="w-16 h-16 rounded-full object-cover mr-4"
+            //           />
+            //           <div>
+            //             <h3 className="font-bold text-lg">Dr. Jean Koffi</h3>
+            //             <p className="text-blue-600">
+            //               Enseignant | Côte d'Ivoire
+            //             </p>
+            //             <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">
+            //               Sponsorisé
+            //             </span>
+            //           </div>
+            //         </div>
+            //         <p className="text-gray-600 mb-4">
+            //           Professeur de droit OHADA à l'Université Félix
+            //           Houphouët-Boigny, expert en droit des contrats.
+            //         </p>
+            //         <div className="flex space-x-2">
+            //           <a href="#" className="text-blue-500 hover:text-blue-700">
+            //             <i className="fab fa-linkedin"></i>
+            //           </a>
+            //           <a href="#" className="text-blue-500 hover:text-blue-700">
+            //             <i className="fas fa-envelope"></i>
+            //           </a>
+            //         </div>
+            //         <button className="mt-4 bg-blue-100 text-blue-800 px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-200">
+            //           Voir le profil complet
+            //         </button>
+            //       </div>
+            //     </div>
+
+            //     {/* <!-- Sponsored Profile 3 --> */}
+            //     <div className="bg-white rounded-lg shadow-md overflow-hidden border-l-4 border-blue-600">
+            //       <div className="p-6">
+            //         <div className="flex items-center mb-4">
+            //           <img
+            //             src="https://randomuser.me/api/portraits/women/68.jpg"
+            //             alt="Profile"
+            //             className="w-16 h-16 rounded-full object-cover mr-4"
+            //           />
+            //           <div>
+            //             <h3 className="font-bold text-lg">
+            //               Maître Amina Ndiaye
+            //             </h3>
+            //             <p className="text-blue-600">
+            //               Juriste d'entreprise | Sénégal
+            //             </p>
+            //             <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">
+            //               Sponsorisé
+            //             </span>
+            //           </div>
+            //         </div>
+            //         <p className="text-gray-600 mb-4">
+            //           Juriste senior spécialisée en conformité et gouvernance
+            //           d'entreprise en zone OHADA.
+            //         </p>
+            //         <div className="flex space-x-2">
+            //           <a href="#" className="text-blue-500 hover:text-blue-700">
+            //             <i className="fab fa-linkedin"></i>
+            //           </a>
+            //           <a href="#" className="text-blue-500 hover:text-blue-700">
+            //             <i className="fas fa-envelope"></i>
+            //           </a>
+            //         </div>
+            //         <button className="mt-4 bg-blue-100 text-blue-800 px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-200">
+            //           Voir le profil complet
+            //         </button>
+            //       </div>
+            //     </div>
+            //   </div>
+            // </div>
           )}
 
           {/* Section Tous les professionnels */}

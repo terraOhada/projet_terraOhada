@@ -79,9 +79,11 @@ const PlanCard = ({
       case "free":
         return "Plan actuel";
       case "paid":
-        return "Choisir ce plan";
+        return "Bientôt disponible";
+      // return "Choisir ce plan";
       case "quote":
-        return "Nous contacter";
+        return "Bientôt disponible";
+      // return "Nous contacter";
     }
   };
 
@@ -138,7 +140,11 @@ const PlanCard = ({
       <div className="p-6 mt-auto">
         <button
           onClick={handleButtonClick}
-          disabled={plan.type === "free"}
+          disabled={
+            plan.type === "free" ||
+            plan.type === "paid" ||
+            plan.type === "quote"
+          }
           className={`w-full py-3 rounded-md font-semibold transition-colors ${buttonClasses[theme]}`}
         >
           {getButtonText()}

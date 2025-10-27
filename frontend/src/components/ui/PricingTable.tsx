@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { plans } from "../../data/data";
 import type { PaidPlan } from "../../types";
-import { userStore } from "../../store/store";
-import axios from "axios";
-import { PLAN_URL } from "../../api/api";
+// import { userStore } from "../../store/store";
+// import axios from "axios";
+// import { PLAN_URL } from "../../api/api";
 
 // 1. On crée une liste de toutes les fonctionnalités à comparer.
 // C'est ce qui va générer les lignes du tableau.
@@ -34,7 +34,7 @@ const renderCell = (content: boolean | string) => {
 };
 
 const PricingTable = () => {
-  const { user } = userStore();
+  // const { user } = userStore();
   const [isYearly, setIsYearly] = useState(false);
   const interval = isYearly ? "yearly" : "monthly";
 
@@ -48,33 +48,33 @@ const PricingTable = () => {
   ) as PaidPlan;
 
   // Fonction pour gérer la sélection du plan
-  const handleSelectPlan = async (flutterwaveId: number) => {
-    console.log(`ID du plan Flutterwave sélectionné : ${flutterwaveId}`);
-    if (!user?.isAccountVerified) {
-      return;
-    }
-    // Ici, vous appelez votre backend pour initier le paiement
-    try {
-      const userInfo = {
-        email: user.email,
-        name: user.nom + " " + user.prenom,
-        plan_id: flutterwaveId,
-      };
+  // const handleSelectPlan = async (flutterwaveId: number) => {
+  //   console.log(`ID du plan Flutterwave sélectionné : ${flutterwaveId}`);
+  //   if (!user?.isAccountVerified) {
+  //     return;
+  //   }
+  //   // Ici, vous appelez votre backend pour initier le paiement
+  //   try {
+  //     const userInfo = {
+  //       email: user.email,
+  //       name: user.nom + " " + user.prenom,
+  //       plan_id: flutterwaveId,
+  //     };
 
-      const response = await axios.post(
-        `${PLAN_URL}/payments/subscribe`,
-        userInfo
-      );
+  //     const response = await axios.post(
+  //       `${PLAN_URL}/payments/subscribe`,
+  //       userInfo
+  //     );
 
-      // Redirige l'utilisateur vers la page de paiement de Flutterwave
-      if (response.data.link) {
-        window.location.href = response.data.link;
-      }
-    } catch (error) {
-      console.error("Erreur lors de la création du lien de paiement", error);
-      alert("Impossible de procéder au paiement.");
-    }
-  };
+  //     // Redirige l'utilisateur vers la page de paiement de Flutterwave
+  //     if (response.data.link) {
+  //       window.location.href = response.data.link;
+  //     }
+  //   } catch (error) {
+  //     console.error("Erreur lors de la création du lien de paiement", error);
+  //     alert("Impossible de procéder au paiement.");
+  //   }
+  // };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -180,18 +180,22 @@ const PricingTable = () => {
             </div>
             <div className="p-4 bg-white text-center flex justify-center items-center">
               <button
-                onClick={() => handleSelectPlan(premiumXOF.flutterwaveId)}
+                // activer bientôt
+                // onClick={() => handleSelectPlan(premiumXOF.flutterwaveId)}
                 className="px-6 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition"
               >
-                S'abonner
+                {/* S'abonner */}
+                Bientôt disponible
               </button>
             </div>
             <div className="p-4 bg-white text-center flex justify-center items-center rounded-br-lg">
               <button
-                onClick={() => handleSelectPlan(premiumEUR.flutterwaveId)}
+                // activer bientôt
+                // onClick={() => handleSelectPlan(premiumEUR.flutterwaveId)}
                 className="px-6 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition"
               >
-                S'abonner
+                {/* S'abonner */}
+                Bientôt disponible
               </button>
             </div>
           </div>
