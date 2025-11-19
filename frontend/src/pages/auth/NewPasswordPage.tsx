@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, type FormEvent } from "react";
 import TerraOhadaLogo from "../../assets/logo TO.png"; // Example: if your logo is in src/assets
 import Couverture from "../../assets/images/couverture.jpeg";
@@ -17,6 +19,8 @@ const NewPasswordPage = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>(""); // State for confirming the new password
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
+  console.log("erreur", error);
 
   const { token } = useParams<{ token: string }>(); // Extracting the token from the URL parameters
   // console.log("token", token?.split("+")[1]); // Log the token for debugging
@@ -83,6 +87,8 @@ const NewPasswordPage = () => {
         email: token.split("+")[0], // Assuming the email is part of the token
       });
 
+      console.log("response", response);
+
       if (response.data.success) {
         // Password reset successful
         toast.success("Mot de passe réinitialisé avec succès !");
@@ -91,16 +97,22 @@ const NewPasswordPage = () => {
           navigate("/");
         }, 2000);
       } else {
+        // console.log("erreur", response);
         // Password reset failed (e.g., invalid/expired token, server error)
         setError(
-          response.data.message ||
+          response?.data.message ||
             "La réinitialisation du mot de passe a échoué. Le lien est peut-être invalide ou expiré."
         );
       }
-    } catch (err) {
-      console.error("Erreur lors de la réinitialisation du mot de passe:", err);
+    } catch (err: any) {
+      console.error(
+        // "Erreur lors de la réinitialisation du mot de passe:",
+        err?.response?.data?.message
+      );
       setError(
-        "Une erreur est survenue lors de la réinitialisation. Veuillez réessayer."
+        (err as any).response?.data?.message
+        // "Une erreur est survenue lors de la réinitialisation. Veuillez réessayer"
+        // "Une erreur est survenue lors de la réinitialisation. Veuillez réessayer."
       );
     } finally {
       setLoading(false);

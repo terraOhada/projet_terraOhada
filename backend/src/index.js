@@ -32,7 +32,7 @@ app.use(cookieParser());
 // Middleware to set CORS headers
 const CLIENT_URL = process.env.CORS_ORIGIN || 'http://localhost:5173'
 
-const allowedOrigins = ['https://www.terraohada.com', 'https://mvp-terraohada-frontend.vercel.app', 'http://localhost:5173'];
+const allowedOrigins = ['https://www.terraohada.com', 'https://mvp-terraohada-frontend.vercel.app', 'http://localhost:5174'];
 
 
 

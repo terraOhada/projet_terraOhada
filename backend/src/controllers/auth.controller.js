@@ -236,12 +236,12 @@ export const sendResetOtp = async (req, res) => {
             where: { email }
         })
         if (!user) {
-            return res.status(404).json({ success: false, message: "Utilisateur non trouvé" });
+            return res.status(404).json({ success: false, message: "Cette adresse email n'existe pas" });
         }
 
         // générer le otp
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
-        const ExpireAt = Date.now() + 15 * 60 * 1000;
+        const ExpireAt = Date.now() + 20 * 1000;
 
         // mettre à jour le otp et l'expiration dans la base de données
         await db.user.update({

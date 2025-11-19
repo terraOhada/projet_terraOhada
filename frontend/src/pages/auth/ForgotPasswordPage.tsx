@@ -44,7 +44,9 @@ const ForgotPasswordPage: React.FC = () => {
         error
       );
       setError(
-        "Impossible de se connecter au serveur. Veuillez vérifier votre connexion."
+        error.response?.data?.message ||
+          "Une erreur est survenue. Veuillez réessayer."
+        // "Impossible de se connecter au serveur. Veuillez vérifier votre connexion."
       );
     } finally {
       setLoading(false);
