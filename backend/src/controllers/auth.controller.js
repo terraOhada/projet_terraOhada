@@ -6,7 +6,7 @@ import db from '../utils/config.js';
 import { generateAndSetCookies } from '../utils/geneateCookie.js';
 import { EMAIL_BIENVENUE, EMAIL_REINITIALISATION_CODE, EMAIL_RESET_PASSWORD, EMAIL_VERIFICATION_CODE } from '../nodemailer/template.js';
 
-const FRONTEND_URL = process.env.FRONTEND_URL || 'https://mvp-terraohada-frontend.vercel.app';
+const FRONTEND_URL = process.env.NODE_ENV === "development" ? "https://mvp-terraohada-frontend.vercel.app" || "http://localhost:5773" : 'https://terraohada.com';
 
 export const register = async (req, res) => {
     // recuperer les informations de l'utilisateur

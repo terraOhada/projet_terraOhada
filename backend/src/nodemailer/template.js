@@ -37,7 +37,7 @@ export const EMAIL_BIENVENUE = `
                 </table>
                 <p style="font-size: 14px; color: #7f8c8d; line-height: 1.5;">
                     Si le bouton ne fonctionne pas, copiez et collez le lien suivant dans votre navigateur :<br>
-                    <a href="http://localhost:5173/verification-compte/{{id_user}}" style="color: #0e4194; word-break: break-all;">cliquez ici</a>
+                    <a href="{{FRONTEND_URL}}/verification-compte/{{id_user}}" style="color: #0e4194; word-break: break-all;">cliquez ici</a>
                 </p>
             </td>
         </tr>
