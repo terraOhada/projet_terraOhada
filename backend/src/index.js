@@ -32,7 +32,7 @@ app.use(cookieParser());
 // Middleware to set CORS headers
 const CLIENT_URL = process.env.CORS_ORIGIN || 'http://localhost:5173'
 
-const allowedOrigins = ['https://www.terraohada.com', 'https://mvp-terraohada-frontend.vercel.app', 'http://localhost:5173', CLIENT_URL, 'https://projet-terraohada.onrender.com'];
+const allowedOrigins = ['https://www.terraohada.com', 'https://mvp-terraohada-frontend.vercel.app', 'http://localhost:5173', 'https://projet-terraohada.onrender.com'];
 
 
 
@@ -79,8 +79,8 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, async () => {
-    await connectDB()
     console.log(`Server is running on port ${PORT}`);
+    await connectDB()
 })
 
 
