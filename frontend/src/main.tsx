@@ -9,7 +9,7 @@ import { AnalyticsProvider } from "@keiko-app/react-google-analytics";
 
 const queryClient = new QueryClient();
 const analyticsConfig = {
-  mesureId: import.meta.env.VITE_APP_GA4_MEASUREMENT_ID,
+  mesureId: import.meta.env.VITE_APP_GA4_MEASUREMENT_ID as string,
 };
 
 createRoot(document.getElementById("root")!).render(
