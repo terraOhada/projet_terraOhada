@@ -275,11 +275,10 @@ model Application {
 model SavedJob {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
   savedAt DateTime @default(now())
-
-  jobId  String @db.ObjectId
-  job    Job    @relation(fields: [jobId], references: [id])
-  userId String @db.ObjectId
-  user   User   @relation(fields: [userId], references: [id])
+  jobId   String   @db.ObjectId
+  job     Job      @relation(fields: [jobId], references: [id])
+  userId  String   @db.ObjectId
+  user    User     @relation(fields: [userId], references: [id])
 
   @@unique([jobId, userId]) // Empêche de sauvegarder deux fois
 }
